@@ -1,0 +1,3 @@
+<html>
+    <p cp-if="f([1 + 1 * false, 2, 3, 'String', f([1])])"/>
+</html>
