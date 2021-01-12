@@ -1,22 +1,15 @@
 package ast.nodes.expression.value.literal;
 
-import ast.nodes.expression.ExpressionNode;
+import ast.nodes.expression.value.ConcatableNode;
 import ast.nodes.expression.value.ValuableNode;
 import ast.nodes.expression.value.ValueExpressionNode;
 
 import java.util.List;
 
-public class ObjectNode extends ValueExpressionNode {
-
-    private List<ObjectItemNode> objectItemNodes;
-
-    public List<ObjectItemNode> getObjectItemNodes() {
-        return objectItemNodes;
-    }
-
-    public void setObjectItemNodes(List<ObjectItemNode> objectItemNodes) {
-        this.objectItemNodes = objectItemNodes;
-    }
+/**
+ * JS Object Node: {x: 3, y: [1, 3]}
+ */
+public class ObjectNode extends LiteralExpressionNode<List<ObjectNode.ObjectItemNode>> implements ConcatableNode {
 
     public static class ObjectItemNode {
         private String key;

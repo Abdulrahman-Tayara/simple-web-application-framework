@@ -2,22 +2,19 @@ package ast.visitor;
 
 
 import ast.nodes.attribute.*;
-import ast.nodes.expression.condition.ConditionExpressionNode;
-import ast.nodes.expression.condition.OneOperandConditionExpressionNode;
+import ast.nodes.expression.condition.*;
 import ast.nodes.expression.math.MathematicalExpressionNode;
+import ast.nodes.expression.value.ConcatableNode;
+import ast.nodes.expression.value.IndexableNode;
 import ast.nodes.expression.value.ValuableNode;
-import ast.nodes.expression.value.ValueExpressionNode;
-import ast.nodes.expression.value.literal.ArrayNode;
-import ast.nodes.expression.value.literal.BooleanValueNode;
-import ast.nodes.expression.value.literal.NumericValueNode;
-import ast.nodes.expression.value.literal.StringValueNode;
+import ast.nodes.expression.value.literal.*;
 import ast.nodes.expression.value.variable.ConcatVariableExpressionNode;
 import ast.nodes.expression.value.variable.FunctionExpressionNode;
+import ast.nodes.expression.value.variable.IndexedVariableExpressionNode;
 import ast.nodes.html.HTMLContentNode;
 import ast.nodes.html.HTMLElementNode;
 import ast.nodes.html.HTMLTagNode;
 import ast.nodes.html.HtmlDocumentNode;
-import ast.nodes.expression.condition.LogicalNode;
 import ast.nodes.expression.value.variable.VariableExpressionNode;
 import gen.HTMLParser;
 import gen.HTMLParserBaseVisitor;
@@ -250,18 +247,25 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public ConcatVariableExpressionNode visitVariableConcatExpression(HTMLParser.VariableConcatExpressionContext ctx) {
         ConcatVariableExpressionNode node = new ConcatVariableExpressionNode();
-        List<ValueExpressionNode> values = new ArrayList<>();
+        List<ConcatableNode> values = new ArrayList<>();
 
         // Visit all nested expressions
         ctx.expression().forEach(expressionContext -> {
             Object visitResult = visit(expressionContext);
 
-            if (visitResult instanceof ValueExpressionNode && !(visitResult instanceof ConditionExpressionNode)) {
+            // Check the visited result validation
+            if (visitResult instanceof ConcatableNode) {
                 // Check if the result is also a ConcatVariableExpressionNode to add its values
-                if (visitResult instanceof ConcatVariableExpressionNode)
+                if (visitResult instanceof ConcatVariableExpressionNode) {
                     values.addAll(((ConcatVariableExpressionNode) visitResult).getValues());
-                    // Terminal object
-                else values.add((ValueExpressionNode) visitResult);
+                } else { // Terminal object
+
+                    // The object or the array mustn't be in the middle of the concatenation
+                    if (!values.isEmpty() && (visitResult instanceof ObjectNode))
+                        throw new RuntimeException("The expression isn't an object");
+
+                    values.add((ConcatableNode) visitResult);
+                }
             } else
                 throw new RuntimeException("The expression isn't an object");
         });
@@ -270,16 +274,89 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         return node;
     }
 
-    //----------------------- Condition -----------------------------
+    @Override
+    public ObjectNode.ObjectItemNode visitObjectItem(HTMLParser.ObjectItemContext ctx) {
+        ObjectNode.ObjectItemNode node = new ObjectNode.ObjectItemNode();
 
+        // Set key
+        node.setKey(ctx.variableName().ANY_NAME().getText());
+
+        // Visit value expression
+        Object value = visit(ctx.expression());
+
+        // Check if the value is valid
+        if (!(value instanceof ValuableNode))
+            throw new RuntimeException("Invalid object value");
+
+        node.setValue((ValuableNode) value);
+
+        return node;
+    }
+
+
+    @Override
+    public ObjectNode visitLiteralObjectExpression(HTMLParser.LiteralObjectExpressionContext ctx) {
+        ObjectNode node = new ObjectNode();
+
+        node.setValue(
+                ctx.literalObject().objectItem() // Access items
+                        .stream().map(this::visitObjectItem) // Visit items
+                        .collect(Collectors.toList())
+        );
+
+        return node;
+    }
+
+    @Override
+    public IndexedVariableExpressionNode visitIndexedVariableExpression(HTMLParser.IndexedVariableExpressionContext ctx) {
+        IndexedVariableExpressionNode node = new IndexedVariableExpressionNode();
+
+        Object indexedNode = visit(ctx.expression());
+
+        if (indexedNode instanceof IndexableNode) {
+            node.setVariable((IndexableNode) indexedNode);
+
+            node.setIndex(visitArrayIndexExpression(ctx.arrayIndexExpression()));
+
+            return node;
+        }
+
+        throw new RuntimeException("The expression isn't indexable");
+    }
+
+    @Override
+    public IndexedVariableExpressionNode.IndexNode visitArrayIndexExpression(HTMLParser.ArrayIndexExpressionContext ctx) {
+        IndexedVariableExpressionNode.IndexNode node = new IndexedVariableExpressionNode.IndexNode();
+
+        Object expression = visit(ctx.expression());
+
+        if (expression instanceof ValuableNode) {
+            if (expression instanceof NumericValueNode) {
+                Float numericValue = ((NumericValueNode) expression).getValue();
+                // Check for negative index && decimal index
+                if (numericValue < 0 || numericValue != Math.floor(numericValue))
+                    throw new RuntimeException("Invalid index");
+            }
+
+            node.setValue((ValuableNode) expression);
+            return node;
+        }
+
+        throw new RuntimeException("Invalid index");
+    }
+
+    //----------------------- Condition -----------------------------
 
     @Override
     public OneOperandConditionExpressionNode visitOneOperandConditionExpression(HTMLParser.OneOperandConditionExpressionContext ctx) {
         OneOperandConditionExpressionNode node = new OneOperandConditionExpressionNode();
+
+        // Set operator
         node.setOperator(ctx.CONDITIONAL_OPERATORS_ONE_OPERAND().getText());
 
         Object operand = visit(ctx.expression());
 
+        // Check if the operand is a logical node
         if (operand instanceof LogicalNode) {
             node.setOperand((LogicalNode) operand);
 
@@ -289,25 +366,71 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         throw new RuntimeException(ctx.expression().getText() + " isn't logical");
     }
 
+    @Override
+    public TwoOperandsConditionExpressionNode visitTwoOperandsConditionExpression(HTMLParser.TwoOperandsConditionExpressionContext ctx) {
+        Object operand1 = visit(ctx.expression(0));
+        Object operand2 = visit(ctx.expression(1));
+
+        // Check if the operands is valid
+        if (operand1 instanceof ValuableNode && operand2 instanceof ValuableNode) {
+            TwoOperandsConditionExpressionNode node = new TwoOperandsConditionExpressionNode();
+
+            node.setOperator(ctx.CONDITIONAL_OPERATORS_TWO_OPERAND().getText());
+            node.setOperand1((ValuableNode) operand1);
+            node.setOperand2((ValuableNode) operand2);
+
+            return node;
+        }
+
+        throw new RuntimeException("Invalid condition expression");
+    }
+
+    @Override
+    public ConcatConditionExpressionNode visitConcatConditionExpression(HTMLParser.ConcatConditionExpressionContext ctx) {
+        Object operand1 = visit(ctx.expression(0));
+        Object operand2 = visit(ctx.expression(1));
+
+        // Check if the operands is valid
+        if (operand1 instanceof LogicalNode && operand2 instanceof LogicalNode) {
+            ConcatConditionExpressionNode node = new ConcatConditionExpressionNode();
+
+            node.setOperator(ctx.CONDITIONAL_OPERATORS_CONCAT().getText());
+            node.setCondition1((LogicalNode) operand1);
+            node.setCondition2((LogicalNode) operand2);
+
+            return node;
+        }
+
+        throw new RuntimeException("Invalid condition expression");
+    }
+
     //----------------------- Math -----------------------------
 
 
     @Override
     public Object visitMathematicalExpression(HTMLParser.MathematicalExpressionContext ctx) {
-        try {
+        Object operand1 = visit(ctx.expression(0));
+        Object operand2 = visit(ctx.expression(1));
+
+        // Check if the expressions is valid
+        if (operand1 instanceof ValuableNode && operand2 instanceof ValuableNode) {
             MathematicalExpressionNode node = new MathematicalExpressionNode();
+
+            // Check if the expression is a multiplicative
             if (ctx.MULTIPLICATIVE_OPERATOR() != null) {
                 node.setOperator(ctx.MULTIPLICATIVE_OPERATOR().getText());
-            } else if(ctx.ADDITIVE_OPERATOR() != null) {
+            } else if (ctx.ADDITIVE_OPERATOR() != null) { // Check if the expression is a additive
                 node.setOperator(ctx.ADDITIVE_OPERATOR().getText());
             }
-            node.setOperand1(((ValuableNode) visit(ctx.expression().get(0))));
-            node.setOperand2(((ValuableNode) visit(ctx.expression().get(1))));
+
+            // Set operands expressions
+            node.setOperand1(((ValuableNode) operand1));
+            node.setOperand2(((ValuableNode) operand2));
+
             return node;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Invalid Mathematical Expression");
         }
+
+        throw new RuntimeException("Invalid Mathematical Expression");
     }
 
 
@@ -358,9 +481,18 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     }
 
     @Override
-    public ObjectLiteralNode visitLiteralObjectExpression(HTMLParser.LiteralObjectExpressionContext ctx) {
+    public CPModelAttributeNode visitCpMODEL(HTMLParser.CpMODELContext ctx) {
+        Object expressionResult = visit(ctx.expression());
 
+        if (expressionResult instanceof ValuableNode) {
+            CPModelAttributeNode node = new CPModelAttributeNode();
 
-        return super.visitLiteralObjectExpression(ctx);
+            node.setName(ctx.CP_MODEL().getText());
+            node.setValue((ValuableNode) expressionResult);
+
+            return node;
+        }
+
+        throw new RuntimeException("Invalid model expression");
     }
 }

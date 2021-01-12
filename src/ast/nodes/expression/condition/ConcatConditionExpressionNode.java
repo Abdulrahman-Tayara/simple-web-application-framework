@@ -5,7 +5,7 @@ package ast.nodes.expression.condition;
  */
 public class ConcatConditionExpressionNode extends ConditionExpressionNode {
     private String operator;
-    private ConditionExpressionNode condition1, condition2;
+    private LogicalNode condition1, condition2;
 
     public String getOperator() {
         return operator;
@@ -15,19 +15,19 @@ public class ConcatConditionExpressionNode extends ConditionExpressionNode {
         this.operator = operator;
     }
 
-    public ConditionExpressionNode getCondition1() {
+    public LogicalNode getCondition1() {
         return condition1;
     }
 
-    public void setCondition1(ConditionExpressionNode condition1) {
+    public void setCondition1(LogicalNode condition1) {
         this.condition1 = condition1;
     }
 
-    public ConditionExpressionNode getCondition2() {
+    public LogicalNode getCondition2() {
         return condition2;
     }
 
-    public void setCondition2(ConditionExpressionNode condition2) {
+    public void setCondition2(LogicalNode condition2) {
         this.condition2 = condition2;
     }
 }

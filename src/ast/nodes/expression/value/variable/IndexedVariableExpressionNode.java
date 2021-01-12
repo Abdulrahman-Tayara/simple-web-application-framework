@@ -1,18 +1,19 @@
 package ast.nodes.expression.value.variable;
 
 import ast.nodes.expression.condition.LogicalNode;
+import ast.nodes.expression.value.ConcatableNode;
 import ast.nodes.expression.value.IndexableNode;
 import ast.nodes.expression.value.ValuableNode;
 import ast.nodes.expression.value.ValueExpressionNode;
-
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Indexed variable, ex: x[2]['s'][f()]
  */
-public class IndexedVariableNode extends ValueExpressionNode implements IndexableNode, LogicalNode {
+public class IndexedVariableExpressionNode extends ValueExpressionNode implements IndexableNode, LogicalNode, ConcatableNode {
+    @SerializedName("indexed variable")
     private IndexableNode variable;
-    private List<Index> indices;
+    private IndexNode index;
 
     public IndexableNode getVariable() {
         return variable;
@@ -22,15 +23,15 @@ public class IndexedVariableNode extends ValueExpressionNode implements Indexabl
         this.variable = variable;
     }
 
-    public List<Index> getIndices() {
-        return indices;
+    public IndexNode getIndex() {
+        return index;
     }
 
-    public void setIndices(List<Index> indices) {
-        this.indices = indices;
+    public void setIndex(IndexNode index) {
+        this.index = index;
     }
 
-    public static class Index {
+    public static class IndexNode {
         private ValuableNode value;
 
         public ValuableNode getValue() {
@@ -45,21 +46,5 @@ public class IndexedVariableNode extends ValueExpressionNode implements Indexabl
         public String toString() {
             return value.toString();
         }
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(variable).append('[');
-
-        if (indices != null && indices.size() > 0) {
-            indices.forEach(index -> builder.append(index).append(','));
-
-            builder.deleteCharAt(builder.length() - 1); // Delete last comma.
-        }
-
-        builder.append(']');
-        return builder.toString();
     }
 }

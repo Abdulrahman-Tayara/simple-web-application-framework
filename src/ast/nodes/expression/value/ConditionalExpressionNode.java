@@ -5,7 +5,8 @@ import ast.nodes.expression.condition.ConditionExpressionNode;
 /**
  * Conditional expression, ex: condition ? expression : expression
  */
-public class ConditionalExpressionNode extends ValueExpressionNode {
+// TODO set is as logicalNode
+public class ConditionalExpressionNode extends ValueExpressionNode implements ConcatableNode {
     private ConditionExpressionNode conditionExpressionNode;
     private ValuableNode expression1, expression2;
 

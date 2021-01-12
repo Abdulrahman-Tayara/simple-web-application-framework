@@ -1,6 +1,8 @@
 import ast.nodes.html.HtmlDocumentNode;
 import ast.visitor.BaseVisitor;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import gen.HTMLLexer;
 import gen.HTMLParser;
 import org.antlr.v4.runtime.CharStream;
@@ -8,6 +10,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.antlr.v4.runtime.CharStreams.fromFileName;
 
@@ -23,7 +27,9 @@ public class Main {
             ParseTree tree = parser.htmlDocument();
             HtmlDocumentNode doc = (HtmlDocumentNode) new BaseVisitor().visit(tree);
 
-            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(doc));
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(doc);
+            System.out.println(json);
 
 
         } catch (IOException e) {

@@ -1762,7 +1762,7 @@ public class HTMLParser extends Parser {
 						_localctx = new IndexedVariableExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(243);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(244);
 						arrayIndexExpression();
 						}
@@ -3106,7 +3106,7 @@ public class HTMLParser extends Parser {
 		case 6:
 			return precpred(_ctx, 11);
 		case 7:
-			return precpred(_ctx, 8);
+			return precpred(_ctx, 3);
 		}
 		return true;
 	}
@@ -3201,7 +3201,7 @@ public class HTMLParser extends Parser {
 		"\u00e9\u00f8\3\2\2\2\u00ea\u00eb\f\17\2\2\u00eb\u00ec\7<\2\2\u00ec\u00f8"+
 		"\5\32\16\17\u00ed\u00ee\f\16\2\2\u00ee\u00ef\7;\2\2\u00ef\u00f8\5\32\16"+
 		"\16\u00f0\u00f1\f\13\2\2\u00f1\u00f2\7)\2\2\u00f2\u00f8\5\32\16\f\u00f3"+
-		"\u00f4\f\r\2\2\u00f4\u00f8\5*\26\2\u00f5\u00f6\f\n\2\2\u00f6\u00f8\5."+
+		"\u00f4\f\r\2\2\u00f4\u00f8\5*\26\2\u00f5\u00f6\f\5\2\2\u00f6\u00f8\5."+
 		"\30\2\u00f7\u00de\3\2\2\2\u00f7\u00e1\3\2\2\2\u00f7\u00e4\3\2\2\2\u00f7"+
 		"\u00ea\3\2\2\2\u00f7\u00ed\3\2\2\2\u00f7\u00f0\3\2\2\2\u00f7\u00f3\3\2"+
 		"\2\2\u00f7\u00f5\3\2\2\2\u00f8\u00fb\3\2\2\2\u00f9\u00f7\3\2\2\2\u00f9"+

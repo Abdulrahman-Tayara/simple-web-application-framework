@@ -2,6 +2,7 @@ package ast.nodes.expression.value.variable;
 
 import ast.nodes.expression.ExpressionNode;
 import ast.nodes.expression.condition.LogicalNode;
+import ast.nodes.expression.value.ConcatableNode;
 import ast.nodes.expression.value.IndexableNode;
 import ast.nodes.expression.value.ValuableNode;
 import ast.nodes.expression.value.ValueExpressionNode;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Function expression, ex: f(1, true, [1, 2]), f()
  */
-public class FunctionExpressionNode extends ValueExpressionNode implements IndexableNode, LogicalNode {
+public class FunctionExpressionNode extends ValueExpressionNode implements IndexableNode, LogicalNode, ConcatableNode {
 
     private String functionName;
     private List<FunctionParam> params;

@@ -79,12 +79,12 @@ expression
     | expression functionParams                                                   #FunctionCallExpression
     | variableName                                                                #VariableNameExpression
     | expression VARIABLE_CONCAT expression                                       #VariableConcatExpression
-    | expression arrayIndexExpression                                             #IndexedVariableExpression
     | literalNumericValue                                                         #LiteralNumericExpression
     | literalStringValue                                                          #LiteralStringExpression
     | literalBooleanValue                                                         #LiteralBooleanExpression
     | literalArray                                                                #LiteralArrayExpression
     | literalObject                                                               #LiteralObjectExpression
+    | expression arrayIndexExpression                                             #IndexedVariableExpression
     | CONDITIONAL_OPERATORS_ONE_OPERAND expression                                #OneOperandConditionExpression
     | PARENTHESE_OPEN expression PARENTHESE_CLOSE                                 #ParenthesizedExpression
     ;
