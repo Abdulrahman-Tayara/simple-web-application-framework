@@ -1,3 +1,7 @@
 <html>
-    <p cp-switch-case="x"/>
+    Text1
+    <p cp-switch-case="x">
+        Text3
+    </p>
+    Text2
 </html>

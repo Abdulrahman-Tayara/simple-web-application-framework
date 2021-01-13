@@ -8,7 +8,7 @@ import java.util.List;
 public class HTMLTagNode extends HTMLElementNode {
     private String name;
     private List<AttributeNode<?>> attributes = new ArrayList<>();
-    private HTMLContentNode htmlContentNode;
+    private List<HTMLElementNode> content;
 
     public String getName() {
         return name;
@@ -26,18 +26,12 @@ public class HTMLTagNode extends HTMLElementNode {
         this.attributes = attributes;
     }
 
-    public HTMLContentNode getHtmlContentNode() {
-        return htmlContentNode;
+    public List<HTMLElementNode> getContent() {
+        return content;
     }
 
-    public void setHtmlContentNode(HTMLContentNode htmlContentNode) {
-        this.htmlContentNode = htmlContentNode;
+    public void setContent(List<HTMLElementNode> content) {
+        this.content = content;
     }
-
-    @Override
-    public String toString() {
-        return "tag name: " + getName() + "\n \t" + "content: " + htmlContentNode;
-    }
-
 }
 

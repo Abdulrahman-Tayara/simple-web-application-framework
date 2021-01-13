@@ -12,10 +12,7 @@ import ast.nodes.expression.value.literal.*;
 import ast.nodes.expression.value.variable.ConcatVariableExpressionNode;
 import ast.nodes.expression.value.variable.FunctionExpressionNode;
 import ast.nodes.expression.value.variable.IndexedVariableExpressionNode;
-import ast.nodes.html.HTMLContentNode;
-import ast.nodes.html.HTMLElementNode;
-import ast.nodes.html.HTMLTagNode;
-import ast.nodes.html.HtmlDocumentNode;
+import ast.nodes.html.*;
 import ast.nodes.expression.value.variable.VariableExpressionNode;
 import gen.HTMLParser;
 import gen.HTMLParserBaseVisitor;
@@ -39,11 +36,6 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     }
 
     @Override
-    public Object visitScriptletOrSeaWs(HTMLParser.ScriptletOrSeaWsContext ctx) {
-        return super.visitScriptletOrSeaWs(ctx);
-    }
-
-    @Override
     public HTMLElementNode visitHtmlElements(HTMLParser.HtmlElementsContext ctx) {
         return visitHtmlElement(ctx.htmlElement());
     }
@@ -55,7 +47,9 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     }
 
     @Override
-    public String visitHtmlChardata(HTMLParser.HtmlChardataContext ctx) {
+    public HTMLTextNode visitHtmlChardata(HTMLParser.HtmlChardataContext ctx) {
+        HTMLTextNode node = new HTMLTextNode();
+
         StringBuilder htmlText = new StringBuilder();
 
         if (ctx.SEA_WS() != null)
@@ -66,37 +60,22 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
         ctx.htmlChardata().forEach(htmlChardataContext -> htmlText.append(visitHtmlChardata(htmlChardataContext)));
 
-        return htmlText.toString();
+        node.setText(htmlText.toString());
+
+        return node;
     }
 
     @Override
-    public HTMLContentNode visitHtmlContent(HTMLParser.HtmlContentContext ctx) {
-        HTMLContentNode contentNode = new HTMLContentNode();
+    public List<HTMLElementNode> visitHtmlContent(HTMLParser.HtmlContentContext ctx) {
+        List<HTMLElementNode> elements =
+                // Iterate over children
+                ctx.children.stream().filter( // Filter the contexts to HTMLElement or HTMLCharData
+                        child -> child instanceof HTMLParser.HtmlElementContext
+                                || child instanceof HTMLParser.HtmlChardataContext
+                ).map(context -> (HTMLElementNode) visit(context)) // Visit the filtered contexts
+                        .collect(Collectors.toList());
 
-        List<HTMLElementNode> elements = new ArrayList<>();
-        StringBuilder textContent = new StringBuilder();
-
-
-        int i = 0;
-        if (ctx.htmlChardata(0) != null) { // First text content
-            i = 1;
-            textContent.append(visitHtmlChardata(ctx.htmlChardata(0)));
-        }
-
-        for (; i < ctx.children.size(); i++) {
-            // If the content is an element
-            if (ctx.getChild(i) instanceof HTMLParser.HtmlElementContext)
-                elements.add(visitHtmlElement((HTMLParser.HtmlElementContext) ctx.getChild(i)));
-
-                // If the content is a text
-            else if (ctx.getChild(i) instanceof HTMLParser.HtmlChardataContext)
-                textContent.append(visitHtmlChardata((HTMLParser.HtmlChardataContext) ctx.getChild(i)));
-        }
-
-        contentNode.setTextContent(textContent.toString());
-        contentNode.setContent(elements);
-
-        return contentNode;
+        return elements;
     }
 
     @Override
@@ -119,7 +98,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             });
 
             if (ctx.htmlContent() != null)
-                tag.setHtmlContentNode(visitHtmlContent(ctx.htmlContent()));
+                tag.setContent(visitHtmlContent(ctx.htmlContent()));
 
             return tag;
         }
