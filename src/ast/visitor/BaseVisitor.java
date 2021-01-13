@@ -58,7 +58,9 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         if (ctx.HTML_TEXT() != null)
             htmlText.append(ctx.HTML_TEXT().getText());
 
-        ctx.htmlChardata().forEach(htmlChardataContext -> htmlText.append(visitHtmlChardata(htmlChardataContext)));
+        ctx.htmlChardata().stream().map(this::visitHtmlChardata)
+                .filter(charData -> charData.getText() != null && !charData.getText().isBlank())
+                .forEach(htmlText::append);
 
         node.setText(htmlText.toString());
 
@@ -76,6 +78,18 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
                         .collect(Collectors.toList());
 
         return elements;
+    }
+
+    @Override
+    public HTMLScriptNode visitScript(HTMLParser.ScriptContext ctx) {
+        HTMLScriptNode node = new HTMLScriptNode();
+
+        if (ctx.SCRIPT_BODY() != null)
+            node.setScriptBody(ctx.SCRIPT_BODY().getText());
+        else if (ctx.SCRIPT_SHORT_BODY() != null)
+            node.setScriptBody(ctx.SCRIPT_SHORT_BODY().getText());
+
+        return node;
     }
 
     @Override
@@ -101,6 +115,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
                 tag.setContent(visitHtmlContent(ctx.htmlContent()));
 
             return tag;
+        } else if (ctx.script() != null) { // Script
+            return visitScript(ctx.script());
         }
         return new HTMLElementNode();
     }

@@ -4,4 +4,8 @@
         Text3
     </p>
     Text2
+
+    <script>
+        Text
+    </>
 </html>
