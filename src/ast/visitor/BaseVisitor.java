@@ -585,4 +585,44 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
         throw new RuntimeException("Invalid for expression");
     }
+
+    @Override
+    public CPSwitchAttributeNode visitCpSWITCH(HTMLParser.CpSWITCHContext ctx) {
+        Object expression = visit(ctx.expression());
+
+        if (expression instanceof ValuableNode) {
+            CPSwitchAttributeNode node = new CPSwitchAttributeNode();
+            node.setName(ctx.CP_SWITCH().getText());
+            node.setValue((ValuableNode) expression);
+
+            return node;
+        }
+
+        throw new RuntimeException("Invalid switch expression");
+    }
+
+    @Override
+    public CPSwitchCaseAttributeNode visitCpSWITCH_CASE(HTMLParser.CpSWITCH_CASEContext ctx) {
+        Object expression = visit(ctx.expression());
+
+        if (expression instanceof ValuableNode) {
+            CPSwitchCaseAttributeNode node = new CPSwitchCaseAttributeNode();
+
+            node.setName(ctx.CP_SWITCH_CASE().getText());
+            node.setValue((ValuableNode) expression);
+
+            return node;
+        }
+
+        throw new RuntimeException("Invalid switch expression");
+    }
+
+    @Override
+    public CPSwitchDefaultAttributeNode visitCpSWITCH_DEFAULT(HTMLParser.CpSWITCH_DEFAULTContext ctx) {
+        CPSwitchDefaultAttributeNode node = new CPSwitchDefaultAttributeNode();
+
+        node.setName(ctx.CP_SWITCH_DEFAULT().getText());
+
+        return node;
+    }
 }

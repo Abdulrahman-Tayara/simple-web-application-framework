@@ -166,17 +166,17 @@ indexExpression
 
 // CP_SWITCH
 cpSWITCH
-    : CP_SHOW CP_OPEN expression CP_CLOSE
+    : CP_SWITCH CP_OPEN expression CP_CLOSE
     ;
 
 // CP_SWITCH_CASE
 cpSWITCH_CASE
-    : CP_SHOW CP_OPEN expression CP_CLOSE
+    : CP_SWITCH_CASE CP_OPEN expression CP_CLOSE
     ;
 
 // CP_SWITCH_DEFAULT
 cpSWITCH_DEFAULT
-    : CP_SWITCH_DEFAULT CP_OPEN expression CP_CLOSE
+    : CP_SWITCH_DEFAULT
     ;
 
 // CP_MODEL
