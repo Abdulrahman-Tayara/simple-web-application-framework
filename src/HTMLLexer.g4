@@ -1,7 +1,7 @@
 lexer grammar  HTMLLexer;
 
 VARIABLE_SCOPE_OPEN
-    : '{{' -> pushMode(VARIABLE_SCOPE)
+    : '{{' -> pushMode(CP)
     ;
 
 HTML_COMMENT
@@ -254,6 +254,10 @@ CP_CLOSE
     : '"' -> popMode
     ;
 
+VARIABLE_SCOPE_CLOSE
+    : ' }}' -> popMode
+    ;
+
 VARIABLE_CONCAT
     : '.'
     ;
@@ -385,15 +389,4 @@ fragment
 VARIABLE_NameStartChar
     : [a-zA-Z]
     | '_'
-    ;
-
-
-mode VARIABLE_SCOPE;
-
-VARIABLE_SCOPE_TEXT
-    : VARIABLE_NAME
-    ;
-
-VARIABLE_SCOPE_CLOSE
-    : '}}' -> popMode
     ;

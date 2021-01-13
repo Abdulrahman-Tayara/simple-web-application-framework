@@ -43,7 +43,7 @@ htmlAttribute
     ;
 
 variableScopeContent
-    : VARIABLE_SCOPE_OPEN VARIABLE_SCOPE_TEXT VARIABLE_SCOPE_CLOSE
+    : VARIABLE_SCOPE_OPEN expression VARIABLE_SCOPE_CLOSE
     ;
 
 htmlChardata
