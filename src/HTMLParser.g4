@@ -147,16 +147,17 @@ cpHIDE
 
 // CP_FOR
 cpFOR
-    : CP_FOR CP_OPEN inForExpression CP_CLOSE
+    : CP_FOR CP_OPEN forInExpression CP_CLOSE
     ;
 
-inForExpression
-    : expression FOR_IN (expression) (indexExpression)?
-    | pairExpression FOR_IN expression
+forInExpression
+    : expression FOR_IN (expression) (indexExpression)? // x in [1, 2]
+    | pairExpression FOR_IN expression // x,y in [1, 2]
     ;
 
 pairExpression
     : variableName COMMA variableName
+    | PARENTHESE_OPEN (variableName COMMA variableName) PARENTHESE_CLOSE
     ;
 
 indexExpression

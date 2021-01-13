@@ -6,6 +6,7 @@ import ast.nodes.expression.condition.*;
 import ast.nodes.expression.math.MathematicalExpressionNode;
 import ast.nodes.expression.value.ConcatableNode;
 import ast.nodes.expression.value.IndexableNode;
+import ast.nodes.expression.value.IterableNode;
 import ast.nodes.expression.value.ValuableNode;
 import ast.nodes.expression.value.literal.*;
 import ast.nodes.expression.value.variable.ConcatVariableExpressionNode;
@@ -20,7 +21,9 @@ import gen.HTMLParser;
 import gen.HTMLParserBaseVisitor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BaseVisitor extends HTMLParserBaseVisitor {
@@ -298,11 +301,13 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     public ObjectNode visitLiteralObjectExpression(HTMLParser.LiteralObjectExpressionContext ctx) {
         ObjectNode node = new ObjectNode();
 
-        node.setValue(
-                ctx.literalObject().objectItem() // Access items
-                        .stream().map(this::visitObjectItem) // Visit items
-                        .collect(Collectors.toList())
-        );
+        Map<String, ValuableNode> members = new HashMap<>();
+
+        ctx.literalObject().objectItem() // Access items
+                .stream().map(this::visitObjectItem) // Visit items
+                .forEach(objectItemNode -> members.put(objectItemNode.getKey(), objectItemNode.getValue()));
+
+        node.setValue(members);
 
         return node;
     }
@@ -494,5 +499,90 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         }
 
         throw new RuntimeException("Invalid model expression");
+    }
+
+    @Override
+    public CPForAttributeNode.ForExpressionNode.ForIndexExpressionNode visitIndexExpression(HTMLParser.IndexExpressionContext ctx) {
+        Object indexExpression = visit(ctx.expression(0));
+        Object indexValueExpression = visit(ctx.expression(1));
+
+        if (!(indexExpression instanceof VariableExpressionNode)
+                || !(indexValueExpression instanceof ValuableNode)) {
+            throw new RuntimeException("Invalid index expression");
+        }
+
+        CPForAttributeNode.ForExpressionNode.ForIndexExpressionNode node = new CPForAttributeNode.ForExpressionNode.ForIndexExpressionNode();
+        node.setIndexName(((VariableExpressionNode) indexExpression).getVariableName());
+        node.setIndexValue((ValuableNode) indexValueExpression);
+
+        return node;
+    }
+
+    @Override
+    public CPForAttributeNode.ForPairNode visitPairExpression(HTMLParser.PairExpressionContext ctx) {
+        CPForAttributeNode.ForPairNode node = new CPForAttributeNode.ForPairNode();
+
+        node.setKey(ctx.variableName(0).ANY_NAME().getText());
+        node.setValue(ctx.variableName(1).ANY_NAME().getText());
+
+        return node;
+    }
+
+    @Override
+    public CPForAttributeNode.ForExpressionNode visitForInExpression(HTMLParser.ForInExpressionContext ctx) {
+        CPForAttributeNode.ForExpressionNode node = new CPForAttributeNode.ForExpressionNode();
+        if (ctx.pairExpression() == null) { // Iterator expression
+            Object iteratorExpression = visit(ctx.expression(0));
+            Object valueExpression = visit(ctx.expression(1));
+
+            if (!(iteratorExpression instanceof VariableExpressionNode)) {
+                throw new RuntimeException("Invalid iterator");
+            }
+
+            if (!(valueExpression instanceof IterableNode)) {
+                throw new RuntimeException("Invalid value expression");
+            }
+
+            node.setVariableName(((VariableExpressionNode) iteratorExpression).getVariableName());
+            node.setValue((IterableNode) valueExpression);
+
+
+            // Visit index expression
+            if (ctx.indexExpression() != null) {
+                CPForAttributeNode.ForExpressionNode.ForIndexExpressionNode indexExpression = visitIndexExpression(ctx.indexExpression());
+                node.setIndex(indexExpression);
+            }
+
+        } else { // Pair expression
+            Object valueExpression = visit(ctx.expression(0));
+
+            if (!(valueExpression instanceof IterableNode)) {
+                throw new RuntimeException("Invalid value expression");
+            }
+
+            CPForAttributeNode.ForPairNode pairNode = visitPairExpression(ctx.pairExpression());
+
+            node.setValue((IterableNode) valueExpression);
+            node.setPair(pairNode);
+        }
+
+        return node;
+    }
+
+    @Override
+    public CPForAttributeNode visitCpFOR(HTMLParser.CpFORContext ctx) {
+        Object forInExpression = visit(ctx.forInExpression());
+
+        // Check if the expression is valid;
+        if (forInExpression instanceof CPForAttributeNode.ForExpressionNode) {
+            CPForAttributeNode node = new CPForAttributeNode();
+
+            node.setName(ctx.CP_FOR().getText());
+            node.setValue((CPForAttributeNode.ForExpressionNode) forInExpression);
+
+            return node;
+        }
+
+        throw new RuntimeException("Invalid for expression");
     }
 }

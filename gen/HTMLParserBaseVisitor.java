@@ -303,7 +303,7 @@ public class HTMLParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitInForExpression(HTMLParser.InForExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitForInExpression(HTMLParser.ForInExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

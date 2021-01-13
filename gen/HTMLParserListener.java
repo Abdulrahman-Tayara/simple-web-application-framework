@@ -447,15 +447,15 @@ public interface HTMLParserListener extends ParseTreeListener {
 	 */
 	void exitCpFOR(HTMLParser.CpFORContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HTMLParser#inForExpression}.
+	 * Enter a parse tree produced by {@link HTMLParser#forInExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterInForExpression(HTMLParser.InForExpressionContext ctx);
+	void enterForInExpression(HTMLParser.ForInExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HTMLParser#inForExpression}.
+	 * Exit a parse tree produced by {@link HTMLParser#forInExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitInForExpression(HTMLParser.InForExpressionContext ctx);
+	void exitForInExpression(HTMLParser.ForInExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HTMLParser#pairExpression}.
 	 * @param ctx the parse tree

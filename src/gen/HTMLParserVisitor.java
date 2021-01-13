@@ -271,11 +271,11 @@ public interface HTMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCpFOR(HTMLParser.CpFORContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HTMLParser#inForExpression}.
+	 * Visit a parse tree produced by {@link HTMLParser#forInExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitInForExpression(HTMLParser.InForExpressionContext ctx);
+	T visitForInExpression(HTMLParser.ForInExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HTMLParser#pairExpression}.
 	 * @param ctx the parse tree

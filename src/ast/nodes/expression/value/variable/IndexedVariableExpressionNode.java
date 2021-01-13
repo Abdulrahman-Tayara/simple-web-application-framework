@@ -1,16 +1,15 @@
 package ast.nodes.expression.value.variable;
 
 import ast.nodes.expression.condition.LogicalNode;
-import ast.nodes.expression.value.ConcatableNode;
-import ast.nodes.expression.value.IndexableNode;
-import ast.nodes.expression.value.ValuableNode;
-import ast.nodes.expression.value.ValueExpressionNode;
+import ast.nodes.expression.value.*;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Indexed variable, ex: x[2]['s'][f()]
  */
-public class IndexedVariableExpressionNode extends ValueExpressionNode implements IndexableNode, LogicalNode, ConcatableNode {
+public class IndexedVariableExpressionNode extends ValueExpressionNode
+        implements IndexableNode, LogicalNode, ConcatableNode, IterableNode {
+
     @SerializedName("indexed variable")
     private IndexableNode variable;
     private IndexNode index;
