@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  * Indexed variable, ex: x[2]['s'][f()]
  */
 public class IndexedVariableExpressionNode extends ValueExpressionNode
-        implements IndexableNode, LogicalNode, ConcatableNode, IterableNode {
+        implements IndexableNode, LogicalNode, ConcatableNode {
 
     @SerializedName("indexed variable")
     private IndexableNode variable;

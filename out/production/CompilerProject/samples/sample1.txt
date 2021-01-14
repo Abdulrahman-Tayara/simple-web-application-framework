@@ -1,1 +1,1 @@
-<html @click="f()"/>
+<g cp-for="x in [x, 2]"/>

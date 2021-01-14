@@ -1,21 +1,22 @@
 package ast.nodes.expression.value;
 
-import ast.nodes.expression.condition.ConditionExpressionNode;
+
+import ast.nodes.expression.condition.LogicalNode;
 
 /**
  * Conditional expression, ex: condition ? expression : expression
  */
-// TODO set is as logicalNode and iterable
-public class ConditionalExpressionNode extends ValueExpressionNode implements ConcatableNode {
-    private ConditionExpressionNode conditionExpressionNode;
+public class ConditionalExpressionNode extends ValueExpressionNode implements ConcatableNode, LogicalNode, IndexableNode {
+
+    private LogicalNode condition;
     private ValuableNode expression1, expression2;
 
-    public ConditionExpressionNode getConditionExpression() {
-        return conditionExpressionNode;
+    public LogicalNode getConditionExpression() {
+        return condition;
     }
 
-    public void setConditionExpression(ConditionExpressionNode conditionExpressionNode) {
-        this.conditionExpressionNode = conditionExpressionNode;
+    public void setConditionExpression(LogicalNode conditionExpressionNode) {
+        this.condition = conditionExpressionNode;
     }
 
     public ValuableNode getExpression1() {

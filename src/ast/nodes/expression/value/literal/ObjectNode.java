@@ -1,7 +1,7 @@
 package ast.nodes.expression.value.literal;
 
 import ast.nodes.expression.value.ConcatableNode;
-import ast.nodes.expression.value.IterableNode;
+import ast.nodes.expression.value.IndexableNode;
 import ast.nodes.expression.value.ValuableNode;
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import java.util.Map;
  * JS Object Node: {x: 3, y: [1, 3]}
  */
 public class ObjectNode extends LiteralExpressionNode<Map<String, ValuableNode>>
-        implements ConcatableNode, IterableNode {
+        implements ConcatableNode, IndexableNode {
 
     public static class ObjectItemNode {
         private String key;

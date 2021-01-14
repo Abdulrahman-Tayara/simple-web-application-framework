@@ -1,6 +1,6 @@
 package ast.nodes.attribute;
 
-import ast.nodes.expression.value.IterableNode;
+import ast.nodes.expression.value.IndexableNode;
 import ast.nodes.expression.value.ValuableNode;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +14,7 @@ public class CPForAttributeNode extends CPAttributeNode<CPForAttributeNode.ForEx
         @SerializedName("pair iterator")
         private ForPairNode pair;
         @SerializedName("iterated value")
-        private IterableNode value;
+        private IndexableNode value;
         private ForIndexExpressionNode index;
 
         public void setVariableName(String variableName) {
@@ -25,7 +25,7 @@ public class CPForAttributeNode extends CPAttributeNode<CPForAttributeNode.ForEx
             this.pair = pair;
         }
 
-        public void setValue(IterableNode value) {
+        public void setValue(IndexableNode value) {
             this.value = value;
         }
 

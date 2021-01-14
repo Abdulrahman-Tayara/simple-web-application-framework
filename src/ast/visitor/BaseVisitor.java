@@ -2,20 +2,17 @@ package ast.visitor;
 
 
 import ast.nodes.attribute.*;
+import ast.nodes.expression.ExpressionNode;
 import ast.nodes.expression.condition.*;
 import ast.nodes.attribute.EventAttributeNode;
 import ast.nodes.expression.math.MathematicalExpressionNode;
-import ast.nodes.expression.value.ConcatableNode;
-import ast.nodes.expression.value.IndexableNode;
-import ast.nodes.expression.value.IterableNode;
-import ast.nodes.expression.value.ValuableNode;
+import ast.nodes.expression.value.*;
 import ast.nodes.expression.value.literal.*;
 import ast.nodes.expression.value.variable.ConcatVariableExpressionNode;
 import ast.nodes.expression.value.variable.FunctionExpressionNode;
 import ast.nodes.expression.value.variable.IndexedVariableExpressionNode;
 import ast.nodes.html.*;
 import ast.nodes.expression.value.variable.VariableExpressionNode;
-import com.google.gson.Gson;
 import gen.HTMLParser;
 import gen.HTMLParserBaseVisitor;
 
@@ -51,9 +48,17 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     }
 
     @Override
-    public Object visitVariableScopeContent(HTMLParser.VariableScopeContentContext ctx) {
-        // TODO implement it
-        return super.visitVariableScopeContent(ctx);
+    public VariableScopeExpressionNode visitVariableScopeContent(HTMLParser.VariableScopeContentContext ctx) {
+        Object expression = visit(ctx.expression());
+
+        if (!(expression instanceof ExpressionNode))
+            throw new RuntimeException("Invalid scope expression");
+
+        VariableScopeExpressionNode node = new VariableScopeExpressionNode();
+
+        node.setScopeValue((ExpressionNode) expression);
+
+        return node;
     }
 
     @Override
@@ -80,6 +85,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
                 ctx.children.stream().filter( // Filter the contexts to HTMLElement or HTMLCharData
                         child -> child instanceof HTMLParser.HtmlElementContext
                                 || child instanceof HTMLParser.HtmlChardataContext
+                                || child instanceof HTMLParser.VariableScopeContentContext
                 ).map(context -> (HTMLElementNode) visit(context)) // Visit the filtered contexts
                         .collect(Collectors.toList());
 
@@ -201,6 +207,80 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         return node;
     }
 
+    @Override
+    public ObjectNode.ObjectItemNode visitObjectItem(HTMLParser.ObjectItemContext ctx) {
+        ObjectNode.ObjectItemNode node = new ObjectNode.ObjectItemNode();
+
+        // Set key
+        node.setKey(ctx.variableName().ANY_NAME().getText());
+
+        // Visit value expression
+        Object value = visit(ctx.expression());
+
+        // Check if the value is valid
+        if (!(value instanceof ValuableNode))
+            throw new RuntimeException("Invalid object value");
+
+        node.setValue((ValuableNode) value);
+
+        return node;
+    }
+
+
+    @Override
+    public ObjectNode visitLiteralObjectExpression(HTMLParser.LiteralObjectExpressionContext ctx) {
+        ObjectNode node = new ObjectNode();
+
+        Map<String, ValuableNode> members = new HashMap<>();
+
+        ctx.literalObject().objectItem() // Access items
+                .stream().map(this::visitObjectItem) // Visit items
+                .forEach(objectItemNode -> members.put(objectItemNode.getKey(), objectItemNode.getValue()));
+
+        node.setValue(members);
+
+        return node;
+    }
+
+    @Override
+    public IndexedVariableExpressionNode visitIndexedVariableExpression(HTMLParser.IndexedVariableExpressionContext ctx) {
+        IndexedVariableExpressionNode node = new IndexedVariableExpressionNode();
+
+        Object indexedNode = visit(ctx.expression());
+
+        if (indexedNode instanceof IndexableNode) {
+            node.setVariable((IndexableNode) indexedNode);
+
+            node.setIndex(visitArrayIndexExpression(ctx.arrayIndexExpression()));
+
+            return node;
+        }
+
+        throw new RuntimeException("The expression isn't indexable");
+    }
+
+    @Override
+    public IndexedVariableExpressionNode.IndexNode visitArrayIndexExpression(HTMLParser.ArrayIndexExpressionContext ctx) {
+        IndexedVariableExpressionNode.IndexNode node = new IndexedVariableExpressionNode.IndexNode();
+
+        Object expression = visit(ctx.expression());
+
+        if (expression instanceof ValuableNode) {
+            if (expression instanceof NumericValueNode) {
+                Float numericValue = ((NumericValueNode) expression).getValue();
+                // Check for negative index && decimal index
+                if (numericValue < 0 || numericValue != Math.floor(numericValue))
+                    throw new RuntimeException("Invalid index");
+            }
+
+            node.setValue((ValuableNode) expression);
+            return node;
+        }
+
+        throw new RuntimeException("Invalid index");
+    }
+
+
     //----------------------- Variable -----------------------------
 
     @Override
@@ -278,78 +358,6 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         return node;
     }
 
-    @Override
-    public ObjectNode.ObjectItemNode visitObjectItem(HTMLParser.ObjectItemContext ctx) {
-        ObjectNode.ObjectItemNode node = new ObjectNode.ObjectItemNode();
-
-        // Set key
-        node.setKey(ctx.variableName().ANY_NAME().getText());
-
-        // Visit value expression
-        Object value = visit(ctx.expression());
-
-        // Check if the value is valid
-        if (!(value instanceof ValuableNode))
-            throw new RuntimeException("Invalid object value");
-
-        node.setValue((ValuableNode) value);
-
-        return node;
-    }
-
-
-    @Override
-    public ObjectNode visitLiteralObjectExpression(HTMLParser.LiteralObjectExpressionContext ctx) {
-        ObjectNode node = new ObjectNode();
-
-        Map<String, ValuableNode> members = new HashMap<>();
-
-        ctx.literalObject().objectItem() // Access items
-                .stream().map(this::visitObjectItem) // Visit items
-                .forEach(objectItemNode -> members.put(objectItemNode.getKey(), objectItemNode.getValue()));
-
-        node.setValue(members);
-
-        return node;
-    }
-
-    @Override
-    public IndexedVariableExpressionNode visitIndexedVariableExpression(HTMLParser.IndexedVariableExpressionContext ctx) {
-        IndexedVariableExpressionNode node = new IndexedVariableExpressionNode();
-
-        Object indexedNode = visit(ctx.expression());
-
-        if (indexedNode instanceof IndexableNode) {
-            node.setVariable((IndexableNode) indexedNode);
-
-            node.setIndex(visitArrayIndexExpression(ctx.arrayIndexExpression()));
-
-            return node;
-        }
-
-        throw new RuntimeException("The expression isn't indexable");
-    }
-
-    @Override
-    public IndexedVariableExpressionNode.IndexNode visitArrayIndexExpression(HTMLParser.ArrayIndexExpressionContext ctx) {
-        IndexedVariableExpressionNode.IndexNode node = new IndexedVariableExpressionNode.IndexNode();
-
-        Object expression = visit(ctx.expression());
-
-        if (expression instanceof ValuableNode) {
-            if (expression instanceof NumericValueNode) {
-                Float numericValue = ((NumericValueNode) expression).getValue();
-                // Check for negative index && decimal index
-                if (numericValue < 0 || numericValue != Math.floor(numericValue))
-                    throw new RuntimeException("Invalid index");
-            }
-
-            node.setValue((ValuableNode) expression);
-            return node;
-        }
-
-        throw new RuntimeException("Invalid index");
-    }
 
     //----------------------- Condition -----------------------------
 
@@ -408,6 +416,29 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         }
 
         throw new RuntimeException("Invalid condition expression");
+    }
+
+    @Override
+    public ConditionalExpressionNode visitConditionalExpression(HTMLParser.ConditionalExpressionContext ctx) {
+        Object conditionExpression = visit(ctx.expression(0));
+
+        if (!(conditionExpression instanceof LogicalNode))
+            throw new RuntimeException("Invalid conditional expression");
+
+        Object value1Expression = visit(ctx.expression(1));
+        Object value2Expression = visit(ctx.expression(2));
+
+        if (!(value1Expression instanceof ValuableNode)
+                || !(value2Expression instanceof ValuableNode))
+            throw new RuntimeException("Invalid conditional expression");
+
+        ConditionalExpressionNode node = new ConditionalExpressionNode();
+
+        node.setConditionExpression((LogicalNode) conditionExpression);
+        node.setExpression1((ValuableNode) value1Expression);
+        node.setExpression2((ValuableNode) value2Expression);
+
+        return node;
     }
 
     //----------------------- Math -----------------------------
@@ -540,12 +571,12 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
                 throw new RuntimeException("Invalid iterator");
             }
 
-            if (!(valueExpression instanceof IterableNode)) {
+            if (!(valueExpression instanceof IndexableNode)) {
                 throw new RuntimeException("Invalid value expression");
             }
 
             node.setVariableName(((VariableExpressionNode) iteratorExpression).getVariableName());
-            node.setValue((IterableNode) valueExpression);
+            node.setValue((IndexableNode) valueExpression);
 
 
             // Visit index expression
@@ -557,13 +588,13 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         } else { // Pair expression
             Object valueExpression = visit(ctx.expression(0));
 
-            if (!(valueExpression instanceof IterableNode)) {
+            if (!(valueExpression instanceof IndexableNode)) {
                 throw new RuntimeException("Invalid value expression");
             }
 
             CPForAttributeNode.ForPairNode pairNode = visitPairExpression(ctx.pairExpression());
 
-            node.setValue((IterableNode) valueExpression);
+            node.setValue((IndexableNode) valueExpression);
             node.setPair(pairNode);
         }
 

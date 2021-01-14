@@ -1,7 +1,6 @@
 package ast.nodes.expression.value.literal;
 
 import ast.nodes.expression.value.IndexableNode;
-import ast.nodes.expression.value.IterableNode;
 import ast.nodes.expression.value.ValuableNode;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +10,7 @@ import java.util.List;
  * Array definition, ex: [1, 's', true, ...]
  */
 public class ArrayNode extends LiteralExpressionNode<List<ArrayNode.ArrayItemNode>>
-        implements IndexableNode, IterableNode {
+        implements IndexableNode {
 
 
     public static class ArrayItemNode {

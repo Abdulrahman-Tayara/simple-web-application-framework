@@ -10,7 +10,7 @@ import java.util.List;
  * Function expression, ex: f(1, true, [1, 2]), f()
  */
 public class FunctionExpressionNode extends ValueExpressionNode
-        implements IndexableNode, LogicalNode, ConcatableNode, IterableNode {
+        implements IndexableNode, LogicalNode, ConcatableNode {
 
     private String functionName;
     private List<FunctionParam> params;
