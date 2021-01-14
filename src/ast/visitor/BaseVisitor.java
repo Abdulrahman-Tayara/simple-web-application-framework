@@ -3,6 +3,7 @@ package ast.visitor;
 
 import ast.nodes.attribute.*;
 import ast.nodes.expression.ExpressionNode;
+import ast.nodes.expression.PipeExpressionNode;
 import ast.nodes.expression.condition.*;
 import ast.nodes.attribute.EventAttributeNode;
 import ast.nodes.expression.math.MathematicalExpressionNode;
@@ -21,10 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BaseVisitor extends HTMLParserBaseVisitor {
@@ -49,14 +47,14 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
     @Override
     public VariableScopeExpressionNode visitVariableScopeContent(HTMLParser.VariableScopeContentContext ctx) {
-        Object expression = visit(ctx.expression());
+        Object scopeExpression = visit(ctx.expression());
 
-        if (!(expression instanceof ExpressionNode))
+        if (!(scopeExpression instanceof ExpressionNode))
             throw new RuntimeException("Invalid scope expression");
 
         VariableScopeExpressionNode node = new VariableScopeExpressionNode();
 
-        node.setScopeValue((ExpressionNode) expression);
+        node.setScopeExpression((ExpressionNode) scopeExpression);
 
         return node;
     }
@@ -82,10 +80,10 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     public List<HTMLElementNode> visitHtmlContent(HTMLParser.HtmlContentContext ctx) {
         List<HTMLElementNode> elements =
                 // Iterate over children
-                ctx.children.stream().filter( // Filter the contexts to HTMLElement or HTMLCharData
-                        child -> child instanceof HTMLParser.HtmlElementContext
-                                || child instanceof HTMLParser.HtmlChardataContext
-                                || child instanceof HTMLParser.VariableScopeContentContext
+                ctx.children.stream().filter( // Filter the contexts to
+                        child -> child instanceof HTMLParser.HtmlElementContext // HTMLElement
+                                || child instanceof HTMLParser.HtmlChardataContext // HTMLText
+                                || child instanceof HTMLParser.VariableScopeContentContext // Variable Scope
                 ).map(context -> (HTMLElementNode) visit(context)) // Visit the filtered contexts
                         .collect(Collectors.toList());
 
@@ -155,6 +153,42 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     public Object visitParenthesizedExpression(HTMLParser.ParenthesizedExpressionContext ctx) {
         return visit(ctx.expression());
     }
+
+    //----------------------- Pipe -----------------------------
+
+    @Override
+    public PipeExpressionNode visitPipeExpression(HTMLParser.PipeExpressionContext ctx) {
+        Object pipedExpression = visit(ctx.expression(0));
+        Object functionExpression = visit(ctx.expression(1));
+
+        // Visit piped expression
+        if (!(pipedExpression instanceof ExpressionNode))
+            throw new RuntimeException("Invalid pipe expression");
+
+        // Check function expression
+        if (!(functionExpression instanceof FunctionExpressionNode
+                || functionExpression instanceof VariableExpressionNode))
+            throw new RuntimeException("Invalid pipe expression");
+
+
+        FunctionExpressionNode functionNode;
+
+        // If the function is just a variableName
+        if (functionExpression instanceof VariableExpressionNode) {
+            functionNode = new FunctionExpressionNode();
+            functionNode.setFunctionName(((VariableExpressionNode) functionExpression).getVariableName());
+            functionNode.setParams(Collections.emptyList());
+        } else // If the function is full function expression
+            functionNode = (FunctionExpressionNode) functionExpression;
+
+        PipeExpressionNode node = new PipeExpressionNode();
+
+        node.setPipedData((ExpressionNode) pipedExpression);
+        node.setTransformer(functionNode);
+
+        return node;
+    }
+
 
     //----------------------- Literal Values -----------------------------
 

@@ -199,6 +199,18 @@ public interface HTMLParserListener extends ParseTreeListener {
 	 */
 	void exitIndexedVariableExpression(HTMLParser.IndexedVariableExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code PipeExpression}
+	 * labeled alternative in {@link HTMLParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPipeExpression(HTMLParser.PipeExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PipeExpression}
+	 * labeled alternative in {@link HTMLParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPipeExpression(HTMLParser.PipeExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code LiteralBooleanExpression}
 	 * labeled alternative in {@link HTMLParser#expression}.
 	 * @param ctx the parse tree

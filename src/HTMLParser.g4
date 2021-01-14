@@ -75,6 +75,7 @@ expression
     | <assoc=right> expression MULTIPLICATIVE_OPERATOR expression                 #MathematicalExpression
     | <assoc=right> expression ADDITIVE_OPERATOR expression                       #MathematicalExpression
     | expression functionParams                                                   #FunctionCallExpression
+    | expression PIPE expression                                                  #PipeExpression
     | variableName                                                                #VariableNameExpression
     | expression VARIABLE_CONCAT expression                                       #VariableConcatExpression
     | literalNumericValue                                                         #LiteralNumericExpression

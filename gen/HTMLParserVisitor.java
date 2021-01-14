@@ -124,6 +124,13 @@ public interface HTMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIndexedVariableExpression(HTMLParser.IndexedVariableExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code PipeExpression}
+	 * labeled alternative in {@link HTMLParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPipeExpression(HTMLParser.PipeExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code LiteralBooleanExpression}
 	 * labeled alternative in {@link HTMLParser#expression}.
 	 * @param ctx the parse tree

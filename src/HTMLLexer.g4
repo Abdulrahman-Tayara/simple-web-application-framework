@@ -274,6 +274,8 @@ SEMI_COLON:';';
 
 COMMA: ',';
 
+PIPE: '|';
+
 FOR_IN: 'in';
 
 ANY_NAME

@@ -231,6 +231,18 @@ public class HTMLParserBaseListener implements HTMLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPipeExpression(HTMLParser.PipeExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPipeExpression(HTMLParser.PipeExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLiteralBooleanExpression(HTMLParser.LiteralBooleanExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}

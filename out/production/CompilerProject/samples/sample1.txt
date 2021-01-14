@@ -1,1 +1,1 @@
-<g cp-for="x in [x, 2]"/>
+<html>{{x > 2 | f()}}</html>

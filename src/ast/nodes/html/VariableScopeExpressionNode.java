@@ -6,13 +6,13 @@ import ast.nodes.expression.ExpressionNode;
  * Variable scope, ex: {{ x }}, {{ x > 2 ? 's' : 's1' }}
  */
 public class VariableScopeExpressionNode extends HTMLElementNode {
-    private ExpressionNode scopeValue;
+    private ExpressionNode scopeExpression;
 
     public ExpressionNode getScopeValue() {
-        return scopeValue;
+        return scopeExpression;
     }
 
-    public void setScopeValue(ExpressionNode scopeValue) {
-        this.scopeValue = scopeValue;
+    public void setScopeExpression(ExpressionNode scopeValues) {
+        this.scopeExpression = scopeValues;
     }
 }
