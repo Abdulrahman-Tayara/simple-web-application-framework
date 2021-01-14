@@ -3,6 +3,7 @@ package ast.visitor;
 
 import ast.nodes.attribute.*;
 import ast.nodes.expression.condition.*;
+import ast.nodes.attribute.EventAttributeNode;
 import ast.nodes.expression.math.MathematicalExpressionNode;
 import ast.nodes.expression.value.ConcatableNode;
 import ast.nodes.expression.value.IndexableNode;
@@ -14,9 +15,15 @@ import ast.nodes.expression.value.variable.FunctionExpressionNode;
 import ast.nodes.expression.value.variable.IndexedVariableExpressionNode;
 import ast.nodes.html.*;
 import ast.nodes.expression.value.variable.VariableExpressionNode;
+import com.google.gson.Gson;
 import gen.HTMLParser;
 import gen.HTMLParserBaseVisitor;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +31,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BaseVisitor extends HTMLParserBaseVisitor {
+
+    private final Path eventFilePath = Paths.get(new File(EventAttributeNode.EVENTS_FILE_DIR).toURI());
+
     @Override
     public HtmlDocumentNode visitHtmlDocument(HTMLParser.HtmlDocumentContext ctx) {
         List<HTMLElementNode> elements = new ArrayList<HTMLElementNode>();
@@ -57,10 +67,6 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
         if (ctx.HTML_TEXT() != null)
             htmlText.append(ctx.HTML_TEXT().getText());
-
-        ctx.htmlChardata().stream().map(this::visitHtmlChardata)
-                .filter(charData -> charData.getText() != null && !charData.getText().isBlank())
-                .forEach(htmlText::append);
 
         node.setText(htmlText.toString());
 
@@ -619,5 +625,34 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         node.setName(ctx.CP_SWITCH_DEFAULT().getText());
 
         return node;
+    }
+
+    @Override
+    public EventAttributeNode visitEvent(HTMLParser.EventContext ctx) {
+        Object functionExpression = visit(ctx.expression());
+
+        if (!(functionExpression instanceof FunctionExpressionNode))
+            throw new RuntimeException("Invalid event expression");
+
+        EventAttributeNode node = new EventAttributeNode();
+
+        node.setName(visitEventName(ctx.eventName()));
+        node.setValue((FunctionExpressionNode) functionExpression);
+
+        return node;
+    }
+
+    @Override
+    public String visitEventName(HTMLParser.EventNameContext ctx) {
+        String eventName = ctx.ANY_NAME().getText();
+        try {
+            boolean exists = Files.readAllLines(eventFilePath).contains(eventName);
+
+            if (!exists)
+                throw new RuntimeException("Invalid event name");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return eventName;
     }
 }

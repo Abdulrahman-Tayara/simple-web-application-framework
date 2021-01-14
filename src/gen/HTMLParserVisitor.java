@@ -313,15 +313,15 @@ public interface HTMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCpMODEL(HTMLParser.CpMODELContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HTMLParser#mouseOver}.
+	 * Visit a parse tree produced by {@link HTMLParser#event}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMouseOver(HTMLParser.MouseOverContext ctx);
+	T visitEvent(HTMLParser.EventContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HTMLParser#click}.
+	 * Visit a parse tree produced by {@link HTMLParser#eventName}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitClick(HTMLParser.ClickContext ctx);
+	T visitEventName(HTMLParser.EventNameContext ctx);
 }

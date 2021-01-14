@@ -102,7 +102,7 @@ CP_MODEL
     ;
 
 EVENT_AT
-    : '@' -> pushMode(EVENT)
+    : '@' -> pushMode(CP)
     ;
 
 TAG_EQUALS
@@ -229,17 +229,6 @@ fragment SINGLE_QUOTE_STRING
     : '\'' ~[<']* '\''
     ;
 
-
-mode EVENT;
-
-MOUSE_OVER
-    : 'mouseover' -> popMode, pushMode(CP)
-    ;
-
-CLICK
-    : 'click' -> popMode, pushMode(CP)
-    ;
-
 mode CP;
 
 CP_WHITESPACE
@@ -255,7 +244,7 @@ CP_CLOSE
     ;
 
 VARIABLE_SCOPE_CLOSE
-    : ' }}' -> popMode
+    : '}}' -> popMode
     ;
 
 VARIABLE_CONCAT

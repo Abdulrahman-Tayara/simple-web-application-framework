@@ -1,7 +1,7 @@
 lexer grammar  HTMLLexer;
 
 VARIABLE_SCOPE_OPEN
-    : '{{' -> pushMode(VARIABLE_SCOPE)
+    : '{{' -> pushMode(CP)
     ;
 
 HTML_COMMENT
@@ -102,7 +102,7 @@ CP_MODEL
     ;
 
 EVENT_AT
-    : '@' -> pushMode(EVENT)
+    : '@' -> pushMode(CP)
     ;
 
 TAG_EQUALS
@@ -229,17 +229,6 @@ fragment SINGLE_QUOTE_STRING
     : '\'' ~[<']* '\''
     ;
 
-
-mode EVENT;
-
-MOUSE_OVER
-    : 'mouseover' -> popMode, pushMode(CP)
-    ;
-
-CLICK
-    : 'click' -> popMode, pushMode(CP)
-    ;
-
 mode CP;
 
 CP_WHITESPACE
@@ -252,6 +241,10 @@ CP_OPEN
 
 CP_CLOSE
     : '"' -> popMode
+    ;
+
+VARIABLE_SCOPE_CLOSE
+    : '}}' -> popMode
     ;
 
 VARIABLE_CONCAT
@@ -385,15 +378,4 @@ fragment
 VARIABLE_NameStartChar
     : [a-zA-Z]
     | '_'
-    ;
-
-
-mode VARIABLE_SCOPE;
-
-VARIABLE_SCOPE_TEXT
-    : VARIABLE_NAME
-    ;
-
-VARIABLE_SCOPE_CLOSE
-    : '}}' -> popMode
     ;

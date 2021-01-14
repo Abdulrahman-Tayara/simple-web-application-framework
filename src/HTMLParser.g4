@@ -24,7 +24,7 @@ htmlElement
     ;
 
 htmlContent
-    : htmlChardata? ((htmlElement | CDATA | htmlComment) htmlChardata?)*
+    : htmlChardata? ((htmlElement | CDATA | htmlComment | variableScopeContent) htmlChardata?)*
     ;
 
 
@@ -37,8 +37,7 @@ htmlAttribute
     | cpSWITCH_CASE
     | cpSWITCH_DEFAULT
     | cpMODEL
-    | mouseOver
-    | click
+    | event
     | TAG_NAME (TAG_EQUALS ATTVALUE_VALUE)?
     ;
 
@@ -47,8 +46,7 @@ variableScopeContent
     ;
 
 htmlChardata
-    : (SEA_WS | HTML_TEXT)? variableScopeContent htmlChardata*?
-    | HTML_TEXT
+    : HTML_TEXT
     | SEA_WS
     ;
 
@@ -184,12 +182,11 @@ cpMODEL
     : CP_MODEL CP_OPEN expression CP_CLOSE
     ;
 
-// MOUSE_OVER
-mouseOver
-    : EVENT_AT MOUSE_OVER CP_OPEN expression CP_CLOSE
+// Event
+event
+    : EVENT_AT eventName CP_OPEN expression CP_CLOSE
     ;
 
-// CLICK
-click
-    : EVENT_AT CLICK CP_OPEN expression CP_CLOSE
+eventName
+    : ANY_NAME
     ;

@@ -517,23 +517,23 @@ public interface HTMLParserListener extends ParseTreeListener {
 	 */
 	void exitCpMODEL(HTMLParser.CpMODELContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HTMLParser#mouseOver}.
+	 * Enter a parse tree produced by {@link HTMLParser#event}.
 	 * @param ctx the parse tree
 	 */
-	void enterMouseOver(HTMLParser.MouseOverContext ctx);
+	void enterEvent(HTMLParser.EventContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HTMLParser#mouseOver}.
+	 * Exit a parse tree produced by {@link HTMLParser#event}.
 	 * @param ctx the parse tree
 	 */
-	void exitMouseOver(HTMLParser.MouseOverContext ctx);
+	void exitEvent(HTMLParser.EventContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HTMLParser#click}.
+	 * Enter a parse tree produced by {@link HTMLParser#eventName}.
 	 * @param ctx the parse tree
 	 */
-	void enterClick(HTMLParser.ClickContext ctx);
+	void enterEventName(HTMLParser.EventNameContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HTMLParser#click}.
+	 * Exit a parse tree produced by {@link HTMLParser#eventName}.
 	 * @param ctx the parse tree
 	 */
-	void exitClick(HTMLParser.ClickContext ctx);
+	void exitEventName(HTMLParser.EventNameContext ctx);
 }

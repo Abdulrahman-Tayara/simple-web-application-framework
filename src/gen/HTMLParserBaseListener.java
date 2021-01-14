@@ -591,25 +591,25 @@ public class HTMLParserBaseListener implements HTMLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMouseOver(HTMLParser.MouseOverContext ctx) { }
+	@Override public void enterEvent(HTMLParser.EventContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMouseOver(HTMLParser.MouseOverContext ctx) { }
+	@Override public void exitEvent(HTMLParser.EventContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClick(HTMLParser.ClickContext ctx) { }
+	@Override public void enterEventName(HTMLParser.EventNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitClick(HTMLParser.ClickContext ctx) { }
+	@Override public void exitEventName(HTMLParser.EventNameContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -352,12 +352,12 @@ public class HTMLParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitMouseOver(HTMLParser.MouseOverContext ctx) { return visitChildren(ctx); }
+	@Override public T visitEvent(HTMLParser.EventContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitClick(HTMLParser.ClickContext ctx) { return visitChildren(ctx); }
+	@Override public T visitEventName(HTMLParser.EventNameContext ctx) { return visitChildren(ctx); }
 }

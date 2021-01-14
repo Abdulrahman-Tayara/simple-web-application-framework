@@ -1,4 +1,4 @@
-package gen;// Generated from C:/Users/Abdulrahman/IdeaProjects/CompilerProject/src\HTMLLexer.g4 by ANTLR 4.8
+// Generated from C:/Users/Abdulrahman/IdeaProjects/CompilerProject/out/production/CompilerProject\HTMLLexer.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
