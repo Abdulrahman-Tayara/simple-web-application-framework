@@ -60,13 +60,13 @@ public class HTMLParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'{{'", null, null, null, null, null, null, null, null, null, "'<'", 
+			null, null, null, null, null, null, null, null, null, null, null, "'<'", 
 			null, "'>'", "'/>'", null, "'cp-app'", "'cp-if'", "'cp-else-if'", "'cp-else'", 
 			"'cp-show'", "'cp-hide'", "'cp-for'", "'cp-switch'", "'cp-switch-case'", 
 			"'cp-switchDefault'", "'cp-model'", "'@'", null, null, null, null, null, 
 			null, null, null, null, null, null, "'\"'", "'.'", null, null, null, 
 			"'['", "']'", null, "' '", "';'", "','", "'|'", "'in'", null, null, "'{'", 
-			"'}'", "'}}'", "'('", "')'", null, null, null, null, "'!'", null, null, 
+			"'}'", null, "'('", "')'", null, null, null, null, "'!'", null, null, 
 			"'?'", "':'", "'+'", "'-'", "'*'", null, "'%'"
 		};
 	}

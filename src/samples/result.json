@@ -1,0 +1,72 @@
+{
+  "elements": [
+    {
+      "name": "p",
+      "attributes": [],
+      "content": [
+        {
+          "text": ""
+        },
+        {
+          "scopeExpression": {
+            "condition": {
+              "operator": ">",
+              "operand1": {
+                "functionName": "res",
+                "params": []
+              },
+              "operand2": {
+                "value": 2.0
+              }
+            },
+            "expression1": {
+              "condition": {
+                "operator": ">",
+                "operand1": {
+                  "variableName": "x"
+                },
+                "operand2": {
+                  "value": 15.0
+                }
+              },
+              "expression1": {
+                "condition": {
+                  "variableName": "x"
+                },
+                "expression1": {
+                  "value": 1.0
+                },
+                "expression2": {
+                  "value": 2.0
+                }
+              },
+              "expression2": {
+                "value": "1-2"
+              }
+            },
+            "expression2": {
+              "condition": {
+                "operator": "<",
+                "operand1": {
+                  "variableName": "x"
+                },
+                "operand2": {
+                  "value": 15.0
+                }
+              },
+              "expression1": {
+                "value": "2-1"
+              },
+              "expression2": {
+                "value": "2-2"
+              }
+            }
+          }
+        },
+        {
+          "text": ""
+        }
+      ]
+    }
+  ]
+}

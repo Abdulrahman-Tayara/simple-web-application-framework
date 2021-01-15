@@ -1,6 +1,6 @@
 token literal names:
 null
-'{{'
+null
 null
 null
 null
@@ -55,7 +55,7 @@ null
 null
 '{'
 '}'
-'}}'
+null
 '('
 ')'
 null

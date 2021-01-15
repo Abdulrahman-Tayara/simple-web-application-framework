@@ -66,9 +66,6 @@ TAG_SLASH
     : '/'
     ;
 
-
-// lexing mode for attribute values
-
 CP_APP
     : 'cp-app' -> pushMode(CP)
     ;
@@ -298,7 +295,6 @@ VARIABLE_NAME
 OBJECT_OPEN: '{';
 
 OBJECT_CLOSE: '}';
-
 
 VARIABLE_SCOPE_CLOSE
     : '}}' -> popMode
