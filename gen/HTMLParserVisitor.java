@@ -254,6 +254,12 @@ public interface HTMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArrayIndexExpression(HTMLParser.ArrayIndexExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HTMLParser#cpApp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCpApp(HTMLParser.CpAppContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HTMLParser#cpIF}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

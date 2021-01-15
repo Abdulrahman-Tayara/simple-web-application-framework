@@ -1,1 +1,1 @@
-<html>{{x > 2 | f()}}</html>
+<h cp-app="x" />

@@ -506,6 +506,16 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
 
     //----------------------- CP Attributes --------------------------
+
+
+    @Override
+    public CPAppAttributeNode visitCpApp(HTMLParser.CpAppContext ctx) {
+        CPAppAttributeNode node = new CPAppAttributeNode();
+        node.setName(ctx.CP_APP().getText());
+        node.setValue(ctx.ANY_NAME().getText());
+        return node;
+    }
+
     @Override
     public CPIFAttributeNode visitCpIF(HTMLParser.CpIFContext ctx) {
         CPIFAttributeNode cpIfAttribute = new CPIFAttributeNode();

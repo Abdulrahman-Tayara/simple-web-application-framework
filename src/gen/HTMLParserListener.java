@@ -419,6 +419,16 @@ public interface HTMLParserListener extends ParseTreeListener {
 	 */
 	void exitArrayIndexExpression(HTMLParser.ArrayIndexExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HTMLParser#cpApp}.
+	 * @param ctx the parse tree
+	 */
+	void enterCpApp(HTMLParser.CpAppContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HTMLParser#cpApp}.
+	 * @param ctx the parse tree
+	 */
+	void exitCpApp(HTMLParser.CpAppContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HTMLParser#cpIF}.
 	 * @param ctx the parse tree
 	 */

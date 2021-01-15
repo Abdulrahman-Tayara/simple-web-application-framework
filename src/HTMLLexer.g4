@@ -69,6 +69,10 @@ TAG_SLASH
 
 // lexing mode for attribute values
 
+CP_APP
+    : 'cp-app' -> pushMode(CP)
+    ;
+
 CP_IF
     : 'cp-if' -> pushMode(CP)
     ;
