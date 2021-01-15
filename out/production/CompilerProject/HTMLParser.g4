@@ -29,7 +29,10 @@ htmlContent
 
 
 htmlAttribute
-    : cpIF
+    : cpApp
+    | cpIF
+    | cpElseIf
+    | cpElse
     | cpSHOW
     | cpHIDE
     | cpFOR
@@ -129,9 +132,24 @@ arrayIndexExpression
     ;
 
 
+// CP_APP
+cpApp
+    : CP_APP CP_OPEN ANY_NAME CP_CLOSE
+    ;
+
 // CP_IF
 cpIF
     : CP_IF CP_OPEN expression CP_CLOSE
+    ;
+
+// CP_ELSE_IF
+cpElseIf
+    : CP_ELSE_IF CP_OPEN expression CP_CLOSE
+    ;
+
+// CP_ELSE
+cpElse
+    : CP_ELSE CP_OPEN expression CP_CLOSE
     ;
 
 // CP_SHOW

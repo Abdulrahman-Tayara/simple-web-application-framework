@@ -69,8 +69,20 @@ TAG_SLASH
 
 // lexing mode for attribute values
 
+CP_APP
+    : 'cp-app' -> pushMode(CP)
+    ;
+
 CP_IF
     : 'cp-if' -> pushMode(CP)
+    ;
+
+CP_ELSE_IF
+    : 'cp-else-if' -> pushMode(CP)
+    ;
+
+CP_ELSE
+    : 'cp-else' -> pushMode(CP)
     ;
 
 CP_SHOW
@@ -243,10 +255,6 @@ CP_CLOSE
     : '"' -> popMode
     ;
 
-VARIABLE_SCOPE_CLOSE
-    : '}}' -> popMode
-    ;
-
 VARIABLE_CONCAT
     : '.'
     ;
@@ -288,8 +296,13 @@ VARIABLE_NAME
     ;
 
 OBJECT_OPEN: '{';
+
 OBJECT_CLOSE: '}';
 
+
+VARIABLE_SCOPE_CLOSE
+    : '}}' -> popMode
+    ;
 
 PARENTHESE_OPEN: '(';
 

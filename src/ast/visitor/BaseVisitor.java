@@ -532,6 +532,36 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     }
 
     @Override
+    public CPElseIfAttributeNode visitCpElseIf(HTMLParser.CpElseIfContext ctx) {
+        CPElseIfAttributeNode node = new CPElseIfAttributeNode();
+
+        Object expressionResult = visit(ctx.expression());
+
+        if (expressionResult instanceof LogicalNode) {
+            node.setName(ctx.CP_ELSE_IF().getText());
+            node.setValue((LogicalNode) expressionResult);
+        } else
+            throw new RuntimeException("This isn't logical value");
+
+        return node;
+    }
+
+    @Override
+    public CPElseAttributeNode visitCpElse(HTMLParser.CpElseContext ctx) {
+        CPElseAttributeNode node = new CPElseAttributeNode();
+
+        Object expressionResult = visit(ctx.expression());
+
+        if (expressionResult instanceof LogicalNode) {
+            node.setName(ctx.CP_ELSE().getText());
+            node.setValue((LogicalNode) expressionResult);
+        } else
+            throw new RuntimeException("This isn't logical value");
+
+        return node;
+    }
+
+    @Override
     public CPShowAttributeNode visitCpSHOW(HTMLParser.CpSHOWContext ctx) {
         CPShowAttributeNode cpShowAttribute = new CPShowAttributeNode();
 

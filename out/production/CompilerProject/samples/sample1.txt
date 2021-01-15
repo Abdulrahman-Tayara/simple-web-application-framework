@@ -1,1 +1,1 @@
-<html>{{x > 2 | f()}}</html>
+<h cp-else-if="x > 2" />

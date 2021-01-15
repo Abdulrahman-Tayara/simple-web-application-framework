@@ -266,6 +266,18 @@ public interface HTMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCpIF(HTMLParser.CpIFContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HTMLParser#cpElseIf}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCpElseIf(HTMLParser.CpElseIfContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HTMLParser#cpElse}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCpElse(HTMLParser.CpElseContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HTMLParser#cpSHOW}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
