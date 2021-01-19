@@ -78,6 +78,9 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
     @Override
     public List<HTMLElementNode> visitHtmlContent(HTMLParser.HtmlContentContext ctx) {
+        if (ctx.children == null)
+            return Collections.emptyList();
+
         List<HTMLElementNode> elements =
                 // Iterate over children
                 ctx.children.stream().filter( // Filter the contexts to
@@ -120,6 +123,9 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             ctx.htmlAttribute().forEach(attribute -> {
                 tag.getAttributes().add(visitHtmlAttribute(attribute));
             });
+
+            if (!tag.validAttributes())
+                throw new RuntimeException("Invalid tag attributes");
 
             if (ctx.htmlContent() != null)
                 tag.setContent(visitHtmlContent(ctx.htmlContent()));
@@ -344,7 +350,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     }
 
     @Override
-    public Object visitFunctionCallExpression(HTMLParser.FunctionCallExpressionContext ctx) {
+    public FunctionExpressionNode visitFunctionCallExpression(HTMLParser.FunctionCallExpressionContext ctx) {
         FunctionExpressionNode node = new FunctionExpressionNode();
 
         // Check if the function name expression is valid
@@ -750,14 +756,14 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public String visitEventName(HTMLParser.EventNameContext ctx) {
         String eventName = ctx.ANY_NAME().getText();
-        try {
-            boolean exists = Files.readAllLines(eventFilePath).contains(eventName);
-
-            if (!exists)
-                throw new RuntimeException("Invalid event name");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            boolean exists = Files.readAllLines(eventFilePath).contains(eventName);
+//
+//            if (!exists)
+//                throw new RuntimeException("Invalid event name");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return eventName;
     }
 }

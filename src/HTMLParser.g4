@@ -72,7 +72,8 @@ style
     ;
 
 expression
-    : <assoc=right> expression CONDITIONAL_OPERATORS_TWO_OPERAND expression       #TwoOperandsConditionExpression
+    : expression VARIABLE_CONCAT expression                                       #VariableConcatExpression
+    | <assoc=right> expression CONDITIONAL_OPERATORS_TWO_OPERAND expression       #TwoOperandsConditionExpression
     | <assoc=right> expression CONDITIONAL_OPERATORS_CONCAT expression            #ConcatConditionExpression
     | expression QUESTION_MARK expression COLON expression                        #ConditionalExpression
     | <assoc=right> expression MULTIPLICATIVE_OPERATOR expression                 #MathematicalExpression
@@ -80,7 +81,6 @@ expression
     | expression functionParams                                                   #FunctionCallExpression
     | expression PIPE expression                                                  #PipeExpression
     | variableName                                                                #VariableNameExpression
-    | expression VARIABLE_CONCAT expression                                       #VariableConcatExpression
     | literalNumericValue                                                         #LiteralNumericExpression
     | literalStringValue                                                          #LiteralStringExpression
     | literalBooleanValue                                                         #LiteralBooleanExpression

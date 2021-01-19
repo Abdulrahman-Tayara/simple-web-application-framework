@@ -1,6 +1,6 @@
 package ast.nodes.html;
 
-import ast.nodes.attribute.AttributeNode;
+import ast.nodes.attribute.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,20 @@ public class HTMLTagNode extends HTMLElementNode {
 
     public void setContent(List<HTMLElementNode> content) {
         this.content = content;
+    }
+
+    public boolean validAttributes() {
+        // Check if there is only one if attribute
+        long ifCount = attributes.stream().filter(attribute -> attribute instanceof CPIFAttributeNode
+                || attribute instanceof CPElseIfAttributeNode
+                || attribute instanceof CPElseAttributeNode).count();
+
+        // Check if there is only one switch attribute
+        long switchCount = attributes.stream().filter(attribute -> attribute instanceof CPSwitchAttributeNode
+                || attribute instanceof CPSwitchCaseAttributeNode
+                || attribute instanceof CPSwitchDefaultAttributeNode).count();
+
+        return ifCount <= 1 && switchCount <= 1;
     }
 }
 
