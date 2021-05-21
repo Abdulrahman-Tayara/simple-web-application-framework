@@ -1,9 +1,6 @@
 package SymbolTable;
 
-import SymbolTable.CpSymbol.CpAppScope;
-import SymbolTable.CpSymbol.CpForScope;
-import SymbolTable.CpSymbol.CpIfScope;
-import SymbolTable.CpSymbol.CpScope;
+import SymbolTable.CpSymbol.*;
 import gen.HTMLParser;
 import gen.HTMLParserBaseListener;
 
@@ -97,4 +94,32 @@ public class DefSymbols extends HTMLParserBaseListener {
     }
 
 
+    @Override
+    public void exitCpSHOW(HTMLParser.CpSHOWContext ctx) {
+        CpScope cpShowScope = new CpShowScope(currentScope);
+        currentScope.addSymbol(cpShowScope);
+        currentScope = cpShowScope;
+    }
+
+
+    @Override
+    public void exitCpHIDE(HTMLParser.CpHIDEContext ctx) {
+        CpScope cpHideScope = new CpHideScope(currentScope);
+        currentScope.addSymbol(cpHideScope);
+        currentScope = cpHideScope;
+    }
+
+    @Override
+    public void exitCpIF(HTMLParser.CpIFContext ctx) {
+        CpScope cpScope = new CpIfScope(currentScope);
+        currentScope.addSymbol(cpScope);
+        currentScope = cpScope;
+    }
+
+    @Override
+    public void exitCpMODEL(HTMLParser.CpMODELContext ctx) {
+        CpScope cpScope = new CpModelScope(currentScope);
+        currentScope.addSymbol(cpScope);
+        currentScope = cpScope;
+    }
 }

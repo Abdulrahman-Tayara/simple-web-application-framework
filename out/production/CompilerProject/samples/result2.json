@@ -2,21 +2,21 @@
   "globalScope": {
     "Scope": [
       {
-        "symbol": "x"
+        "symbol": "t"
       },
       {
         "Scope": [
           {
-            "symbol": "y"
+            "symbol": "x"
           },
           {
-            "symbol": "inside"
+            "symbol": "t"
           },
           {
-            "symbol": "xxxxx"
+            "symbol": "x"
           }
         ],
-        "symbol": "cp-show Scope"
+        "symbol": "cp-for Scope"
       }
     ],
     "symbol": "Global Scope"

@@ -1,4 +1,11 @@
 <html>
-<div cp-for="x,y in t">
+<div cp-show="x">
+
+    {{y}}
+    <div>
+    {{x}}
+    {{inside}}
+    </div>
+    {{xxxxx}}
 </div>
 </html>
