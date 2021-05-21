@@ -1,60 +1,63 @@
 package SymbolTable;
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class BasicScope implements Scope {
-	protected Scope enclosingScope;
-	public Map<String,Symbol> variables = new HashMap<>();
-	public List<Scope> scopes = new ArrayList<>();
+public class BasicScope extends Symbol implements Scope {
 
-	public BasicScope(Scope enclosingScope) {
-		this.enclosingScope = enclosingScope;
-	}
+    protected transient Scope enclosingScope;
+    @SerializedName("Scope")
+    public List<Symbol> symbols = new ArrayList<>();
 
-	@Override
-	public String getScopeName() {
-		return "<unknown>";
-	}
+    public BasicScope(String name, Scope enclosingScope) {
+        super(name);
+        this.enclosingScope = enclosingScope;
+    }
 
-	@Override
-	public void addSymbol(Symbol s) {
-//		table.put(s.name, s);
-		if(s instanceof Scope){
-			scopes.add((Scope) s);
-		}else{
-			if(this.bindOrLookUpSymbol(s.name) == null){
-				variables.put(s.name, s);
-			}
-		}
-	}
+    @Override
+    public String getScopeName() {
+        return "Global Scope";
+    }
 
+    @Override
+    public void addSymbol(Symbol symbol) {
+        if (symbol instanceof Scope) { //scope
+            symbols.add(symbol);
+        } else { //variable
+            if (this.bindOrLookUpSymbol(symbol) == null) {
+                this.symbols.add(symbol);
+            }
+
+        }
+    }
 
 
+        /**
+         * searches in the current table and above
+         */
 
-	@Override
-	public Symbol bindOrLookUpSymbol(String name) {
-		Symbol s = variables.get(name);
-		if ( s!=null ) return s;
-		if ( getEnclosingScope()!=null ) {
-			return getEnclosingScope().bindOrLookUpSymbol(name);
-		}
-		return null;
-	}
+    @Override
+    public Symbol bindOrLookUpSymbol(Symbol searchedForSymbol) {
+		Symbol s = this.symbols.stream().filter(searchedForSymbol::equals).findAny().orElse(null);
+        if (s != null) return s;
+        if (getEnclosingScope() != null) {
+            return getEnclosingScope().bindOrLookUpSymbol(searchedForSymbol);
+        }
+        return null;
+    }
 
-	@Override
-	public Scope getEnclosingScope() {
-		return enclosingScope;
-	}
+    @Override
+    public Scope getEnclosingScope() {
+        return enclosingScope;
+    }
 
-	@Override
-	public String toString() {
-		return "Global Scope : vars  { " +
-				variables+
-				"},\n scopes{ \n" + scopes + "\n}";
-	}
+    @Override
+    public String toString() {
+        return "Global Scope : { " +
+                this.symbols +
+                "}";
+    }
 }

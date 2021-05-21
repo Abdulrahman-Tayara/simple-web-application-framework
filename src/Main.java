@@ -15,6 +15,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import javax.json.Json;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -25,7 +26,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             String source = "src/samples/sample1.txt";
-            String resultFile = "src/samples/result.json";
+            String resultFile = "src/samples/result2.json";
 
             CharStream cs = fromFileName(source);
             HTMLLexer lexer = new HTMLLexer(cs);
@@ -34,7 +35,10 @@ public class Main {
             ParseTree tree = parser.htmlDocument();
             HtmlDocumentNode doc = (HtmlDocumentNode) new BaseVisitor().visit(tree);
 
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Gson gson = new GsonBuilder()
+                    .excludeFieldsWithModifiers(Modifier.TRANSIENT)
+                    .setPrettyPrinting()
+                    .create();
 //            String json = gson.toJson(doc);
 //            JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
 
@@ -49,12 +53,11 @@ public class Main {
             walker.walk(def, tree);
 
 
-//            String json = gson.toJson(def.currentScope);
-
-            System.out.println();
-            System.out.println(def.currentScope.toString());
-
-
+            String json = gson.toJson(def);
+            FileWriter writer = new FileWriter(resultFile);
+            writer.write(json);
+            writer.close();
+//            System.out.println(def.currentScope.toString());
 
 
         } catch (IOException e) {

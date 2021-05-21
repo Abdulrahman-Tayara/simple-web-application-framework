@@ -1,8 +1,11 @@
-<div>
-    {{x}}
-    <p cp-if="x">
-    </p>
-    <p cp-if="y">
-    {{xxx}}
-    </p>
+<html>
+<div cp-app="x">
+    {{tt1}}
+    <div cp-app="y">
+        {{tt2}}
+        <div>
+            {{x}}
+        </div>
+    </div>
 </div>
+</html>
