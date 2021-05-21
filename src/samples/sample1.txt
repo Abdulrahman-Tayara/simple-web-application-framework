@@ -1,11 +1,4 @@
 <html>
-<div cp-app="x">
-    {{tt1}}
-    <div cp-app="y">
-        {{tt2}}
-        <div>
-            {{x}}
-        </div>
-    </div>
+<div cp-for="x,y in t">
 </div>
 </html>

@@ -26,7 +26,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             String source = "src/samples/sample1.txt";
-            String resultFile = "src/samples/result2.json";
+            String resultFile = "src/samples/result3.json";
 
             CharStream cs = fromFileName(source);
             HTMLLexer lexer = new HTMLLexer(cs);

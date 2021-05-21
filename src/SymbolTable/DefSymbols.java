@@ -1,10 +1,13 @@
 package SymbolTable;
 
 import SymbolTable.CpSymbol.CpAppScope;
+import SymbolTable.CpSymbol.CpForScope;
 import SymbolTable.CpSymbol.CpIfScope;
 import SymbolTable.CpSymbol.CpScope;
 import gen.HTMLParser;
 import gen.HTMLParserBaseListener;
+
+import java.util.List;
 
 
 public class DefSymbols extends HTMLParserBaseListener {
@@ -51,7 +54,7 @@ public class DefSymbols extends HTMLParserBaseListener {
     public void exitHtmlElement(HTMLParser.HtmlElementContext ctx) {
         int hash = ctx.hashCode();
         if (currentScope instanceof CpScope) {
-            if (((CpScope)currentScope).grandpaHash == hash) //the same containing element of
+            if (((CpScope) currentScope).grandpaHash == hash) //the same containing element of
                 currentScope = currentScope.getEnclosingScope();
         }
     }
@@ -68,7 +71,22 @@ public class DefSymbols extends HTMLParserBaseListener {
 //    public void exitCpIF(HTMLParser.CpIFContext ctx) {
 //        currentScope = currentScope.getEnclosingScope();
 //    }
-//
+
+
+    @Override
+    public void enterCpFOR(HTMLParser.CpFORContext ctx) {
+
+        String counter = ctx.forInExpression().expression(0).getText();
+        String iterative = ctx.forInExpression().expression(1).getText();
+
+        VariableSymbol iterativeSymbol = new VariableSymbol(iterative);
+
+        currentScope.addSymbol(iterativeSymbol);
+
+        CpForScope cpForScope = new CpForScope(currentScope);
+        currentScope.addSymbol(cpForScope);
+        currentScope = cpForScope;
+    }
 
     @Override
     public void enterVariableName(HTMLParser.VariableNameContext ctx) {

@@ -41,7 +41,7 @@ public class BasicScope extends Symbol implements Scope {
 
     @Override
     public Symbol bindOrLookUpSymbol(Symbol searchedForSymbol) {
-		Symbol s = this.symbols.stream().filter(searchedForSymbol::equals).findAny().orElse(null);
+		Symbol s = this.symbols.stream().filter(sym -> sym.name.equals(searchedForSymbol.name)).findAny().orElse(null);
         if (s != null) return s;
         if (getEnclosingScope() != null) {
             return getEnclosingScope().bindOrLookUpSymbol(searchedForSymbol);
