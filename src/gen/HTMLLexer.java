@@ -1,4 +1,4 @@
-package gen;// Generated from C:/Users/Abdulrahman/IdeaProjects/CompilerProject/src\HTMLLexer.g4 by ANTLR 4.9
+package gen;// Generated from F:/school/compiler/sem2/Tayara Project/compiler-project-4th-year/src\HTMLLexer.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class HTMLLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.9", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.9.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
