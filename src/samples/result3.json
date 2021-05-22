@@ -2,23 +2,44 @@
   "globalScope": {
     "Scope": [
       {
-        "symbol": "x"
+        "symbol": "enumVal"
       },
       {
         "Scope": [
           {
-            "symbol": "y"
+            "symbol": "ENUM1"
           },
           {
-            "symbol": "inside"
+            "Scope": [
+              {
+                "symbol": "X1"
+              }
+            ],
+            "symbol": "cp-switch-case Scope"
           },
           {
-            "symbol": "xxxxx"
+            "symbol": "ENUM2"
+          },
+          {
+            "Scope": [
+              {
+                "symbol": "X2"
+              }
+            ],
+            "symbol": "cp-switch-case Scope"
+          },
+          {
+            "Scope": [
+              {
+                "symbol": "X3"
+              }
+            ],
+            "symbol": "cp-switch-default Scope"
           }
         ],
-        "symbol": "cp-show Scope"
+        "symbol": "cp-switch Scope"
       }
     ],
-    "symbol": "Global Scope"
+    "symbol": "HtmlDocument Scope"
   }
 }

@@ -1,4 +1,4 @@
-// Generated from F:/school/compiler/sem2/Tayara Project/compiler-project-4th-year/src\HTMLLexer.g4 by ANTLR 4.9.1
+// Generated from D:/antlr/compiler-project-4th-year/src\HTMLLexer.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
