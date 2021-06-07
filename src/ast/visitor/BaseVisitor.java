@@ -135,6 +135,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             return visitScript(ctx.script());
         }
         return new HTMLElementNode();
+
     }
 
     @Override
@@ -146,7 +147,11 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         if (ctx.TAG_NAME() != null) { // Standard tag (No CP attribute)
             HTMLAttributeNode attribute = new HTMLAttributeNode();
             attribute.setName(ctx.TAG_NAME().getText()); // Add name
-            attribute.setValue(ctx.ATTVALUE_VALUE().getText()); // Add value
+            if (ctx.ATTVALUE_VALUE() != null) {
+                attribute.setValue(ctx.ATTVALUE_VALUE().getText()); // Add value
+            }else{
+                attribute.setValue(null);
+            }
 
             return attribute;
         }
