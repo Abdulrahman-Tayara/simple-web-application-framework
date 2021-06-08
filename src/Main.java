@@ -49,18 +49,15 @@ public class Main {
             System.out.println();
 
 
-
             FileWriter writer = new FileWriter(astOutputFile);
             writer.write(jsonObject.toString());
             writer.close();
 
-            boolean isAllIdsUnique = SymantecChecker.checkAlIdsAreUnique(doc);
+            SymantecChecker checker = new SymantecChecker(doc);
+            checker.execute();
 
-            if(isAllIdsUnique){
-                System.out.println("all ids are unique");
-            }else{
-                throw new Exception("ids are repeated");
-            }
+            System.out.println("exceptions:");
+            System.out.println(checker.getTotalExceptions());
 
 //            ParseTreeWalker walker = new ParseTreeWalker();
 //            DefSymbols def = new DefSymbols();

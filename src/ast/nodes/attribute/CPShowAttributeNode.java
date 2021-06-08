@@ -1,4 +1,4 @@
 package ast.nodes.attribute;
 
-public class CPShowAttributeNode extends CPConditionalAttributeNode {
+public class CPShowAttributeNode extends CPConditionalAttributeNode implements Structural {
 }

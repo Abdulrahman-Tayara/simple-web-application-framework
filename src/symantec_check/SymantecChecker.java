@@ -7,47 +7,36 @@ import ast.nodes.html.HTMLTagNode;
 import ast.nodes.html.HtmlDocumentNode;
 import symantec_check.exceptions.IdIsAlreadyInUseException;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SymantecChecker {
 
-    static Set<String> ids = new HashSet<>();
+    List<Exception> totalExceptions = new ArrayList<>();
 
-    public static boolean checkAlIdsAreUnique(HtmlDocumentNode tree) throws Exception {
+    final HtmlDocumentNode astTree;
 
-        for (HTMLElementNode element : tree.getElements()) {
-            if (element instanceof HTMLTagNode) {
-                examineHtmlTagIds((HTMLTagNode) element);
-            }
-        }
+    AttributeChecker attributeChecker = new AttributeChecker();
+    PipesChecker pipesChecker = new PipesChecker();
+    StructuralChecker structuralChecker = new StructuralChecker();
 
-        return true;
-
+    public SymantecChecker(HtmlDocumentNode astTree) {
+        this.astTree = astTree;
     }
 
-    private static void examineHtmlTagIds(HTMLTagNode tagNode) throws Exception {
-        for (AttributeNode attribute : tagNode.getAttributes()) {
-            if (attribute.getName().equals("id")) {
-                String value = (String) attribute.getValue();
-                if (ids.contains(value)) {
-                    throw new IdIsAlreadyInUseException();
-                } else {
-                    ids.add(value);
-                    System.out.println(value);
-                }
-            }
-        }
+    public void execute() throws Exception {
+//        OccuranceIdChecker.check(astTree);
 
-        for (HTMLElementNode elementNode: tagNode.getContent()) {
-            if(elementNode instanceof HTMLTagNode){
-                examineHtmlTagIds((HTMLTagNode) elementNode);
-                System.out.println(((HTMLTagNode) elementNode).getName());
-            }
-        }
+        attributeChecker.check(astTree);
+        totalExceptions.addAll(attributeChecker.getExceptions());
 
+        pipesChecker.check(astTree);
+        totalExceptions.addAll(pipesChecker.getExceptions());
+
+        structuralChecker.check(astTree);
+        totalExceptions.addAll(structuralChecker.getExceptions());
     }
 
+    public List<Exception> getTotalExceptions() {
+        return totalExceptions;
+    }
 }

@@ -5,7 +5,7 @@ import ast.nodes.expression.value.ValuableNode;
 import com.google.gson.annotations.SerializedName;
 
 
-public class CPForAttributeNode extends CPAttributeNode<CPForAttributeNode.ForExpressionNode> {
+public class CPForAttributeNode extends CPAttributeNode<CPForAttributeNode.ForExpressionNode> implements Structural {
 
 
     public static class ForExpressionNode {

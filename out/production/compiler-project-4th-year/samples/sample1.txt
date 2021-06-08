@@ -1,13 +1,6 @@
 <html>
-    <div cp-switch="enumVal">
-        <div cp-switch-case="ENUM1">
-            {{X1}}
-        </div>
-        <div cp-switch-case="ENUM2">
-            {{X2}}
-        </div>
-        <div cp-switchDefault>
-            {{X3}}
-        </div>
+    <div></div>
+    <div>
+        <span></span>
     </div>
 </html>
