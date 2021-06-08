@@ -15,7 +15,7 @@
                 "symbol": "X1"
               }
             ],
-            "symbol": "cp-switch-case"
+            "symbol": "cp-switch-case Scope"
           },
           {
             "symbol": "ENUM2"
@@ -26,7 +26,7 @@
                 "symbol": "X2"
               }
             ],
-            "symbol": "cp-switch-case"
+            "symbol": "cp-switch-case Scope"
           },
           {
             "Scope": [
@@ -34,10 +34,10 @@
                 "symbol": "X3"
               }
             ],
-            "symbol": "cp-switch-default"
+            "symbol": "cp-switch-default Scope"
           }
         ],
-        "symbol": "cp-switch"
+        "symbol": "cp-switch Scope"
       }
     ],
     "symbol": "HtmlDocument Scope"

@@ -11,6 +11,7 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import symantec_check.SymantecChecker;
 
 import javax.json.Json;
 import java.io.FileWriter;
@@ -25,8 +26,9 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            String source = "src/samples/sample1.txt";
+            String source = "src/samples/input.txt";
             String resultFile = "src/samples/result3.json";
+            String astOutputFile = "src/samples/ast-output.json";
 
             CharStream cs = fromFileName(source);
             HTMLLexer lexer = new HTMLLexer(cs);
@@ -39,29 +41,43 @@ public class Main {
                     .excludeFieldsWithModifiers(Modifier.TRANSIENT)
                     .setPrettyPrinting()
                     .create();
-//            String json = gson.toJson(doc);
-//            JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+            String json = gson.toJson(doc);
+            JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
 
 //            System.out.println(json);
 
-//            FileWriter writer = new FileWriter(resultFile);
-//            writer.write(jsonObject.toString());
-//            writer.close();
-
-            ParseTreeWalker walker = new ParseTreeWalker();
-            DefSymbols def = new DefSymbols();
-            walker.walk(def, tree);
+            System.out.println();
 
 
-            String json = gson.toJson(def);
-            FileWriter writer = new FileWriter(resultFile);
-            writer.write(json);
+
+            FileWriter writer = new FileWriter(astOutputFile);
+            writer.write(jsonObject.toString());
             writer.close();
+
+            boolean isAllIdsUnique = SymantecChecker.checkAlIdsAreUnique(doc);
+
+            if(isAllIdsUnique){
+                System.out.println("all ids are unique");
+            }else{
+                throw new Exception("ids are repeated");
+            }
+
+//            ParseTreeWalker walker = new ParseTreeWalker();
+//            DefSymbols def = new DefSymbols();
+//            walker.walk(def, tree);
+//
+//
+//            String json = gson.toJson(def);
+//            FileWriter writer = new FileWriter(resultFile);
+//            writer.write(json);
+//            writer.close();
 //            System.out.println(def.currentScope.toString());
 
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }
