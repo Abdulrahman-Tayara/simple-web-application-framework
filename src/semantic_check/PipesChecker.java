@@ -1,42 +1,23 @@
-package symantec_check;
+package semantic_check;
 
 import ast.nodes.Node;
 import ast.nodes.expression.PipeExpressionNode;
 import ast.nodes.expression.value.literal.StringValueNode;
 import ast.nodes.html.*;
 
-import java.util.ArrayList;
-import java.util.List;
+public class PipesChecker extends Checker {
 
-public class PipesChecker {
 
-    List<Exception> exceptions = new ArrayList<>();
-
-    public List<Exception> getExceptions() {
-        return exceptions;
-    }
-
-    public void check(Node node) {
-        if (node instanceof HtmlDocumentNode) {
-            HtmlDocumentNode htmlDocNode = ((HtmlDocumentNode) node);
-            for (HTMLElementNode elementNode : htmlDocNode.getElements()) {
-                check(elementNode);
-            }
-        } else if (node instanceof HTMLTagNode) {
-            HTMLTagNode tagNode = ((HTMLTagNode) node);
-            for (HTMLElementNode elementNode : tagNode.getContent()) {
-                check(elementNode);
-            }
-        } else if (node instanceof HTMLElementNode) {
-            if (node instanceof VariableScopeExpressionNode) {
-                VariableScopeExpressionNode varScopeNode = ((VariableScopeExpressionNode) node);
-                if (varScopeNode.getScopeValue() instanceof PipeExpressionNode) {
-                    PipeExpressionNode pipeExpressionNode = ((PipeExpressionNode) varScopeNode.getScopeValue());
-                    checkCurrencyFunctionInPipe(pipeExpressionNode);
-                    checkLowerFunctionInPipe(pipeExpressionNode);
-                    checkUpperFunctionInPipe(pipeExpressionNode);
-                    checkDateFunctionInPipe(pipeExpressionNode);
-                }
+    @Override
+    public void checkNode(Node node) {
+        if (node instanceof VariableScopeExpressionNode) {
+            VariableScopeExpressionNode varScopeNode = ((VariableScopeExpressionNode) node);
+            if (varScopeNode.getScopeValue() instanceof PipeExpressionNode) {
+                PipeExpressionNode pipeExpressionNode = ((PipeExpressionNode) varScopeNode.getScopeValue());
+                checkCurrencyFunctionInPipe(pipeExpressionNode);
+                checkLowerFunctionInPipe(pipeExpressionNode);
+                checkUpperFunctionInPipe(pipeExpressionNode);
+                checkDateFunctionInPipe(pipeExpressionNode);
             }
         }
     }

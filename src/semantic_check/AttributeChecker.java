@@ -1,15 +1,14 @@
-package symantec_check;
+package semantic_check;
 
+import ast.nodes.Node;
 import ast.nodes.attribute.AttributeNode;
 import ast.nodes.attribute.HTMLAttributeNode;
-import ast.nodes.html.HTMLElementNode;
 import ast.nodes.html.HTMLTagNode;
-import ast.nodes.html.HtmlDocumentNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttributeChecker {
+public class AttributeChecker implements IChecker {
 
     List<Exception> exceptions = new ArrayList<>();
 
@@ -19,29 +18,14 @@ public class AttributeChecker {
     private static final String SRC_ATTR_NAME = "src";
     private static final String HREF_ATTR_NAME = "href";
 
-    public void check(HtmlDocumentNode tree) {
-        for (HTMLElementNode element : tree.getElements()) {
-            if (element instanceof HTMLTagNode) {
-                checkImageTag((HTMLTagNode) element);
-                checkAnchorTag(((HTMLTagNode) element));
-                checkElementTag(((HTMLTagNode) element));
-            }
+    @Override
+    public List<Exception> check(Node node) {
+        exceptions.clear();
+        if(node instanceof HTMLTagNode) {
+            checkImageTag((HTMLTagNode) node);
+            checkAnchorTag((HTMLTagNode) node);
         }
-    }
-
-    private void checkElementTag(HTMLTagNode tagNode) {
-        checkImageTag(tagNode);
-        checkAnchorTag(tagNode);
-        System.out.println(tagNode.getName());
-
-        if (tagNode.getContent() != null) {
-            for (HTMLElementNode elementNode : tagNode.getContent()) {
-                if (elementNode instanceof HTMLTagNode) {
-                    checkElementTag(((HTMLTagNode) elementNode));
-                }
-            }
-        }
-
+        return exceptions;
     }
 
     private void checkImageTag(HTMLTagNode node) {
@@ -65,8 +49,7 @@ public class AttributeChecker {
 
             if (!hasSrc) {
                 this.exceptions.add(new Exception("does not have src"));
-            }
-            else if (!hasValue) {
+            } else if (!hasValue) {
                 this.exceptions.add(new Exception("src does not have a value"));
             }
         }
@@ -93,8 +76,7 @@ public class AttributeChecker {
 
             if (!hasHref) {
                 this.exceptions.add(new Exception("does not have href"));
-            }
-            else if (!hasValue) {
+            } else if (!hasValue) {
                 this.exceptions.add(new Exception("href does not have a value"));
             }
         }

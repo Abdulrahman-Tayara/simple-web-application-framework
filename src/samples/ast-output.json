@@ -1,1 +1,1 @@
-{"elements":[{"name":"div","attributes":[{"name":"cp-if","value":{"variableName":"someCondition"}},{"name":"cp-for","value":{"iterator":"i","iterated value":{"variableName":"arr"}}}],"content":[{"text":""}]}]}
+{"elements":[{"name":"div","attributes":[],"content":[{"text":""},{"name":"a","attributes":[{"name":"id","value":"\"12\""},{"name":"cp-if","value":{"variableName":"someCondition"}}]},{"text":""},{"name":"c","attributes":[{"name":"id","value":"\"12\""}]},{"text":""}]}]}

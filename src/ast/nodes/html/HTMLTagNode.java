@@ -47,5 +47,9 @@ public class HTMLTagNode extends HTMLElementNode {
 
         return ifCount <= 1 && switchCount <= 1;
     }
+
+    public boolean hasContent() {
+        return content != null && !content.isEmpty();
+    }
 }
 

@@ -1,3 +1,4 @@
-<div cp-if="someCondition" cp-for="i in arr">
-
+<div>
+    <a id="12" cp-if="someCondition"/>
+    <c id="12"/>
 </div>

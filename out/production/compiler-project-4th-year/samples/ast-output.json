@@ -1,1 +1,1 @@
-{"elements":[{"name":"div","attributes":[],"content":[{"text":""},{"scopeExpression":{"pipedData":{"variableName":"someValue"},"transformer":{"functionName":"date","params":[{"value":{"value":"$"}}]}}},{"text":""}]}]}
+{"elements":[{"name":"div","attributes":[],"content":[{"text":""},{"name":"a","attributes":[{"name":"id","value":"\"12\""},{"name":"cp-if","value":{"variableName":"someCondition"}}]},{"text":""},{"name":"c","attributes":[{"name":"id","value":"\"12\""}]},{"text":""}]}]}
