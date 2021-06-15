@@ -1,3 +1,4 @@
+import SymbolTable.DefSymbols;
 import ast.nodes.html.HtmlDocumentNode;
 import ast.visitor.BaseVisitor;
 import com.google.gson.Gson;
@@ -8,6 +9,7 @@ import gen.HTMLParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import semantic_check.SymantecChecker;
 
 import java.io.FileWriter;
@@ -20,7 +22,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
             String source = "src/samples/input.txt";
-            String resultFile = "src/samples/result3.json";
+            String sourceSYM = "src/samples/input-symbol.txt";
+            String symbolTableResultFile = "src/samples/symbol-table-result.json";
             String astOutputFile = "src/samples/ast-output.json";
 
             CharStream cs = fromFileName(source);
@@ -52,16 +55,16 @@ public class Main {
             System.out.println("exceptions:");
             System.out.println(checker.getTotalExceptions());
 
-//            ParseTreeWalker walker = new ParseTreeWalker();
-//            DefSymbols def = new DefSymbols();
-//            walker.walk(def, tree);
-//
-//
-//            String json = gson.toJson(def);
-//            FileWriter writer = new FileWriter(resultFile);
-//            writer.write(json);
-//            writer.close();
-//            System.out.println(def.currentScope.toString());
+            ParseTreeWalker walker = new ParseTreeWalker();
+            DefSymbols def = new DefSymbols();
+            walker.walk(def, tree);
+
+
+            String jsonDef = gson.toJson(def);
+            FileWriter writerDef = new FileWriter(symbolTableResultFile);
+            writerDef.write(jsonDef);
+            writerDef.close();
+            System.out.println(def.globalScope.toString());
 
     }
 }

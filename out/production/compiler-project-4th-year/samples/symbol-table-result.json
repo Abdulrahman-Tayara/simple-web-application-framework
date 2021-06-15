@@ -1,0 +1,37 @@
+{
+  "globalScope": {
+    "Scope": [
+      {
+        "tagName": "div",
+        "Scope": [
+          {
+            "attributeName": "cp-app",
+            "value": {
+              "variableName": "id1",
+              "type": "cp app expression",
+              "symbol": "variable expression"
+            },
+            "symbol": "cp attribute"
+          },
+          {
+            "tagName": "div",
+            "Scope": [
+              {
+                "attributeName": "cp-app",
+                "value": {
+                  "variableName": "id2",
+                  "type": "cp app expression",
+                  "symbol": "variable expression"
+                },
+                "symbol": "cp attribute"
+              }
+            ],
+            "symbol": "html element"
+          }
+        ],
+        "symbol": "html element"
+      }
+    ],
+    "symbol": "HtmlDocument Scope"
+  }
+}

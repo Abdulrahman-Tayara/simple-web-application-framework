@@ -1,1 +1,1 @@
-{"elements":[{"name":"div","attributes":[],"content":[{"text":""},{"name":"a","attributes":[{"name":"id","value":"\"12\""},{"name":"cp-if","value":{"variableName":"someCondition"}}]},{"text":""},{"name":"c","attributes":[{"name":"id","value":"\"12\""}]},{"text":""}]}]}
+{"elements":[{"name":"div","attributes":[{"name":"cp-app","value":"id1"}],"content":[{"text":""},{"name":"div","attributes":[{"name":"cp-app","value":"id2"}],"content":[{"text":""}]},{"text":""}]}]}

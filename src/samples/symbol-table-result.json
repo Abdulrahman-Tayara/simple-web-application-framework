@@ -1,0 +1,27 @@
+{
+  "globalScope": {
+    "Scope": [
+      {
+        "tagName": "div",
+        "Scope": [
+          {
+            "attributeName": "cp-if",
+            "value": {
+              "variableName": "id1",
+              "type": "gen.HTMLParser$VariableNameExpressionContext",
+              "symbol": "variable expression"
+            },
+            "symbol": "cp attribute"
+          }
+        ],
+        "symbol": "html element"
+      },
+      {
+        "variableName": "id1",
+        "type": "gen.HTMLParser$VariableNameExpressionContext",
+        "symbol": "variable expression"
+      }
+    ],
+    "symbol": "HtmlDocument Scope"
+  }
+}

@@ -1,4 +1,2 @@
-<div>
-    <a id="12" cp-if="someCondition"/>
-    <c id="12"/>
+<div cp-if="id1">
 </div>
