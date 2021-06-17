@@ -1,6 +1,7 @@
 package ast.visitor;
 
 
+import ast.nodes.Node;
 import ast.nodes.attribute.*;
 import ast.nodes.expression.ExpressionNode;
 import ast.nodes.expression.PipeExpressionNode;
@@ -53,6 +54,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             throw new RuntimeException("Invalid scope expression");
 
         VariableScopeExpressionNode node = new VariableScopeExpressionNode();
+        node.setLine(ctx.VARIABLE_SCOPE_OPEN().getSymbol().getLine());
+        node.setCol(ctx.VARIABLE_SCOPE_OPEN().getSymbol().getCharPositionInLine());
 
         node.setScopeExpression((ExpressionNode) scopeExpression);
 
@@ -65,11 +68,17 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
         StringBuilder htmlText = new StringBuilder();
 
-        if (ctx.SEA_WS() != null)
+        if (ctx.SEA_WS() != null) {
+            node.setLine(ctx.SEA_WS().getSymbol().getLine());
+            node.setCol(ctx.SEA_WS().getSymbol().getCharPositionInLine());
             htmlText.append(ctx.SEA_WS().getText());
+        }
 
-        if (ctx.HTML_TEXT() != null)
+        if (ctx.HTML_TEXT() != null) {
+            node.setLine(ctx.HTML_TEXT().getSymbol().getLine());
+            node.setCol(ctx.HTML_TEXT().getSymbol().getCharPositionInLine());
             htmlText.append(ctx.HTML_TEXT().getText());
+        }
 
         node.setText(htmlText.toString());
 
@@ -96,6 +105,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public HTMLScriptNode visitScript(HTMLParser.ScriptContext ctx) {
         HTMLScriptNode node = new HTMLScriptNode();
+        node.setLine(ctx.SCRIPT_OPEN().getSymbol().getLine());
+        node.setLine(ctx.SCRIPT_OPEN().getSymbol().getCharPositionInLine());
 
         if (ctx.SCRIPT_BODY() != null)
             node.setScriptBody(ctx.SCRIPT_BODY().getText());
@@ -115,6 +126,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             }
 
             HTMLTagNode tag = new HTMLTagNode();
+            tag.setLine(ctx.TAG_OPEN(0).getSymbol().getLine());
+            tag.setLine(ctx.TAG_OPEN(0).getSymbol().getCharPositionInLine());
 
             // Set Tag Name
             tag.setName(ctx.TAG_NAME(0).getText());
@@ -135,7 +148,6 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             return visitScript(ctx.script());
         }
         return new HTMLElementNode();
-
     }
 
     @Override
@@ -146,10 +158,13 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
         if (ctx.TAG_NAME() != null) { // Standard tag (No CP attribute)
             HTMLAttributeNode attribute = new HTMLAttributeNode();
+            attribute.setLine(ctx.ATTVALUE_VALUE().getSymbol().getLine());
+            attribute.setLine(ctx.ATTVALUE_VALUE().getSymbol().getCharPositionInLine());
+
             attribute.setName(ctx.TAG_NAME().getText()); // Add name
             if (ctx.ATTVALUE_VALUE() != null) {
                 attribute.setValue(ctx.ATTVALUE_VALUE().getText()); // Add value
-            }else{
+            } else {
                 attribute.setValue(null);
             }
 
@@ -187,12 +202,16 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         // If the function is just a variableName
         if (functionExpression instanceof VariableExpressionNode) {
             functionNode = new FunctionExpressionNode();
+            functionNode.setLine(((VariableExpressionNode) functionExpression).getLine());
+            functionNode.setCol(((VariableExpressionNode) functionExpression).getCol());
             functionNode.setFunctionName(((VariableExpressionNode) functionExpression).getVariableName());
             functionNode.setParams(Collections.emptyList());
         } else // If the function is full function expression
             functionNode = (FunctionExpressionNode) functionExpression;
 
         PipeExpressionNode node = new PipeExpressionNode();
+        node.setLine(((ExpressionNode) pipedExpression).getLine());
+        node.setCol(((ExpressionNode) pipedExpression).getCol());
 
         node.setPipedData((ExpressionNode) pipedExpression);
         node.setTransformer(functionNode);
@@ -206,6 +225,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public BooleanValueNode visitLiteralBooleanExpression(HTMLParser.LiteralBooleanExpressionContext ctx) {
         BooleanValueNode node = new BooleanValueNode();
+        node.setLine(ctx.literalBooleanValue().BOOLEAN_VALUE().getSymbol().getLine());
+        node.setCol(ctx.literalBooleanValue().BOOLEAN_VALUE().getSymbol().getCharPositionInLine());
         node.setValue(Boolean.valueOf(ctx.literalBooleanValue().BOOLEAN_VALUE().getText().toLowerCase()));
         return node;
     }
@@ -213,6 +234,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public StringValueNode visitLiteralStringExpression(HTMLParser.LiteralStringExpressionContext ctx) {
         StringValueNode node = new StringValueNode();
+        node.setLine(ctx.literalStringValue().STRING_VALUE().getSymbol().getLine());
+        node.setCol(ctx.literalStringValue().STRING_VALUE().getSymbol().getCharPositionInLine());
         node.setValue(ctx.literalStringValue().STRING_VALUE().getText().replace("'", ""));
         return node;
     }
@@ -220,6 +243,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public NumericValueNode visitLiteralNumericExpression(HTMLParser.LiteralNumericExpressionContext ctx) {
         NumericValueNode node = new NumericValueNode();
+        node.setLine(ctx.literalNumericValue().NUMERIC_VALUE().getSymbol().getLine());
+        node.setCol(ctx.literalNumericValue().NUMERIC_VALUE().getSymbol().getCharPositionInLine());
         node.setValue(Float.valueOf(ctx.literalNumericValue().NUMERIC_VALUE().getText()));
         return node;
     }
@@ -245,6 +270,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public ArrayNode visitLiteralArray(HTMLParser.LiteralArrayContext ctx) {
         ArrayNode node = new ArrayNode();
+        node.setLine(ctx.ARRAY_OPEN().getSymbol().getLine());
+        node.setCol(ctx.ARRAY_OPEN().getSymbol().getCharPositionInLine());
 
         // Visit all items and put them.
         node.setValue(ctx.arrayItemValue().stream().map(this::visitArrayItemValue).collect(Collectors.toList()));
@@ -331,6 +358,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public VariableExpressionNode visitVariableNameExpression(HTMLParser.VariableNameExpressionContext ctx) {
         VariableExpressionNode node = new VariableExpressionNode();
+        node.setLine(ctx.variableName().ANY_NAME().getSymbol().getLine());
+        node.setCol(ctx.variableName().ANY_NAME().getSymbol().getCharPositionInLine());
         node.setVariableName(ctx.variableName().ANY_NAME().getText());
         return node;
     }
@@ -409,6 +438,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public OneOperandConditionExpressionNode visitOneOperandConditionExpression(HTMLParser.OneOperandConditionExpressionContext ctx) {
         OneOperandConditionExpressionNode node = new OneOperandConditionExpressionNode();
+        node.setLine(ctx.CONDITIONAL_OPERATORS_ONE_OPERAND().getSymbol().getLine());
+        node.setCol(ctx.CONDITIONAL_OPERATORS_ONE_OPERAND().getSymbol().getCharPositionInLine());
 
         // Set operator
         node.setOperator(ctx.CONDITIONAL_OPERATORS_ONE_OPERAND().getText());
@@ -522,6 +553,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public CPAppAttributeNode visitCpApp(HTMLParser.CpAppContext ctx) {
         CPAppAttributeNode node = new CPAppAttributeNode();
+        node.setLine(ctx.CP_APP().getSymbol().getLine());
+        node.setCol(ctx.CP_APP().getSymbol().getCharPositionInLine());
         node.setName(ctx.CP_APP().getText());
         node.setValue(ctx.ANY_NAME().getText());
         return node;
@@ -530,6 +563,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public CPIFAttributeNode visitCpIF(HTMLParser.CpIFContext ctx) {
         CPIFAttributeNode cpIfAttribute = new CPIFAttributeNode();
+        cpIfAttribute.setLine(ctx.CP_IF().getSymbol().getLine());
+        cpIfAttribute.setCol(ctx.CP_IF().getSymbol().getCharPositionInLine());
 
         Object expressionResult = visit(ctx.expression());
 
@@ -545,6 +580,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public CPElseIfAttributeNode visitCpElseIf(HTMLParser.CpElseIfContext ctx) {
         CPElseIfAttributeNode node = new CPElseIfAttributeNode();
+        node.setLine(ctx.CP_ELSE_IF().getSymbol().getLine());
+        node.setCol(ctx.CP_ELSE_IF().getSymbol().getCharPositionInLine());
 
         Object expressionResult = visit(ctx.expression());
 
@@ -560,6 +597,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public CPElseAttributeNode visitCpElse(HTMLParser.CpElseContext ctx) {
         CPElseAttributeNode node = new CPElseAttributeNode();
+        node.setLine(ctx.CP_ELSE().getSymbol().getLine());
+        node.setCol(ctx.CP_ELSE().getSymbol().getCharPositionInLine());
 
         Object expressionResult = visit(ctx.expression());
 
@@ -575,6 +614,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public CPShowAttributeNode visitCpSHOW(HTMLParser.CpSHOWContext ctx) {
         CPShowAttributeNode cpShowAttribute = new CPShowAttributeNode();
+        cpShowAttribute.setLine(ctx.CP_SHOW().getSymbol().getLine());
+        cpShowAttribute.setCol(ctx.CP_SHOW().getSymbol().getCharPositionInLine());
 
         Object expressionResult = visit(ctx.expression());
 
@@ -590,6 +631,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public CPHideAttributeNode visitCpHIDE(HTMLParser.CpHIDEContext ctx) {
         CPHideAttributeNode cpHideAttribute = new CPHideAttributeNode();
+        cpHideAttribute.setLine(ctx.CP_HIDE().getSymbol().getLine());
+        cpHideAttribute.setCol(ctx.CP_HIDE().getSymbol().getCharPositionInLine());
 
         Object expressionResult = visit(ctx.expression());
 
@@ -608,6 +651,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
         if (expressionResult instanceof ValuableNode) {
             CPModelAttributeNode node = new CPModelAttributeNode();
+            node.setLine(ctx.CP_MODEL().getSymbol().getLine());
+            node.setCol(ctx.CP_MODEL().getSymbol().getCharPositionInLine());
 
             node.setName(ctx.CP_MODEL().getText());
             node.setValue((ValuableNode) expressionResult);
@@ -694,6 +739,9 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         if (forInExpression instanceof CPForAttributeNode.ForExpressionNode) {
             CPForAttributeNode node = new CPForAttributeNode();
 
+            node.setLine(ctx.CP_FOR().getSymbol().getLine());
+            node.setCol(ctx.CP_FOR().getSymbol().getCharPositionInLine());
+
             node.setName(ctx.CP_FOR().getText());
             node.setValue((CPForAttributeNode.ForExpressionNode) forInExpression);
 
@@ -709,6 +757,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
         if (expression instanceof ValuableNode) {
             CPSwitchAttributeNode node = new CPSwitchAttributeNode();
+            node.setLine(ctx.CP_SWITCH().getSymbol().getLine());
+            node.setCol(ctx.CP_SWITCH().getSymbol().getCharPositionInLine());
             node.setName(ctx.CP_SWITCH().getText());
             node.setValue((ValuableNode) expression);
 
@@ -724,6 +774,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
         if (expression instanceof ValuableNode) {
             CPSwitchCaseAttributeNode node = new CPSwitchCaseAttributeNode();
+            node.setLine(ctx.CP_SWITCH_CASE().getSymbol().getLine());
+            node.setCol(ctx.CP_SWITCH_CASE().getSymbol().getCharPositionInLine());
 
             node.setName(ctx.CP_SWITCH_CASE().getText());
             node.setValue((ValuableNode) expression);
@@ -737,6 +789,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
     @Override
     public CPSwitchDefaultAttributeNode visitCpSWITCH_DEFAULT(HTMLParser.CpSWITCH_DEFAULTContext ctx) {
         CPSwitchDefaultAttributeNode node = new CPSwitchDefaultAttributeNode();
+        node.setLine(ctx.CP_SWITCH_DEFAULT().getSymbol().getLine());
+        node.setCol(ctx.CP_SWITCH_DEFAULT().getSymbol().getCharPositionInLine());
 
         node.setName(ctx.CP_SWITCH_DEFAULT().getText());
 
@@ -751,6 +805,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             throw new RuntimeException("Invalid event expression");
 
         EventAttributeNode node = new EventAttributeNode();
+        node.setLine(ctx.eventName().ANY_NAME().getSymbol().getLine());
+        node.setCol(ctx.eventName().ANY_NAME().getSymbol().getCharPositionInLine());
 
         node.setName(visitEventName(ctx.eventName()));
         node.setValue((FunctionExpressionNode) functionExpression);

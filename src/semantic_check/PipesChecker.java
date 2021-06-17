@@ -5,6 +5,9 @@ import ast.nodes.expression.PipeExpressionNode;
 import ast.nodes.expression.value.literal.StringValueNode;
 import ast.nodes.html.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PipesChecker extends Checker {
 
 
@@ -64,8 +67,8 @@ public class PipesChecker extends Checker {
             } else if (numberOfParams == 1) {
                 if (pipeExpressionNode.getTransformer().getParams().get(0).getValue() instanceof StringValueNode) {
                     StringValueNode stringValueNode = ((StringValueNode) pipeExpressionNode.getTransformer().getParams().get(0).getValue());
-                    if (!stringValueNode.getValue().equalsIgnoreCase("mm-dd-yyyy")) {
-                        exceptions.add(new Exception("format cannot be other than mm-dd-yyyy"));
+                    if (!acceptedDateFormats.contains(stringValueNode.getValue())) {
+                        exceptions.add(new Exception("format cannot be other than mm-dd-yyyy at line " + stringValueNode.getLine()));
                     }
                 }
             } else {
@@ -73,4 +76,19 @@ public class PipesChecker extends Checker {
             }
         }
     }
+
+    private static final List<String> acceptedDateFormats = new ArrayList<String>() {
+        {
+            add("dd/mm/yyyy h:m:s");
+            add("dd/mm/yyyy h:m");
+            add("mm/dd/yyyy h:m:s");
+            add("mm/dd/yyyy h:m");
+            add("dd-mm-yyyy h:m:s");
+            add("dd-mm-yyyy h:m");
+            add("mm-dd-yyyy h:m:s");
+            add("mm-dd-yyyy h:m");
+            add("mm-yyyy");
+            add("mm-yy");
+        }
+    };
 }
