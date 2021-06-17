@@ -1,4 +1,4 @@
-package SymbolTable.CpSymbol;
+package SymbolTable.scopes;
 
 import SymbolTable.BasicScope;
 import SymbolTable.Scope;

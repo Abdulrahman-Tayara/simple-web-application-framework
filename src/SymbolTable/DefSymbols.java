@@ -1,8 +1,9 @@
 package SymbolTable;
 
-import SymbolTable.CpSymbol.*;
 import SymbolTable.attribute.CpAttribute;
 import SymbolTable.expression.*;
+import SymbolTable.scopes.HtmlBasicScope;
+import SymbolTable.scopes.HtmlDocumentScope;
 import gen.HTMLParser;
 import gen.HTMLParserBaseListener;
 

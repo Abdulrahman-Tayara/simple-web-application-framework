@@ -5,35 +5,42 @@
         "tagName": "div",
         "Scope": [
           {
-            "attributeName": "cp-for",
+            "attributeName": "cp-app",
             "value": {
-              "countersExpression": {
-                "variableName": "x",
-                "type": "gen.HTMLParser$VariableNameExpressionContext",
-                "symbol": "variable expression"
-              },
-              "forExpression": {
-                "variableName": "tttt",
-                "type": "gen.HTMLParser$VariableNameExpressionContext",
-                "symbol": "variable expression"
-              },
-              "type": "gen.HTMLParser$ForInExpressionContext",
-              "symbol": "for expression"
+              "variableName": "dddd",
+              "type": "cp app expression",
+              "symbol": "variable expression"
             },
             "symbol": "cp attribute"
           },
           {
-            "variableName": "x",
-            "type": "gen.HTMLParser$VariableNameExpressionContext",
-            "symbol": "variable expression"
+            "tagName": "div",
+            "Scope": [
+              {
+                "tagName": "div",
+                "Scope": [
+                  {
+                    "attributeName": "cp-app",
+                    "value": {
+                      "variableName": "id",
+                      "type": "cp app expression",
+                      "symbol": "variable expression"
+                    },
+                    "symbol": "cp attribute"
+                  }
+                ],
+                "symbol": "html element"
+              },
+              {
+                "tagName": "div",
+                "Scope": [],
+                "symbol": "html element"
+              }
+            ],
+            "symbol": "html element"
           }
         ],
         "symbol": "html element"
-      },
-      {
-        "variableName": "tttt",
-        "type": "gen.HTMLParser$VariableNameExpressionContext",
-        "symbol": "variable expression"
       }
     ],
     "symbol": "HtmlDocument Scope"

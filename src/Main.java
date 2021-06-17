@@ -49,11 +49,7 @@ public class Main {
             writer.write(jsonObject.toString());
             writer.close();
 
-            SymantecChecker checker = new SymantecChecker(doc);
-            checker.execute();
 
-            System.out.println("exceptions:");
-            System.out.println(checker.getTotalExceptions());
 
             ParseTreeWalker walker = new ParseTreeWalker();
             DefSymbols def = new DefSymbols();
@@ -65,6 +61,14 @@ public class Main {
             writerDef.write(jsonDef);
             writerDef.close();
             System.out.println(def.globalScope.toString());
+
+
+
+            SymantecChecker checker = new SymantecChecker(doc, def.globalScope);
+            checker.execute();
+
+            System.out.println("exceptions:");
+            System.out.println(checker.getTotalExceptions());
 
     }
 }
