@@ -5,45 +5,49 @@
         "tagName": "div",
         "Scope": [
           {
-            "attributeName": "cp-app",
-            "value": {
-              "variableName": "dddd",
-              "type": "cp app expression",
-              "symbol": "variable expression"
-            },
-            "symbol": "cp attribute"
-          },
-          {
             "tagName": "div",
             "Scope": [
               {
-                "tagName": "div",
-                "Scope": [
-                  {
-                    "attributeName": "cp-if",
-                    "value": {
-                      "variableName": "id",
-                      "type": "gen.HTMLParser$VariableNameExpressionContext",
-                      "symbol": "variable expression"
-                    },
-                    "symbol": "cp attribute"
-                  }
-                ],
-                "symbol": "html element"
+                "attributeName": "cp-for",
+                "value": {
+                  "countersExpression": {
+                    "variableName": "s",
+                    "type": "gen.HTMLParser$VariableNameExpressionContext",
+                    "symbol": "variable expression"
+                  },
+                  "forExpression": {
+                    "variableName": "y",
+                    "type": "gen.HTMLParser$VariableNameExpressionContext",
+                    "symbol": "variable expression"
+                  },
+                  "type": "gen.HTMLParser$ForInExpressionContext",
+                  "symbol": "for expression"
+                },
+                "symbol": "cp attribute"
               },
               {
-                "tagName": "div",
-                "Scope": [],
-                "symbol": "html element"
+                "variableName": "s",
+                "type": "gen.HTMLParser$VariableNameExpressionContext",
+                "symbol": "variable expression"
               }
             ],
+            "symbol": "html element"
+          },
+          {
+            "tagName": "div",
+            "Scope": [],
             "symbol": "html element"
           }
         ],
         "symbol": "html element"
       },
       {
-        "variableName": "id",
+        "variableName": "y",
+        "type": "gen.HTMLParser$VariableNameExpressionContext",
+        "symbol": "variable expression"
+      },
+      {
+        "variableName": "s",
         "type": "gen.HTMLParser$VariableNameExpressionContext",
         "symbol": "variable expression"
       }

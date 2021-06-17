@@ -1,8 +1,5 @@
-<div cp-app="dddd">
-
         <div>
-            <div cp-if="id">
+            <div cp-for="s in y">
+                {{s}}
             <div/>
         </div>
-
-</div>

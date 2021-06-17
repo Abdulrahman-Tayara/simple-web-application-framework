@@ -85,19 +85,6 @@ public class DefSymbols extends HTMLParserBaseListener {
 
     @Override
     public void exitForInExpression(HTMLParser.ForInExpressionContext ctx) {
-//        CpScope cpForInScope = new CpForScope(currentScope);
-//        if (ctx.expression().size() == 2) {//counter & iterable
-//            cpForInScope.addSymbol(new VariableSymbol(ctx.expression(0).getText())); //the iterator, and the iterable will be added in enter variable name function
-//            globalScope.addSymbol(new VariableSymbol(ctx.expression(1).getText()));
-//        } else if (ctx.expression().size() == 1) {//only iterable, the counter is a pair expression
-//            cpForInScope.addSymbol(new VariableSymbol(ctx.pairExpression().variableName().get(0).getText())); //the first iterable, and counters will be added in pair expression
-//            cpForInScope.addSymbol(new VariableSymbol(ctx.pairExpression().variableName().get(1).getText())); //the first iterable, and counters will be added in pair expression
-//            globalScope.addSymbol(new VariableSymbol(ctx.expression(0).getText()));
-//        }
-//        currentScope.addSymbol(cpForInScope);
-//        cpForInScope.grandpaHash = ctx.parent.parent.hashCode();
-//        currentScope = cpForInScope;
-
         //create expressions
         ExpressionSymbol countersExpression;
         ExpressionSymbol forExpression;
@@ -124,6 +111,20 @@ public class DefSymbols extends HTMLParserBaseListener {
         //add to scope
 
         this.addToAppropriateScope(forInExpression);
+
+    }
+
+    @Override
+    public void exitVariableScopeContent(HTMLParser.VariableScopeContentContext ctx) {
+
+
+        System.out.println(((BasicScope)this.currentScope).symbols);
+        ExpressionSymbol expression = ExpressionSymbolFactory.make(ctx.expression());
+
+        if(this.currentScope.bindOrLookUpSymbol(expression) == null){
+            System.out.println("no thing in current scope");
+            this.globalScope.addSymbol(expression);
+        }
 
     }
 
