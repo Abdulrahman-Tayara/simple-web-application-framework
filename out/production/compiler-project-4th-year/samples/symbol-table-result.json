@@ -5,31 +5,21 @@
         "tagName": "div",
         "Scope": [
           {
-            "attributeName": "cp-app",
+            "attributeName": "cp-if",
             "value": {
               "variableName": "id1",
-              "type": "cp app expression",
+              "type": "gen.HTMLParser$VariableNameExpressionContext",
               "symbol": "variable expression"
             },
             "symbol": "cp attribute"
-          },
-          {
-            "tagName": "div",
-            "Scope": [
-              {
-                "attributeName": "cp-app",
-                "value": {
-                  "variableName": "id2",
-                  "type": "cp app expression",
-                  "symbol": "variable expression"
-                },
-                "symbol": "cp attribute"
-              }
-            ],
-            "symbol": "html element"
           }
         ],
         "symbol": "html element"
+      },
+      {
+        "variableName": "id1",
+        "type": "gen.HTMLParser$VariableNameExpressionContext",
+        "symbol": "variable expression"
       }
     ],
     "symbol": "HtmlDocument Scope"

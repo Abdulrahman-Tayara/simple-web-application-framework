@@ -1,7 +1,6 @@
 package SymbolTable;
 
 
-import SymbolTable.expression.ExpressionSymbol;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.*;
@@ -49,15 +48,33 @@ public class BasicScope extends Symbol implements Scope {
         return null;
     }
 
+    public boolean bindOrLookUpComparableSymbol(ICompareableSymbol<Symbol> searchedForSymbol) {
+        boolean match = false;
+        for (Symbol symbol : this.symbols) {
+            if(symbol instanceof ICompareableSymbol){
+                if(searchedForSymbol.compareSymbolWith(symbol)){
+                    match = true;
+                    break;
+                }
+            }
+        }
+        if (match) return true;
+        if (getEnclosingScope() != null) {
+            return ((BasicScope)getEnclosingScope()).bindOrLookUpComparableSymbol(searchedForSymbol);
+        }
+        return false;
+    }
+
     @Override
     public Scope getEnclosingScope() {
         return enclosingScope;
     }
 
-    @Override
-    public String toString() {
-        return "Global Scope : { " +
-                this.symbols +
-                "}";
+    public void addToGlobalIfCould(ICompareableSymbol<Symbol> symbol, BasicScope globalScope){
+
+        if(!this.bindOrLookUpComparableSymbol(symbol)){
+            globalScope.addSymbol((Symbol) symbol);
+        }
+
     }
 }
