@@ -5,39 +5,47 @@
         "tagName": "div",
         "Scope": [
           {
-            "attributeName": "cp-if",
+            "attributeName": "cp-for",
             "value": {
-              "variableName": "id1",
-              "type": "gen.HTMLParser$VariableNameExpressionContext",
-              "symbol": "variable expression"
+              "countersExpression": {
+                "variableExpressionSymbol1": {
+                  "variableName": "x",
+                  "type": "gen.HTMLParser$VariableNameContext",
+                  "symbol": "variable expression"
+                },
+                "variableExpressionSymbol2": {
+                  "variableName": "y",
+                  "type": "gen.HTMLParser$VariableNameContext",
+                  "symbol": "variable expression"
+                },
+                "type": "gen.HTMLParser$PairExpressionContext",
+                "symbol": "pair expression"
+              },
+              "forExpression": {
+                "variableName": "tttt",
+                "type": "gen.HTMLParser$VariableNameExpressionContext",
+                "symbol": "variable expression"
+              },
+              "type": "gen.HTMLParser$ForInExpressionContext",
+              "symbol": "for expression"
             },
             "symbol": "cp attribute"
           },
           {
-            "tagName": "div",
-            "Scope": [
-              {
-                "attributeName": "cp-if",
-                "value": {
-                  "variableName": "id1",
-                  "type": "gen.HTMLParser$VariableNameExpressionContext",
-                  "symbol": "variable expression"
-                },
-                "symbol": "cp attribute"
-              }
-            ],
-            "symbol": "html element"
+            "variableName": "x",
+            "type": "gen.HTMLParser$VariableNameContext",
+            "symbol": "variable expression"
+          },
+          {
+            "variableName": "y",
+            "type": "gen.HTMLParser$VariableNameContext",
+            "symbol": "variable expression"
           }
         ],
         "symbol": "html element"
       },
       {
-        "variableName": "id1",
-        "type": "gen.HTMLParser$VariableNameExpressionContext",
-        "symbol": "variable expression"
-      },
-      {
-        "variableName": "id1",
+        "variableName": "tttt",
         "type": "gen.HTMLParser$VariableNameExpressionContext",
         "symbol": "variable expression"
       }

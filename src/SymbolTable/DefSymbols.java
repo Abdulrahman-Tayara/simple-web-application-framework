@@ -84,18 +84,46 @@ public class DefSymbols extends HTMLParserBaseListener {
 
     @Override
     public void exitForInExpression(HTMLParser.ForInExpressionContext ctx) {
-        CpScope cpForInScope = new CpForScope(currentScope);
-        if (ctx.expression().size() == 2) {//counter & iterable
-            cpForInScope.addSymbol(new VariableSymbol(ctx.expression(0).getText())); //the iterator, and the iterable will be added in enter variable name function
-            globalScope.addSymbol(new VariableSymbol(ctx.expression(1).getText()));
-        } else if (ctx.expression().size() == 1) {//only iterable, the counter is a pair expression
-            cpForInScope.addSymbol(new VariableSymbol(ctx.pairExpression().variableName().get(0).getText())); //the first iterable, and counters will be added in pair expression
-            cpForInScope.addSymbol(new VariableSymbol(ctx.pairExpression().variableName().get(1).getText())); //the first iterable, and counters will be added in pair expression
-            globalScope.addSymbol(new VariableSymbol(ctx.expression(0).getText()));
+//        CpScope cpForInScope = new CpForScope(currentScope);
+//        if (ctx.expression().size() == 2) {//counter & iterable
+//            cpForInScope.addSymbol(new VariableSymbol(ctx.expression(0).getText())); //the iterator, and the iterable will be added in enter variable name function
+//            globalScope.addSymbol(new VariableSymbol(ctx.expression(1).getText()));
+//        } else if (ctx.expression().size() == 1) {//only iterable, the counter is a pair expression
+//            cpForInScope.addSymbol(new VariableSymbol(ctx.pairExpression().variableName().get(0).getText())); //the first iterable, and counters will be added in pair expression
+//            cpForInScope.addSymbol(new VariableSymbol(ctx.pairExpression().variableName().get(1).getText())); //the first iterable, and counters will be added in pair expression
+//            globalScope.addSymbol(new VariableSymbol(ctx.expression(0).getText()));
+//        }
+//        currentScope.addSymbol(cpForInScope);
+//        cpForInScope.grandpaHash = ctx.parent.parent.hashCode();
+//        currentScope = cpForInScope;
+
+        //create expressions
+        ExpressionSymbol countersExpression;
+        ExpressionSymbol forExpression;
+        if (ctx.pairExpression() != null) { //pair expression for loop
+
+            countersExpression = ExpressionSymbolFactory.make(ctx.pairExpression());
+            forExpression = ExpressionSymbolFactory.make(ctx.expression(0));
+        } else {//normal for in
+
+            countersExpression = ExpressionSymbolFactory.make(ctx.expression(0));
+            forExpression = ExpressionSymbolFactory.make(ctx.expression(1));
         }
-        currentScope.addSymbol(cpForInScope);
-        cpForInScope.grandpaHash = ctx.parent.parent.hashCode();
-        currentScope = cpForInScope;
+        ForInExpression forInExpression = new ForInExpression(
+                countersExpression,
+                forExpression,
+                ctx.getClass().getName()
+        );
+
+        //create attributes
+
+        CpAttribute forAttribute = new CpAttribute("cp-for", forInExpression);
+        this.currentScope.addSymbol(forAttribute);
+
+        //add to scope
+
+        this.addToAppropriateScope(forInExpression);
+
     }
 
     @Override
@@ -158,18 +186,35 @@ public class DefSymbols extends HTMLParserBaseListener {
         } else if (expressionSymbol instanceof ParsableExpressionSymbol) {
             //just for now
             globalScope.addSymbol(expressionSymbol);
-        } else {
+        } else if (expressionSymbol instanceof ForInExpression) {
+
+            //add counters
+            if(((ForInExpression) expressionSymbol).countersExpression instanceof PairExpression){
+                this.currentScope.addSymbol(((PairExpression) ((ForInExpression) expressionSymbol).countersExpression).variableExpressionSymbol1);
+                this.currentScope.addSymbol(((PairExpression) ((ForInExpression) expressionSymbol).countersExpression).variableExpressionSymbol2);
+            }
+            if(((ForInExpression) expressionSymbol).countersExpression instanceof VariableExpressionSymbol){
+                this.currentScope.addSymbol(((ForInExpression) expressionSymbol).countersExpression);
+            }
+
+            //add expression
+            if(((ForInExpression) expressionSymbol).forExpression instanceof VariableExpressionSymbol){
+                this.globalScope.addSymbol(((ForInExpression) expressionSymbol).forExpression);
+            }
+
+
+        } else{
             System.out.println("something is fucked up");
         }
     }
 
 
     /*
-    *   A typical cp symbol has an expression (a lot of potential expressions ex: variable, literal string, ..)
-    *   its expression will be added to the same scope the cp symbol is in.
-    *   and if the expression should be added globally it will be added later.
-    *
-    * */
+     *   A typical cp symbol has an expression (a lot of potential expressions ex: variable, literal string, ..)
+     *   its expression will be added to the same scope the cp symbol is in.
+     *   and if the expression should be added globally it will be added later.
+     *
+     * */
     private void addTypicalCpSymbol(HTMLParser.ExpressionContext expressionContext, String cpName) {
         //create the expression
         ExpressionSymbol expression = ExpressionSymbolFactory.make(expressionContext);

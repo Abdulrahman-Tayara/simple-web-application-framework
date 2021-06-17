@@ -5,19 +5,33 @@
         "tagName": "div",
         "Scope": [
           {
-            "attributeName": "cp-if",
+            "attributeName": "cp-for",
             "value": {
-              "variableName": "id1",
-              "type": "gen.HTMLParser$VariableNameExpressionContext",
-              "symbol": "variable expression"
+              "countersExpression": {
+                "variableName": "x",
+                "type": "gen.HTMLParser$VariableNameExpressionContext",
+                "symbol": "variable expression"
+              },
+              "forExpression": {
+                "variableName": "tttt",
+                "type": "gen.HTMLParser$VariableNameExpressionContext",
+                "symbol": "variable expression"
+              },
+              "type": "gen.HTMLParser$ForInExpressionContext",
+              "symbol": "for expression"
             },
             "symbol": "cp attribute"
+          },
+          {
+            "variableName": "x",
+            "type": "gen.HTMLParser$VariableNameExpressionContext",
+            "symbol": "variable expression"
           }
         ],
         "symbol": "html element"
       },
       {
-        "variableName": "id1",
+        "variableName": "tttt",
         "type": "gen.HTMLParser$VariableNameExpressionContext",
         "symbol": "variable expression"
       }

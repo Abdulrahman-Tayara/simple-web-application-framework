@@ -27,4 +27,16 @@ public class ExpressionSymbolFactory {
 
     }
 
+    public static PairExpression make(HTMLParser.PairExpressionContext pairExpression) {
+
+        return new PairExpression(
+                new VariableExpressionSymbol(pairExpression.variableName().get(0).ANY_NAME().getText(),
+                        pairExpression.variableName().get(0).getClass().getName()
+                ),
+                new VariableExpressionSymbol(pairExpression.variableName().get(1).ANY_NAME().getText(),
+                        pairExpression.variableName().get(1).getClass().getName()
+                ),
+                pairExpression.getClass().getName()
+        );
+    }
 }

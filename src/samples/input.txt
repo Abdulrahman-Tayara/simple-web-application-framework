@@ -1,6 +1,3 @@
-<div cp-if="id1">
-<div cp-if="id1">
-
-</div>
+<div cp-for="x,y in tttt">
 
 </div>
