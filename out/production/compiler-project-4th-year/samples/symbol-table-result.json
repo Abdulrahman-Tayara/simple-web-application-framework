@@ -8,18 +8,9 @@
             "attributeName": "cp-for",
             "value": {
               "countersExpression": {
-                "variableExpressionSymbol1": {
-                  "variableName": "x1",
-                  "type": "gen.HTMLParser$VariableNameContext",
-                  "symbol": "variable expression"
-                },
-                "variableExpressionSymbol2": {
-                  "variableName": "x2",
-                  "type": "gen.HTMLParser$VariableNameContext",
-                  "symbol": "variable expression"
-                },
-                "type": "gen.HTMLParser$PairExpressionContext",
-                "symbol": "pair expression"
+                "variableName": "x1",
+                "type": "gen.HTMLParser$VariableNameExpressionContext",
+                "symbol": "variable expression"
               },
               "forExpression": {
                 "variableName": "y",
@@ -33,56 +24,8 @@
           },
           {
             "variableName": "x1",
-            "type": "gen.HTMLParser$VariableNameContext",
+            "type": "gen.HTMLParser$VariableNameExpressionContext",
             "symbol": "variable expression"
-          },
-          {
-            "variableName": "x2",
-            "type": "gen.HTMLParser$VariableNameContext",
-            "symbol": "variable expression"
-          },
-          {
-            "tagName": "div",
-            "Scope": [
-              {
-                "attributeName": "cp-for",
-                "value": {
-                  "countersExpression": {
-                    "variableExpressionSymbol1": {
-                      "variableName": "x1",
-                      "type": "gen.HTMLParser$VariableNameContext",
-                      "symbol": "variable expression"
-                    },
-                    "variableExpressionSymbol2": {
-                      "variableName": "x2",
-                      "type": "gen.HTMLParser$VariableNameContext",
-                      "symbol": "variable expression"
-                    },
-                    "type": "gen.HTMLParser$PairExpressionContext",
-                    "symbol": "pair expression"
-                  },
-                  "forExpression": {
-                    "variableName": "t",
-                    "type": "gen.HTMLParser$VariableNameExpressionContext",
-                    "symbol": "variable expression"
-                  },
-                  "type": "gen.HTMLParser$ForInExpressionContext",
-                  "symbol": "for expression"
-                },
-                "symbol": "cp attribute"
-              },
-              {
-                "variableName": "x1",
-                "type": "gen.HTMLParser$VariableNameContext",
-                "symbol": "variable expression"
-              },
-              {
-                "variableName": "x2",
-                "type": "gen.HTMLParser$VariableNameContext",
-                "symbol": "variable expression"
-              }
-            ],
-            "symbol": "html element"
           }
         ],
         "symbol": "html element"
@@ -93,7 +36,7 @@
         "symbol": "variable expression"
       },
       {
-        "variableName": "t",
+        "variableName": "x2",
         "type": "gen.HTMLParser$VariableNameExpressionContext",
         "symbol": "variable expression"
       }

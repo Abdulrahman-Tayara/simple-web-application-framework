@@ -118,14 +118,21 @@ public class DefSymbols extends HTMLParserBaseListener {
     public void exitVariableScopeContent(HTMLParser.VariableScopeContentContext ctx) {
 
 
-        System.out.println(((BasicScope)this.currentScope).symbols);
+        System.out.println(((BasicScope) this.currentScope).symbols);
         ExpressionSymbol expression = ExpressionSymbolFactory.make(ctx.expression());
 
-        if(this.currentScope.bindOrLookUpSymbol(expression) == null){
+        if (this.currentScope.bindOrLookUpSymbol(expression) == null) {
             System.out.println("no thing in current scope");
             this.globalScope.addSymbol(expression);
         }
 
+        ExpressionSymbol usageExpression = new TextVariableUsage(
+                ((VariableExpressionSymbol) expression).variableName,
+                TextVariableUsage.class.getName()
+        );
+
+
+        this.currentScope.addSymbol(usageExpression);
     }
 
     @Override
@@ -191,21 +198,21 @@ public class DefSymbols extends HTMLParserBaseListener {
         } else if (expressionSymbol instanceof ForInExpression) {
 
             //add counters
-            if(((ForInExpression) expressionSymbol).countersExpression instanceof PairExpression){
+            if (((ForInExpression) expressionSymbol).countersExpression instanceof PairExpression) {
                 ((BasicScope) this.currentScope).addSymbolWithoutBinding(((PairExpression) ((ForInExpression) expressionSymbol).countersExpression).variableExpressionSymbol1);
                 ((BasicScope) this.currentScope).addSymbolWithoutBinding(((PairExpression) ((ForInExpression) expressionSymbol).countersExpression).variableExpressionSymbol2);
             }
-            if(((ForInExpression) expressionSymbol).countersExpression instanceof VariableExpressionSymbol){
+            if (((ForInExpression) expressionSymbol).countersExpression instanceof VariableExpressionSymbol) {
                 ((BasicScope) this.currentScope).addSymbolWithoutBinding(((ForInExpression) expressionSymbol).countersExpression);
             }
 
             //add expression
-            if(((ForInExpression) expressionSymbol).forExpression instanceof VariableExpressionSymbol){
+            if (((ForInExpression) expressionSymbol).forExpression instanceof VariableExpressionSymbol) {
                 this.globalScope.addSymbol(((ForInExpression) expressionSymbol).forExpression);
             }
 
 
-        } else{
+        } else {
             System.out.println("something is fucked up");
         }
     }
