@@ -3,6 +3,7 @@ package semantic_check;
 import ast.nodes.Node;
 import ast.nodes.attribute.AttributeNode;
 import ast.nodes.html.HTMLTagNode;
+import semantic_check.exceptions.attributes.IdIsAlreadyInUseException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +23,7 @@ public class OccurrenceIdChecker implements IChecker {
                 if (attribute.getName().equals("id")) {
                     String value = (String) attribute.getValue();
                     if (ids.contains(value)) {
-                        exceptions.add(new Exception("Id is already in use"));
+                        exceptions.add(new IdIsAlreadyInUseException(attribute.getLine(), attribute.getCol()));
                     } else {
                         ids.add(value);
                     }

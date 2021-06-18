@@ -4,6 +4,7 @@ import ast.nodes.Node;
 import ast.nodes.expression.PipeExpressionNode;
 import ast.nodes.expression.value.literal.StringValueNode;
 import ast.nodes.html.*;
+import semantic_check.exceptions.pipes.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +29,13 @@ public class PipesChecker extends Checker {
     private void checkCurrencyFunctionInPipe(PipeExpressionNode pipeExpressionNode) {
         if (pipeExpressionNode.getTransformer().getFunctionName().equals("currency")) {
             int numberOfParams = pipeExpressionNode.getTransformer().getParams().size();
-            if (numberOfParams == 0) {
-                exceptions.add(new Exception("Currency function should at least have one parameter."));
+            if (numberOfParams == 0 || numberOfParams > 1) {
+                exceptions.add(new CurrencyFuncNotOneParamException(pipeExpressionNode.getPipedData().getLine(), pipeExpressionNode.getPipedData().getCol()));
             } else if (numberOfParams == 1) {
                 if (pipeExpressionNode.getTransformer().getParams().get(0).getValue() instanceof StringValueNode) {
                     StringValueNode stringValueNode = ((StringValueNode) pipeExpressionNode.getTransformer().getParams().get(0).getValue());
                     if (stringValueNode.getValue().length() != 1) {
-                        exceptions.add(new Exception("Parameter should be one character only"));
+                        exceptions.add(new CurrencyFuncParamNotOneCharException(stringValueNode.getLine(), stringValueNode.getCol()));
                     }
                 }
             }
@@ -45,7 +46,7 @@ public class PipesChecker extends Checker {
         if (pipeExpressionNode.getTransformer().getFunctionName().equals("lower")) {
             int numberOfParams = pipeExpressionNode.getTransformer().getParams().size();
             if (numberOfParams != 0) {
-                exceptions.add(new Exception("Lower function should not have any parameters."));
+                exceptions.add(new LowerFuncHasParamsException(pipeExpressionNode.getPipedData().getLine(), pipeExpressionNode.getPipedData().getCol()));
             }
         }
     }
@@ -54,7 +55,7 @@ public class PipesChecker extends Checker {
         if (pipeExpressionNode.getTransformer().getFunctionName().equals("upper")) {
             int numberOfParams = pipeExpressionNode.getTransformer().getParams().size();
             if (numberOfParams != 0) {
-                exceptions.add(new Exception("Upper function should not have any parameters."));
+                exceptions.add(new UpperFuncHasParamsException(pipeExpressionNode.getPipedData().getLine(), pipeExpressionNode.getPipedData().getCol()));
             }
         }
     }
@@ -63,16 +64,16 @@ public class PipesChecker extends Checker {
         if (pipeExpressionNode.getTransformer().getFunctionName().equals("date")) {
             int numberOfParams = pipeExpressionNode.getTransformer().getParams().size();
             if (numberOfParams == 0) {
-                exceptions.add(new Exception("Date function is not provided with a format"));
+                exceptions.add(new DateFuncNoFormatException(pipeExpressionNode.getPipedData().getLine(), pipeExpressionNode.getPipedData().getCol()));
             } else if (numberOfParams == 1) {
                 if (pipeExpressionNode.getTransformer().getParams().get(0).getValue() instanceof StringValueNode) {
                     StringValueNode stringValueNode = ((StringValueNode) pipeExpressionNode.getTransformer().getParams().get(0).getValue());
                     if (!acceptedDateFormats.contains(stringValueNode.getValue())) {
-                        exceptions.add(new Exception("format cannot be other than mm-dd-yyyy at line " + stringValueNode.getLine()));
+                        exceptions.add(new InvalidDateFormatException(pipeExpressionNode.getPipedData().getLine(), pipeExpressionNode.getPipedData().getCol()));
                     }
                 }
             } else {
-                exceptions.add(new Exception("Date function cannot have more than 1 parameter"));
+                exceptions.add(new DateMoreThanOneParamException(pipeExpressionNode.getPipedData().getLine(), pipeExpressionNode.getPipedData().getCol()));
             }
         }
     }

@@ -3,54 +3,8 @@
     "Scope": [
       {
         "tagName": "div",
-        "Scope": [
-          {
-            "attributeName": "cp-for",
-            "value": {
-              "countersExpression": {
-                "variableName": "x1",
-                "type": "gen.HTMLParser$VariableNameExpressionContext",
-                "symbol": "variable expression"
-              },
-              "forExpression": {
-                "variableName": "y",
-                "type": "gen.HTMLParser$VariableNameExpressionContext",
-                "symbol": "variable expression"
-              },
-              "type": "gen.HTMLParser$ForInExpressionContext",
-              "symbol": "for expression"
-            },
-            "symbol": "cp attribute"
-          },
-          {
-            "variableName": "x1",
-            "type": "gen.HTMLParser$VariableNameExpressionContext",
-            "symbol": "variable expression"
-          },
-          {
-            "TEXT_VARIABLE": "text variable usage",
-            "variableName": "x1",
-            "type": "SymbolTable.expression.TextVariableUsage",
-            "symbol": "text variable usage"
-          },
-          {
-            "TEXT_VARIABLE": "text variable usage",
-            "variableName": "x2",
-            "type": "SymbolTable.expression.TextVariableUsage",
-            "symbol": "text variable usage"
-          }
-        ],
+        "Scope": [],
         "symbol": "html element"
-      },
-      {
-        "variableName": "y",
-        "type": "gen.HTMLParser$VariableNameExpressionContext",
-        "symbol": "variable expression"
-      },
-      {
-        "variableName": "x2",
-        "type": "gen.HTMLParser$VariableNameExpressionContext",
-        "symbol": "variable expression"
       }
     ],
     "symbol": "HtmlDocument Scope"

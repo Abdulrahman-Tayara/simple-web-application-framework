@@ -127,7 +127,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
             HTMLTagNode tag = new HTMLTagNode();
             tag.setLine(ctx.TAG_OPEN(0).getSymbol().getLine());
-            tag.setLine(ctx.TAG_OPEN(0).getSymbol().getCharPositionInLine());
+            tag.setCol(ctx.TAG_OPEN(0).getSymbol().getCharPositionInLine());
 
             // Set Tag Name
             tag.setName(ctx.TAG_NAME(0).getText());
@@ -159,7 +159,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         if (ctx.TAG_NAME() != null) { // Standard tag (No CP attribute)
             HTMLAttributeNode attribute = new HTMLAttributeNode();
             attribute.setLine(ctx.ATTVALUE_VALUE().getSymbol().getLine());
-            attribute.setLine(ctx.ATTVALUE_VALUE().getSymbol().getCharPositionInLine());
+            attribute.setCol(ctx.ATTVALUE_VALUE().getSymbol().getCharPositionInLine());
 
             attribute.setName(ctx.TAG_NAME().getText()); // Add name
             if (ctx.ATTVALUE_VALUE() != null) {

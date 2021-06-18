@@ -4,6 +4,10 @@ import ast.nodes.Node;
 import ast.nodes.attribute.AttributeNode;
 import ast.nodes.attribute.HTMLAttributeNode;
 import ast.nodes.html.HTMLTagNode;
+import semantic_check.exceptions.attributes.AnchorHrefNoValueException;
+import semantic_check.exceptions.attributes.AnchorNoHrefException;
+import semantic_check.exceptions.attributes.ImageNoSrcException;
+import semantic_check.exceptions.attributes.ImageSrcNoValueException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +25,7 @@ public class AttributeChecker implements IChecker {
     @Override
     public List<Exception> check(Node node) {
         exceptions.clear();
-        if(node instanceof HTMLTagNode) {
+        if (node instanceof HTMLTagNode) {
             checkImageTag((HTMLTagNode) node);
             checkAnchorTag((HTMLTagNode) node);
         }
@@ -34,11 +38,13 @@ public class AttributeChecker implements IChecker {
             //check has href attribute
             boolean hasSrc = false;
             boolean hasValue = false;
+            AttributeNode srcAttr = null;
             if (node.getAttributes() != null) {
 
                 for (AttributeNode attr : node.getAttributes()) {
                     if (attr.getName().equals(SRC_ATTR_NAME)) {
                         hasSrc = true;
+                        srcAttr = attr;
                         if (!((HTMLAttributeNode) attr).getValue().equals("\"\"")) {
                             hasValue = true;
                         }
@@ -48,9 +54,9 @@ public class AttributeChecker implements IChecker {
             }
 
             if (!hasSrc) {
-                this.exceptions.add(new Exception("does not have src"));
+                this.exceptions.add(new ImageNoSrcException(node.getLine(), node.getCol()));
             } else if (!hasValue) {
-                this.exceptions.add(new Exception("src does not have a value"));
+                this.exceptions.add(new ImageSrcNoValueException(srcAttr.getLine(), srcAttr.getCol()));
             }
         }
     }
@@ -61,11 +67,13 @@ public class AttributeChecker implements IChecker {
             //check has href attribute
             boolean hasHref = false;
             boolean hasValue = false;
+            AttributeNode anchorAttr = null;
             if (node.getAttributes() != null) {
 
                 for (AttributeNode attr : node.getAttributes()) {
                     if (attr.getName().equals(HREF_ATTR_NAME)) {
                         hasHref = true;
+                        anchorAttr = attr;
                         if (!((HTMLAttributeNode) attr).getValue().equals("\"\"")) {
                             hasValue = true;
                         }
@@ -75,9 +83,9 @@ public class AttributeChecker implements IChecker {
             }
 
             if (!hasHref) {
-                this.exceptions.add(new Exception("does not have href"));
+                this.exceptions.add(new AnchorNoHrefException(node.getLine(), node.getCol()));
             } else if (!hasValue) {
-                this.exceptions.add(new Exception("href does not have a value"));
+                this.exceptions.add(new AnchorHrefNoValueException(anchorAttr.getLine(), anchorAttr.getCol()));
             }
         }
     }
