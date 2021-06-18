@@ -1,5 +1,6 @@
-        <div>
-            <div cp-for="s in y">
-                {{s}}
-            <div/>
-        </div>
+<div cp-for="x1 in y">
+
+    <div cp-for="x1, x2 in t">
+    </div>
+
+</div>

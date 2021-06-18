@@ -5,18 +5,64 @@
         "tagName": "div",
         "Scope": [
           {
+            "attributeName": "cp-for",
+            "value": {
+              "countersExpression": {
+                "variableExpressionSymbol1": {
+                  "variableName": "x1",
+                  "type": "gen.HTMLParser$VariableNameContext",
+                  "symbol": "variable expression"
+                },
+                "variableExpressionSymbol2": {
+                  "variableName": "x2",
+                  "type": "gen.HTMLParser$VariableNameContext",
+                  "symbol": "variable expression"
+                },
+                "type": "gen.HTMLParser$PairExpressionContext",
+                "symbol": "pair expression"
+              },
+              "forExpression": {
+                "variableName": "y",
+                "type": "gen.HTMLParser$VariableNameExpressionContext",
+                "symbol": "variable expression"
+              },
+              "type": "gen.HTMLParser$ForInExpressionContext",
+              "symbol": "for expression"
+            },
+            "symbol": "cp attribute"
+          },
+          {
+            "variableName": "x1",
+            "type": "gen.HTMLParser$VariableNameContext",
+            "symbol": "variable expression"
+          },
+          {
+            "variableName": "x2",
+            "type": "gen.HTMLParser$VariableNameContext",
+            "symbol": "variable expression"
+          },
+          {
             "tagName": "div",
             "Scope": [
               {
                 "attributeName": "cp-for",
                 "value": {
                   "countersExpression": {
-                    "variableName": "s",
-                    "type": "gen.HTMLParser$VariableNameExpressionContext",
-                    "symbol": "variable expression"
+                    "variableExpressionSymbol1": {
+                      "variableName": "x1",
+                      "type": "gen.HTMLParser$VariableNameContext",
+                      "symbol": "variable expression"
+                    },
+                    "variableExpressionSymbol2": {
+                      "variableName": "x2",
+                      "type": "gen.HTMLParser$VariableNameContext",
+                      "symbol": "variable expression"
+                    },
+                    "type": "gen.HTMLParser$PairExpressionContext",
+                    "symbol": "pair expression"
                   },
                   "forExpression": {
-                    "variableName": "y",
+                    "variableName": "t",
                     "type": "gen.HTMLParser$VariableNameExpressionContext",
                     "symbol": "variable expression"
                   },
@@ -26,16 +72,16 @@
                 "symbol": "cp attribute"
               },
               {
-                "variableName": "s",
-                "type": "gen.HTMLParser$VariableNameExpressionContext",
+                "variableName": "x1",
+                "type": "gen.HTMLParser$VariableNameContext",
+                "symbol": "variable expression"
+              },
+              {
+                "variableName": "x2",
+                "type": "gen.HTMLParser$VariableNameContext",
                 "symbol": "variable expression"
               }
             ],
-            "symbol": "html element"
-          },
-          {
-            "tagName": "div",
-            "Scope": [],
             "symbol": "html element"
           }
         ],
@@ -47,7 +93,7 @@
         "symbol": "variable expression"
       },
       {
-        "variableName": "s",
+        "variableName": "t",
         "type": "gen.HTMLParser$VariableNameExpressionContext",
         "symbol": "variable expression"
       }

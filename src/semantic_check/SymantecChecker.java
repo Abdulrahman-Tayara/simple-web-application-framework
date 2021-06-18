@@ -3,6 +3,10 @@ package semantic_check;
 import SymbolTable.BasicScope;
 import SymbolTable.Symbol;
 import SymbolTable.attribute.CpAttribute;
+import SymbolTable.expression.ExpressionSymbol;
+import SymbolTable.expression.ForInExpression;
+import SymbolTable.expression.PairExpression;
+import SymbolTable.expression.VariableExpressionSymbol;
 import SymbolTable.scopes.HtmlBasicScope;
 import ast.nodes.Node;
 import ast.nodes.html.HTMLElementNode;
@@ -14,7 +18,7 @@ import java.util.*;
 public class SymantecChecker {
 
     List<Exception> totalExceptions = new ArrayList<>();
-
+    Set<VariableExpressionSymbol> countersVariables = new HashSet<>();
 
     final HtmlDocumentNode astTree;
     final BasicScope scope;
@@ -131,8 +135,54 @@ public class SymantecChecker {
                     this.existsCpApp = true;
                 }
             }
+        }
 
+        //counters variables
+
+
+        CpAttribute cpForAttribute = scope.getCpAttribute("cp-for");
+        if (cpForAttribute != null) {
+
+            ForInExpression expression = (ForInExpression) cpForAttribute.value;
+            //check variables
+            if (expression.countersExpression instanceof PairExpression) {
+
+
+                if (checkCounterVariablesContain(((PairExpression) expression.countersExpression).variableExpressionSymbol1)) {
+                    this.totalExceptions.add(new Exception(
+                            "variable " + ((PairExpression) expression.countersExpression).variableExpressionSymbol1.variableName + " is repeated in loop"
+                    ));
+                }
+                if (checkCounterVariablesContain(((PairExpression) expression.countersExpression).variableExpressionSymbol2)) {
+                    this.totalExceptions.add(new Exception(
+                            "variable " + ((PairExpression) expression.countersExpression).variableExpressionSymbol2.variableName + " is repeated in loop"
+                    ));
+                }
+
+                this.countersVariables.add(((PairExpression) expression.countersExpression).variableExpressionSymbol1);
+                this.countersVariables.add(((PairExpression) expression.countersExpression).variableExpressionSymbol2);
+
+            } else {//single variable
+
+                if(this.checkCounterVariablesContain((VariableExpressionSymbol) expression.countersExpression)){
+                    this.totalExceptions.add(new Exception(
+                            "variable " + ((VariableExpressionSymbol) expression.countersExpression).variableName + " is repeated in loop"
+                    ));
+                }
+
+                this.countersVariables.add((VariableExpressionSymbol) expression.countersExpression);
+            }
 
         }
+
+    }
+
+    private boolean checkCounterVariablesContain(VariableExpressionSymbol variableExpressionSymbol) {
+        for (VariableExpressionSymbol countersVariable : this.countersVariables) {
+            if (countersVariable.compareSymbolWith(variableExpressionSymbol)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

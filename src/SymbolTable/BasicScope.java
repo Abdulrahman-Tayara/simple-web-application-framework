@@ -1,6 +1,7 @@
 package SymbolTable;
 
 
+import SymbolTable.attribute.CpAttribute;
 import SymbolTable.expression.VariableExpressionSymbol;
 import com.google.gson.annotations.SerializedName;
 
@@ -41,6 +42,19 @@ public class BasicScope extends Symbol implements Scope {
 //            }
 //
 //        }
+    }
+
+    public void addSymbolWithoutBinding(Symbol symbol){
+        this.symbols.add(symbol);
+    }
+
+    public CpAttribute getCpAttribute(String attributeName){
+        for (Symbol symbol : this.symbols) {
+            if(symbol instanceof CpAttribute && ((CpAttribute) symbol).attributeName.equals(attributeName)){
+                return (CpAttribute) symbol;
+            }
+        }
+        return null;
     }
 
 

@@ -192,11 +192,11 @@ public class DefSymbols extends HTMLParserBaseListener {
 
             //add counters
             if(((ForInExpression) expressionSymbol).countersExpression instanceof PairExpression){
-                this.currentScope.addSymbol(((PairExpression) ((ForInExpression) expressionSymbol).countersExpression).variableExpressionSymbol1);
-                this.currentScope.addSymbol(((PairExpression) ((ForInExpression) expressionSymbol).countersExpression).variableExpressionSymbol2);
+                ((BasicScope) this.currentScope).addSymbolWithoutBinding(((PairExpression) ((ForInExpression) expressionSymbol).countersExpression).variableExpressionSymbol1);
+                ((BasicScope) this.currentScope).addSymbolWithoutBinding(((PairExpression) ((ForInExpression) expressionSymbol).countersExpression).variableExpressionSymbol2);
             }
             if(((ForInExpression) expressionSymbol).countersExpression instanceof VariableExpressionSymbol){
-                this.currentScope.addSymbol(((ForInExpression) expressionSymbol).countersExpression);
+                ((BasicScope) this.currentScope).addSymbolWithoutBinding(((ForInExpression) expressionSymbol).countersExpression);
             }
 
             //add expression
