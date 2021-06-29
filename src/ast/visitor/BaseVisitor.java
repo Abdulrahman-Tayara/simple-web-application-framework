@@ -163,7 +163,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
             attribute.setName(ctx.TAG_NAME().getText()); // Add name
             if (ctx.ATTVALUE_VALUE() != null) {
-                attribute.setValue(ctx.ATTVALUE_VALUE().getText()); // Add value
+                attribute.setValue(ctx.ATTVALUE_VALUE().getText().replace("\"", "")); // Add value
             } else {
                 attribute.setValue(null);
             }

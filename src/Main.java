@@ -1,6 +1,7 @@
 import SymbolTable.DefSymbols;
 import ast.nodes.html.HtmlDocumentNode;
 import ast.visitor.BaseVisitor;
+import cg.IdsGenerator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -69,6 +70,9 @@ public class Main {
 
             System.out.println("exceptions:");
             System.out.println(checker.getTotalExceptions());
+
+            HtmlDocumentNode astWithGeneratedRandomUniqueIds = IdsGenerator.injectRandomIds(doc);
+            System.out.println(gson.toJson(astWithGeneratedRandomUniqueIds));
 
     }
 }

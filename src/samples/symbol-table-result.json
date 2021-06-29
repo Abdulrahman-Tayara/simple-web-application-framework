@@ -2,8 +2,19 @@
   "globalScope": {
     "Scope": [
       {
-        "tagName": "div",
-        "Scope": [],
+        "tagName": "Html",
+        "Scope": [
+          {
+            "tagName": "div",
+            "Scope": [],
+            "symbol": "html element"
+          },
+          {
+            "tagName": "div",
+            "Scope": [],
+            "symbol": "html element"
+          }
+        ],
         "symbol": "html element"
       }
     ],

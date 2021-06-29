@@ -1,12 +1,5 @@
-<div cp-if="a" cp-for="x in arr">
-    <div id="id1">
-        {{ x | lower(bla) }}
-        <div id="id1">
-            {{ x | date('someformat') }}
-            <img src=""/>
-            <img/>
-            <a href=""/>
-            <a/>
-        </div>
-    </div>
-</div>
+<!DOCTYPE html>
+<Html>
+    <div id="myTextId">1</div>
+    <div>2</div>
+</Html>

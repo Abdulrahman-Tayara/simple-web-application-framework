@@ -3,8 +3,8 @@ package ast.nodes.attribute;
 import ast.nodes.Node;
 
 public abstract class AttributeNode<T> extends Node {
-    private String name;
-    private T value;
+    protected String name;
+    protected T value;
 
     public String getName() {
         return name;
