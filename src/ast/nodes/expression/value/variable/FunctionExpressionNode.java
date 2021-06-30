@@ -68,4 +68,12 @@ public class FunctionExpressionNode extends ValueExpressionNode
         builder.append(')');
         return builder.toString();
     }
+
+    @Override
+    public String toHtml() {
+        StringBuilder builder = new StringBuilder();
+        params.forEach(param -> builder.append(param.value.toHtml()).append(','));
+        builder.setLength(builder.length() - 1);
+        return functionName + '(' + builder.toString() + ')';
+    }
 }

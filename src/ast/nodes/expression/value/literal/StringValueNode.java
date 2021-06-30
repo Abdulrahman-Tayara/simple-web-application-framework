@@ -9,4 +9,8 @@ import ast.nodes.expression.value.IndexableNode;
 public class StringValueNode extends LiteralExpressionNode<String>
         implements IndexableNode {
 
+    @Override
+    public String toHtml() {
+        return value;
+    }
 }

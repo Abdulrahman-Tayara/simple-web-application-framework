@@ -46,4 +46,9 @@ public class IndexedVariableExpressionNode extends ValueExpressionNode
             return value.toString();
         }
     }
+
+    @Override
+    public String toHtml() {
+        return variable.toHtml() + '[' + index.value.toHtml() + ']';
+    }
 }

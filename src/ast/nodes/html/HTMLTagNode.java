@@ -51,5 +51,23 @@ public class HTMLTagNode extends HTMLElementNode {
     public boolean hasContent() {
         return content != null && !content.isEmpty();
     }
+
+    @Override
+    public String toHtml() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("<")
+                .append(name);
+        attributes.forEach(attribute -> {
+            builder.append(attribute.toHtml());
+            if (attribute instanceof CPAttributeNode) return;
+            builder.append(" ");
+        });
+        builder.append(">");
+        content.forEach(elementNode -> builder.append(elementNode.toHtml()));
+        builder.append("</")
+                .append(name)
+                .append(">");
+        return builder.toString();
+    }
 }
 

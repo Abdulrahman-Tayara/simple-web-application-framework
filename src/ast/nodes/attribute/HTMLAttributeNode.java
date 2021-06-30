@@ -9,4 +9,9 @@ public class HTMLAttributeNode extends AttributeNode<String> {
         this.name = name;
         this.value = value;
     }
+
+    @Override
+    public String toHtml() {
+        return ' ' + name + '=' + '\"' + value + '\"';
+    }
 }

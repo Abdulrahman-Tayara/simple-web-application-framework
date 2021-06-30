@@ -24,4 +24,12 @@ public class ConcatVariableExpressionNode extends ValueExpressionNode
     public void setValues(List<ConcatableNode> values) {
         this.values = values;
     }
+
+    @Override
+    public String toHtml() {
+        StringBuilder builder = new StringBuilder();
+        values.forEach(concatableNode -> builder.append(concatableNode.toHtml()).append('.'));
+        builder.setLength(builder.length() - 1);//removing the last concat dot.
+        return builder.toString();
+    }
 }

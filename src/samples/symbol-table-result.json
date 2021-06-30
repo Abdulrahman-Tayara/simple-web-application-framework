@@ -5,13 +5,24 @@
         "tagName": "Html",
         "Scope": [
           {
-            "tagName": "div",
-            "Scope": [],
+            "tagName": "head",
+            "Scope": [
+              {
+                "tagName": "title",
+                "Scope": [],
+                "symbol": "html element"
+              }
+            ],
             "symbol": "html element"
           },
           {
             "tagName": "div",
-            "Scope": [],
+            "Scope": [
+              {
+                "attributeName": "cp-model",
+                "symbol": "cp attribute"
+              }
+            ],
             "symbol": "html element"
           }
         ],

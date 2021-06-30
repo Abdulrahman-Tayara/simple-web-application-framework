@@ -34,4 +34,9 @@ public class ConditionalExpressionNode extends ValueExpressionNode implements Co
     public void setExpression2(ValuableNode expression2) {
         this.expression2 = expression2;
     }
+
+    @Override
+    public String toHtml() {
+        return expression1.toHtml() + ' ' + condition.toHtml() + expression2.toHtml();
+    }
 }

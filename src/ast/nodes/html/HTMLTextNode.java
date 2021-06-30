@@ -11,4 +11,9 @@ public class HTMLTextNode extends HTMLElementNode {
         if (text != null)
             this.text = text.trim();
     }
+
+    @Override
+    public String toHtml() {
+        return text;
+    }
 }

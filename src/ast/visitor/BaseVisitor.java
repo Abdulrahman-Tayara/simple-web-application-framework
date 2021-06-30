@@ -193,7 +193,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
         // Check function expression
         if (!(functionExpression instanceof FunctionExpressionNode
-                || functionExpression instanceof VariableExpressionNode))
+                || functionExpression instanceof VariableExpressionNode
+        ))
             throw new RuntimeException("Invalid pipe expression");
 
 

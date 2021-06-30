@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <Html>
-    <div id="myTextId">1</div>
-    <div>2</div>
+<head>
+<title>blabla
+</title>
+</head>
+    <div cp-model="1"></div>
 </Html>

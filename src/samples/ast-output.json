@@ -1,1 +1,1 @@
-{"elements":[{"name":"Html","attributes":[],"content":[{"text":""},{"name":"div","attributes":[{"name":"id","value":"myTextId"}],"content":[{"text":"1"}]},{"text":""},{"name":"div","attributes":[],"content":[{"text":"2"}]},{"text":""}]}]}
+{"elements":[{"name":"Html","attributes":[],"content":[{"text":""},{"name":"head","attributes":[],"content":[{"text":""},{"name":"title","attributes":[],"content":[{"text":"blabla"}]},{"text":""}]},{"text":""},{"name":"div","attributes":[{"name":"cp-model","value":{"value":1.0}}],"content":[]},{"text":""}]}]}

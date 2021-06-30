@@ -32,4 +32,9 @@ public class TwoOperandsConditionExpressionNode extends ConditionExpressionNode 
     public void setOperand2(ValuableNode operand2) {
         this.operand2 = operand2;
     }
+
+    @Override
+    public String toHtml() {
+        return operand1.toHtml() + ' ' + operator + ' ' + operand2.toHtml();
+    }
 }

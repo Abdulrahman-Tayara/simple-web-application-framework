@@ -26,4 +26,9 @@ public class PipeExpressionNode extends ExpressionNode {
     public void setTransformer(FunctionExpressionNode transformer) {
         this.transformer = transformer;
     }
+
+    @Override
+    public String toHtml() {
+        return pipedData.toHtml() + " | " + transformer.toHtml();
+    }
 }

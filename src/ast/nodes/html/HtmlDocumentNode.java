@@ -15,4 +15,12 @@ public class HtmlDocumentNode extends Node {
     public List<HTMLElementNode> getElements() {
         return elements;
     }
+
+    @Override
+    public String toHtml() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("<!DOCTYPE html>");
+        elements.forEach(htmlElementNode -> builder.append(htmlElementNode.toHtml()));
+        return builder.toString();
+    }
 }

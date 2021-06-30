@@ -15,4 +15,9 @@ public class VariableScopeExpressionNode extends HTMLElementNode {
     public void setScopeExpression(ExpressionNode scopeValues) {
         this.scopeExpression = scopeValues;
     }
+
+    @Override
+    public String toHtml() {
+        return "{{" + scopeExpression.toHtml() + "}}";
+    }
 }
