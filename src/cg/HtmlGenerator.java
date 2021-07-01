@@ -78,17 +78,17 @@ public class HtmlGenerator {
 
     private void generateInitialFieldsScript() {
         InitialFieldsScriptGenerator generator = new InitialFieldsScriptGenerator();
-        scripts.add(generator.generateScript(usedClasses));
+        scripts.add(generator.generateScript());
     }
 
     private void generateTemplateScripts() {
         TemplateScriptsGenerator generator = new TemplateScriptsGenerator();
-        scripts.addAll(generator.generateScripts(usedClasses));
+        scripts.addAll(generator.generateScripts());
     }
 
     private void generateRenderScript() {
         RenderScriptGenerator renderScriptGenerator = new RenderScriptGenerator();
-        scripts.add(renderScriptGenerator.generateRenderScripts(templatePreRenderCalls, templatePostRenderCalls));
+        scripts.add(renderScriptGenerator.getRenderScript());
     }
 
     private void attachScriptNodesToAst(Node node) {
