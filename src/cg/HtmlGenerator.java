@@ -88,7 +88,7 @@ public class HtmlGenerator {
 
     private void generateInitialFieldsScript() {
         InitialFieldsScriptGenerator generator = new InitialFieldsScriptGenerator();
-        scripts.add(generator.generateScript(usedClasses));
+        scripts.add(generator.generateScript());
     }
 
     private void generateTemplateScripts() {
