@@ -7,6 +7,7 @@ import ast.nodes.html.HTMLElementNode;
 import ast.nodes.html.HTMLScriptNode;
 import ast.nodes.html.HTMLTagNode;
 import ast.nodes.html.HtmlDocumentNode;
+import cg.scripting.ScriptCode;
 import cg.scripting.ScriptableNode;
 
 import java.util.ArrayList;
@@ -14,12 +15,9 @@ import java.util.List;
 
 public class HtmlGenerator {
 
-    private List<String> usedClasses = new ArrayList<>();
     private String generatedHtmlText = "";
     private List<String> scripts = new ArrayList<>();
-    private List<String> templatePreRenderCalls = new ArrayList<>();
-    private List<String> templatePostRenderCalls = new ArrayList<>();
-
+    private List<String> scriptCalls = new ArrayList<>();
 
     public void generateHtmlTextFromAst(HtmlDocumentNode doc) {
         IdsGenerator.injectRandomIds(doc);
@@ -54,26 +52,11 @@ public class HtmlGenerator {
     private void examineTag(HTMLTagNode tagNode) {
         for (AttributeNode<?> attributeNode : tagNode.getAttributes()) {
             if (attributeNode instanceof ScriptableNode) {
-
-                if (!usedClasses.contains(attributeNode.getClass().getSimpleName()))
-                    usedClasses.add(attributeNode.getClass().getSimpleName());
-
-                templatePreRenderCalls.addAll(examineAttributeAndConvertToPreFunctionCalls(tagNode, attributeNode));
-                templatePostRenderCalls.addAll(examineAttributeAndConvertToPostFunctionCalls(tagNode, attributeNode));
+                ScriptableNode scriptableNode = (ScriptableNode) attributeNode;
+                ScriptCode scriptCode = scriptableNode.generateScript(tagNode);
+                scriptCalls.addAll(scriptCode.getLines());
             }
         }
-    }
-
-    private List<String> examineAttributeAndConvertToPreFunctionCalls(HTMLTagNode tagNode, AttributeNode<?> attributeNode) {
-        List<String> calls = new ArrayList<>();
-        preRenderCallMappers.forEach(callMapper -> calls.addAll(callMapper.map(tagNode, attributeNode)));
-        return calls;
-    }
-
-    private List<String> examineAttributeAndConvertToPostFunctionCalls(HTMLTagNode tagNode, AttributeNode<?> attributeNode) {
-        List<String> calls = new ArrayList<>();
-        postRenderCallMappers.forEach(callMapper -> calls.addAll(callMapper.map(tagNode, attributeNode)));
-        return calls;
     }
 
     private void generateInitialFieldsScript() {
@@ -88,7 +71,11 @@ public class HtmlGenerator {
 
     private void generateRenderScript() {
         RenderScriptGenerator renderScriptGenerator = new RenderScriptGenerator();
-        scripts.add(renderScriptGenerator.getRenderScript());
+        String renderFunction = renderScriptGenerator.getRenderScript();
+        StringBuilder builder = new StringBuilder();
+        scriptCalls.forEach(scriptCall -> builder.append(scriptCall).append('\n'));
+        builder.append(renderFunction);
+        scripts.add(builder.toString());
     }
 
     private void attachScriptNodesToAst(Node node) {
