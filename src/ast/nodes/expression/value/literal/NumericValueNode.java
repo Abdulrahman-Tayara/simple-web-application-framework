@@ -6,6 +6,10 @@ package ast.nodes.expression.value.literal;
 public class NumericValueNode extends LiteralExpressionNode<Float> {
     @Override
     public String toHtml() {
-        return value.toString();
+        float fValue = value;
+        if (fValue == (int) fValue)
+            return String.format("%d", (int) fValue);
+        else
+            return String.format("%s", fValue);
     }
 }

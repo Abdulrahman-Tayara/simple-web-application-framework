@@ -72,16 +72,18 @@ public class Main {
 //        System.out.println("exceptions:");
 //        System.out.println(checker.getTotalExceptions());
 
-        System.out.println(doc.toHtml());
 
 
 
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         htmlGenerator.generateHtmlTextFromAst(doc);
+
+        System.out.println(doc.toHtml());
+
 //        String generatedHtmlCode = htmlGenerator.getGeneratedHtmlText();
 //        FileWriter writerGeneratedCode = new FileWriter(generatedOutputFile);
 //        writerGeneratedCode.write(generatedHtmlCode);
-
+//
         Tidy tidy = new Tidy();
         tidy.setIndentContent(true);
         tidy.setTidyMark(false);

@@ -125,7 +125,7 @@ public class HtmlGenerator {
             }
             if (tagNode.hasContent()) {
                 for (HTMLElementNode elementNode : tagNode.getContent()) {
-                    iterate(elementNode);
+                    injectScriptNode(elementNode, scriptNodes);
                 }
             }
         }

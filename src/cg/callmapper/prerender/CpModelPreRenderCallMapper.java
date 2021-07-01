@@ -3,6 +3,7 @@ package cg.callmapper.prerender;
 import ast.nodes.attribute.AttributeNode;
 import ast.nodes.attribute.CPModelAttributeNode;
 import ast.nodes.attribute.HTMLAttributeNode;
+import ast.nodes.expression.value.ValuableNode;
 import ast.nodes.html.HTMLTagNode;
 import cg.callmapper.CallMapper;
 
@@ -29,8 +30,7 @@ public class CpModelPreRenderCallMapper implements CallMapper {
         if (idValue.isEmpty())
             throw new RuntimeException("id not found in tag, tried to generate code for cp-model and no id found in tag");
 
-        //todo: cpModelAttributeNode.getValue() is not the way to go, it is of type T and we need to get the runtime value.
-        mappedCalls.add(THIS_DOT + bindCpModelToVar + "(\"" + idValue + "\", \"" + cpModelAttributeNode.getValue() + "\");");
+        mappedCalls.add(THIS_DOT + bindCpModelToVar + "(\"" + idValue + "\", \"" + ((ValuableNode) cpModelAttributeNode.getValue()).toHtml() + "\");");
 
         return mappedCalls;
     }

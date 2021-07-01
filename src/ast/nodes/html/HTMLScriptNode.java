@@ -13,6 +13,6 @@ public class HTMLScriptNode extends HTMLElementNode {
 
     @Override
     public String toHtml() {
-        return "<script>\n" + scriptBody + "\n</scriptBody>";
+        return "<script>\n" + scriptBody + "\n</script>";
     }
 }

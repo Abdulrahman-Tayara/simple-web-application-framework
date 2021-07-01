@@ -1,31 +1,27 @@
-<!-- cp-model -->
-<script>
-        // this should be used because we are initializing on every render
-        function assigneInitalVariables(id, variableName) {
-            document.getElementById(id).value = forthyear[variableName];
-        }
+// this should be used because we are initializing on every render
+function assigneInitalVariables(id, variableName) {
+    document.getElementById(id).value = forthyear[variableName];
+}
 
-        function changeValue(id, variableName) {
-            forthyear[variableName] = document.getElementById(id).value;
-        }
+function changeValue(id, variableName) {
+    forthyear[variableName] = document.getElementById(id).value;
+}
 
-        function bindCpModelToVar(id, variableName) {
+function bindCpModelToVar(id, variableName) {
 
-            // here we have 2 way bindings.
+    // here we have 2 way bindings.
 
-            //bind: variable => input
-            inits.push(() => {
-                assigneInitalVariables(id, variableName);
-            });
+    //bind: variable => input
+    inits.push(() => {
+        assigneInitalVariables(id, variableName);
+    });
 
-            //bind : input => variable
-            document.getElementById(id).addEventListener("input", (event) => {
+    //bind : input => variable
+    document.getElementById(id).addEventListener("input", (event) => {
 
-                changes.push(() => {
-                    changeValue(id, variableName);
-                });
+        changes.push(() => {
+            changeValue(id, variableName);
+        });
 
-            });
-        }
-
-</script>
+    });
+}

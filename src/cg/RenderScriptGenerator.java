@@ -7,7 +7,6 @@ public class RenderScriptGenerator {
     private StringBuilder builder = new StringBuilder();
 
     public String generateRenderScripts(List<String> preRenderCalls, List<String> postRenderCalls) {
-        builder.append("<script>");
         builder.append("function render() {\n" +
                 "      setInterval(() => {\n" +
                 "\n");
@@ -43,8 +42,7 @@ public class RenderScriptGenerator {
                 "\n" +
                 "            }, 200);\n" +
                 "        }\n" +
-                "        render();\n" +
-                "    </script>");
+                "        render();\n");
 
         return builder.toString();
     }
