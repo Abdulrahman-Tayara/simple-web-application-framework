@@ -1,7 +1,7 @@
 package cg;
 
 import ast.nodes.attribute.CPModelAttributeNode;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,7 +25,8 @@ public class TemplateScriptsGenerator {
         if (nodeClassName.equals(CPModelAttributeNode.class.getSimpleName())) {
             return getCpModelScript();
         } //todo implement others
-        throw new NotImplementedException();
+//        throw new NotImplementedException();
+        return "";
     }
 
     private String getCpModelScript() {

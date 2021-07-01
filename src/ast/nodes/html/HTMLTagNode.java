@@ -52,6 +52,15 @@ public class HTMLTagNode extends HTMLElementNode {
         return content != null && !content.isEmpty();
     }
 
+    public String getId() {
+        for (AttributeNode<?> attributeNode : getAttributes()) {
+            if (attributeNode.getName().equals("id")) {
+                return ((HTMLAttributeNode) attributeNode).getValue();
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toHtml() {
         StringBuilder builder = new StringBuilder();
