@@ -3,10 +3,7 @@ package cg;
 import ast.nodes.Node;
 import ast.nodes.attribute.AttributeNode;
 import ast.nodes.attribute.CPAttributeNode;
-import ast.nodes.html.HTMLElementNode;
-import ast.nodes.html.HTMLScriptNode;
-import ast.nodes.html.HTMLTagNode;
-import ast.nodes.html.HtmlDocumentNode;
+import ast.nodes.html.*;
 import cg.scripting.ScriptCode;
 import cg.scripting.ScriptableNode;
 
@@ -44,8 +41,6 @@ public class HtmlGenerator {
                     iterate(elementNode);
                 }
             }
-        } else if (node instanceof HTMLScriptNode) {
-            scripts.add(((HTMLScriptNode) node).getScriptBody());
         }
     }
 
@@ -55,6 +50,13 @@ public class HtmlGenerator {
                 ScriptableNode scriptableNode = (ScriptableNode) attributeNode;
                 ScriptCode scriptCode = scriptableNode.generateScript(tagNode);
                 scriptCalls.addAll(scriptCode.getLines());
+            }
+        }
+        if (tagNode.hasContent()) {
+            for (HTMLElementNode elementNode: tagNode.getContent()) {
+                if (elementNode instanceof ScriptableNode) {
+                    scriptCalls.addAll(((ScriptableNode) elementNode).generateScript(tagNode).getLines());
+                }
             }
         }
     }

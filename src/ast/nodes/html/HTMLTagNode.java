@@ -72,7 +72,8 @@ public class HTMLTagNode extends HTMLElementNode {
             builder.append(" ");
         });
         builder.append(">");
-        content.forEach(elementNode -> builder.append(elementNode.toHtml()));
+        if (content != null && !content.isEmpty())
+            content.forEach(elementNode -> builder.append(elementNode.toHtml()));
         builder.append("</")
                 .append(name)
                 .append(">");

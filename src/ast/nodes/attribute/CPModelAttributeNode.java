@@ -23,7 +23,7 @@ public class CPModelAttributeNode extends CPAttributeNode<ValuableNode> {
             throw new RuntimeException("id not found in tag, tried to generate code for cp-model and no id found in tag");
 
         code.addLine(
-                THIS_DOT + bindCpModelToVar + "(\"" + tagId + "\", \"" + getValue().toHtml() + "\");"
+                bindCpModelToVar + "(\"" + tagId + "\", \"" + getValue().toHtml() + "\");"
         );
 
         return code;

@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <Html>
     <body>
-        <input cp-model="1"></input>
+        <input cp-model="var1"></input>
+        <div>{{var1}}</div>
+
+        <script>
+            function forthyear() {
+                this.var1 = "initial value";
+            }
+            var forthyear = new forthyear();
+        </script>
     </body>
 </Html>
