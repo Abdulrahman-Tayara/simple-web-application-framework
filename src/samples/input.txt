@@ -2,11 +2,14 @@
 <Html>
     <body>
         <input cp-model="var1"></input>
-        <div>{{var1}}</div>
+        <div cp-show="var2">{{var1}}</div>
+        <div cp-hide="var3">{{var1}}</div>
 
         <script>
             function forthyear() {
                 this.var1 = "initial value";
+                this.var2 = false;
+                this.var3 = true;
             }
             var forthyear = new forthyear();
         </script>

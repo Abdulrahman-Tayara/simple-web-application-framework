@@ -41,6 +41,10 @@ public class VariableScopeExpressionNode extends HTMLElementNode implements Scri
             }
         }
 
+        if (tagId.equals("")) {
+            throw new RuntimeException("id not found in tag, tried to generate code for variable usage and no id found in tag");
+        }
+
         builder.append(bindVariableUsageWithVariable)
                 .append('(')
                 .append("\"").append(tagId).append("\", ")

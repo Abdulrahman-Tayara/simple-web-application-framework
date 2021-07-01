@@ -1,6 +1,8 @@
 function render() {
     setInterval(() => {
 
+        restoreDeleteIfNodes();
+
         for (var i = 0; i < changes.length; i++) {
             changes[i]();
         }
@@ -15,6 +17,9 @@ function render() {
         }
 
         replaceAllVariableUsages();
+        renderCpShowConditionally();
+        renderCpHideConditionally();
+        renderCpIfConditionalBindings();
 
     }, 16);
 }
