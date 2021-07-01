@@ -1,6 +1,0 @@
-<!DOCTYPE html>
-<Html>
-    <body>
-        <input cp-model="1"></input>
-    </body>
-</Html>
