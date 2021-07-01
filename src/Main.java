@@ -77,19 +77,18 @@ public class Main {
 
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         htmlGenerator.generateHtmlTextFromAst(doc);
+        String generatedHtmlCode = htmlGenerator.getGeneratedHtmlText();
 
-        System.out.println(doc.toHtml());
-
-//        String generatedHtmlCode = htmlGenerator.getGeneratedHtmlText();
-//        FileWriter writerGeneratedCode = new FileWriter(generatedOutputFile);
-//        writerGeneratedCode.write(generatedHtmlCode);
+        writer = new FileWriter(generatedOutputFile);
+        writer.write(generatedHtmlCode);
+        writer.close();
 //
-        Tidy tidy = new Tidy();
-        tidy.setIndentContent(true);
-        tidy.setTidyMark(false);
-        Document htmlDOM = tidy.parseDOM(new ByteArrayInputStream(doc.toHtml().getBytes()), null);
-        OutputStream out = new ByteArrayOutputStream();
-        tidy.pprint(htmlDOM, out);
-        System.out.println(out.toString());
+//        Tidy tidy = new Tidy();
+//        tidy.setIndentContent(true);
+//        tidy.setTidyMark(false);
+//        Document htmlDOM = tidy.parseDOM(new ByteArrayInputStream(doc.toHtml().getBytes()), null);
+//        OutputStream out = new ByteArrayOutputStream();
+//        tidy.pprint(htmlDOM, out);
+//        System.out.println(out.toString());
     }
 }

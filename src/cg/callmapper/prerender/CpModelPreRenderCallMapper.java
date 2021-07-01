@@ -20,6 +20,11 @@ public class CpModelPreRenderCallMapper implements CallMapper {
             return new ArrayList<>();
 
         List<String> mappedCalls = new ArrayList<>();
+
+        if (!tagNode.getName().equals("input")) {
+            return mappedCalls;
+        }
+
         String idValue = "";
         for (AttributeNode<?> attributeNode : tagNode.getAttributes()) {
             if (attributeNode.getName().equals("id")) {

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <Html>
-<head>
-<title>blabla
-</title>
-</head>
-    <div cp-model="1"></div>
+    <body>
+        <input cp-model="1"></input>
+    </body>
 </Html>

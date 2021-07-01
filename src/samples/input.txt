@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <Html>
     <body>
-        <div cp-model="1"></div>
+        <input cp-model="1"></input>
     </body>
 </Html>
