@@ -64,8 +64,6 @@ public class HtmlGenerator {
         }
     }
 
-    private void 
-
     private List<String> examineAttributeAndConvertToPreFunctionCalls(HTMLTagNode tagNode, AttributeNode<?> attributeNode) {
         List<String> calls = new ArrayList<>();
         preRenderCallMappers.forEach(callMapper -> calls.addAll(callMapper.map(tagNode, attributeNode)));
