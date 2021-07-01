@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<Html id="1557153621">
+<body id="50182498"><input id="1495195858"></input>
+<script>
+
+        let defaultBodyCode = document.body.innerHTML;
+        let inits = [];
+        let changes = [];
+    
+
+</script>
+<script>
+// this should be used because we are initializing on every renderfunction assigneInitalVariables(id, variableName) {    document.getElementById(id).value = forthyear[variableName];}function changeValue(id, variableName) {    forthyear[variableName] = document.getElementById(id).value;}function bindCpModelToVar(id, variableName) {    // here we have 2 way bindings.    //bind: variable => input    inits.push(() => {        assigneInitalVariables(id, variableName);    });    //bind : input => variable    document.getElementById(id).addEventListener("input", (event) => {        changes.push(() => {            changeValue(id, variableName);        });    });}
+
+</script>
+<script>
+function render() {
+      setInterval(() => {
+
+this.bindCpModelToVar("1495195858", "1");                //render the changes of the cp-model (input=>variable) binding
+                for (var i = 0; i < changes.length; i++) {
+                    // console.log(changes[i]);
+                    changes[i]();
+                }
+                changes = [];
+
+                //(variable => input) binding
+                for (let index = 0; index < inits.length; index++) {
+                    inits[index]();
+                }
+
+
+
+                //render the fors
+                for (let index = 0; index < forRenders.length; index++) {
+                    forRenders[index]();
+                }
+
+            }, 200);
+        }
+        render();
+
+
+</script>
+</body>
+</Html>
