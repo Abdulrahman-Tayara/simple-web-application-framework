@@ -10,129 +10,129 @@
 
 <body>
 
-    <div id="div" cp-app="forthyear">
+<div id="div" cp-app="forthyear">
 
-        <!-- Html Code -->
-        <input id="myTestInput" type="text" cp-model="myTest" value="myTestInputValue" />
-        <div id="myTestUsage">My Text is: {{myTest}}</div>
-        <div id="myTestUsage2">AnotherText is: {{repeatsNumber + repeatsNumber2}}</div>
-
-
-        <div id="myTestFor">
-            for is repeated
-
-            <div id="myTestFor2">
-                for is repeated2222222222222222222222
-
-                <div id="myTestFor3">
-                    for is repeated333333333333333333333
-                </div>
-            </div>
-
-        </div>
+    <!-- Html Code -->
+    <input id="myTestInput" type="text" cp-model="myTest" value="myTestInputValue" />
+    <div id="myTestUsage">My Text is: {{myTest}}</div>
+    <div id="myTestUsage2">AnotherText is: {{repeatsNumber + repeatsNumber2}}</div>
 
 
+    <div id="myTestFor">
+        for is repeated
 
+        <div id="myTestFor2">
+            for is repeated2222222222222222222222
 
-        <div id="myConditionTest">
-            conditionTest
-        </div>
-
-        <div id="myConditionTest2">
-            conditionTest2222222222
-        </div>
-
-        <div>
-            <div id="myTestShow">This will be hidden when the cpShowCondition variable is false </div>
-            <button id="showButton">Show Btn</button>
-        </div>
-        <div>
-            <div id="myTestHide">This will be hidden when the cpHideCondition variable is true </div>
-            <button id="hideButton">Hide Btn</button>
-        </div>
-
-        <div id="myTestEvent">
-
-            When clicking the buttom bellow a custom event with name "eventName" is fired and listened to on this div
-            element
-            <br>
-            this div changes its bg-color to be red when the "eventName" event is fired
-            <button id="eventButton">Test The event</button>
-        </div>
-
-
-        <div id="myTestSwitchParent">
-            <div id="myTestSwitchChild1">
-                child 1
-            </div>
-            <div id="myTestSwitchChild2">
-                child 2
-            </div>
-            <div id="myTestSwitchChildDefault">
-                child default
+            <div id="myTestFor3">
+                for is repeated333333333333333333333
             </div>
         </div>
-
-
-
-
-
 
     </div>
 
 
-    <script>
-        document.getElementById("showButton").addEventListener("click", () => {
-            this.forthyear.cpShowCondition = !this.forthyear.cpShowCondition;
-        });
-        document.getElementById("hideButton").addEventListener("click", () => {
-            this.forthyear.cpHideCondition = !this.forthyear.cpHideCondition;
-        });
-
-        document.getElementById("eventButton").addEventListener("click", () => {
-            document.getElementById("myTestEvent").dispatchEvent(new CustomEvent(this.forthyear.event));
-        });
 
 
+    <div id="myConditionTest">
+        conditionTest
+    </div>
+
+    <div id="myConditionTest2">
+        conditionTest2222222222
+    </div>
+
+    <div>
+        <div id="myTestShow">This will be hidden when the cpShowCondition variable is false </div>
+        <button id="showButton">Show Btn</button>
+    </div>
+    <div>
+        <div id="myTestHide">This will be hidden when the cpHideCondition variable is true </div>
+        <button id="hideButton">Hide Btn</button>
+    </div>
+
+    <div id="myTestEvent">
+
+        When clicking the buttom bellow a custom event with name "eventName" is fired and listened to on this div
+        element
+        <br>
+        this div changes its bg-color to be red when the "eventName" event is fired
+        <button id="eventButton">Test The event</button>
+    </div>
 
 
-        // <!-- script already exists -->
+    <div id="myTestSwitchParent">
+        <div id="myTestSwitchChild1">
+            child 1
+        </div>
+        <div id="myTestSwitchChild2">
+            child 2
+        </div>
+        <div id="myTestSwitchChildDefault">
+            child default
+        </div>
+    </div>
 
-        function forthyear() {
-            this.myTest = "HI MAn";
-            this.cpShowCondition = true;
-            this.cpHideCondition = false;
-            this.event = "eventName";
-            this.repeatsNumber = 1;
-            this.repeatsNumber2 = 1;
-            this.repeatsNumber3 = 3;
-            this.conditional = true;
-            this.conditional2 = true;
-            this.switch = 99;
-            this.obj = {
-                data1: "data"
-            }
-            this.a = 1;
-            this.b = 1;
-            this.c = 1;
-            this.fun = (a, b, c) => {
-                return a + b + c;
-            };
-            this.lower = (str) => {
-                return str.toLowerCase();
-            };
-            this.upper = (str) => {
-                return str.toUpperCase();
-            };
-            this.printEventFire = (id)=>{
-                console.log("fire");
-                console.log(id);
-                document.getElementById(id).style.backgroundColor = "red";
-            }
 
+
+
+
+
+</div>
+
+
+<script>
+    document.getElementById("showButton").addEventListener("click", () => {
+        this.forthyear.cpShowCondition = !this.forthyear.cpShowCondition;
+    });
+    document.getElementById("hideButton").addEventListener("click", () => {
+        this.forthyear.cpHideCondition = !this.forthyear.cpHideCondition;
+    });
+
+    document.getElementById("eventButton").addEventListener("click", () => {
+        document.getElementById("myTestEvent").dispatchEvent(new CustomEvent(this.forthyear.event));
+    });
+
+
+
+
+    // <!-- script already exists -->
+
+    function forthyear() {
+        this.myTest = "HI MAn";
+        this.cpShowCondition = true;
+        this.cpHideCondition = false;
+        this.event = "eventName";
+        this.repeatsNumber = 1;
+        this.repeatsNumber2 = 1;
+        this.repeatsNumber3 = 3;
+        this.conditional = true;
+        this.conditional2 = true;
+        this.switch = 99;
+        this.obj = {
+            data1: "data"
+        }
+        this.a = 1;
+        this.b = 1;
+        this.c = 1;
+        this.fun = (a, b, c) => {
+            return a + b + c;
         };
+        this.lower = (str) => {
+            return str.toLowerCase();
+        };
+        this.upper = (str) => {
+            return str.toUpperCase();
+        };
+        this.printEventFire = (id)=>{
+            console.log("fire");
+            console.log(id);
+            document.getElementById(id).style.backgroundColor = "red";
+        }
 
-        var forthyear = new forthyear();
+    };
+
+    var forthyear = new forthyear();
 
 
 
@@ -140,505 +140,501 @@
 
 
 
-        // here you will pass an exp or a string of expressions and the function will add the global
-        // scope name before it so you will be able to evaluate it later
+    // here you will pass an exp or a string of expressions and the function will add the global
+    // scope name before it so you will be able to evaluate it later
 
 
-        var globalObjectString = "forthyear";
+    var globalObjectString = "forthyear";
 
-        function parse(expressionString) {
+    function parse(expressionString) {
 
 
-            let type = typeof expressionString;
-            // console.log(type);
-            if (type != "string") {
-                return `${expressionString}`
-            }
-            //now all spaces are removed
-            let exprArr = expressionString.split(" ");
-            // console.log(exprArr);
+        let type = typeof expressionString;
+        // console.log(type);
+        if (type != "string") {
+            return `${expressionString}`;
+        }
+        //now all spaces are removed
+        let exprArr = expressionString.split(" ");
+        // console.log(exprArr);
 
-            let finalString = "";
-            for (let index = 0; index < exprArr.length; index++) {
-                //for sure there is no space
+        let finalString = "";
+        for (let index = 0; index < exprArr.length; index++) {
+            //for sure there is no space
 
-                let expr = exprArr[index]; //this is a string as well
-                if (isLetter(expr.charAt(0))) {
-                    //format the calling and usage
+            let expr = exprArr[index]; //this is a string as well
+            if (isLetter(expr.charAt(0))) {
+                //format the calling and usage
 
-                    let striped = expr;
+                let striped = expr;
 
-                    if (isFunction(expr)) {
-                        return parseAsFunction(expr);
-                    }
-
-                    if (isConcatObj(expr)) {
-                        striped = expr.substr(0, striped.indexOf("."))
-                    }
-                    //check if the var exists in the global object
-                    if (forthyear[striped] != undefined) {
-                        let newExpr = globalObjectString + "." + expr;
-                        expr = newExpr;
-                    }
+                if (isFunction(expr)) {
+                    return parseAsFunction(expr);
                 }
-                finalString += expr;
+
+                if (isConcatObj(expr)) {
+                    striped = expr.substr(0, striped.indexOf("."));
+                }
+                //check if the var exists in the global object
+                if (forthyear[striped] != undefined) {
+                    let newExpr = globalObjectString + "." + expr;
+                    expr = newExpr;
+                }
             }
-            // console.log(finalString);
-            // console.log(eval(finalString));
-            return finalString;
+            finalString += expr;
+        }
+        // console.log(finalString);
+        // console.log(eval(finalString));
+        return finalString;
+    }
+
+    function parseAsFunction(expr) {
+        //will divide into 3 parts:
+
+        //part one before the "("
+        let part1 = expr.substr(0, expr.indexOf("("));
+
+        //part two from the first "(" to the last ")"
+        let len = expr.lastIndexOf(")") - 1 - expr.indexOf("(");
+        let part2 = expr.substr(expr.indexOf("(") + 1, len);
+        // console.log("part 2 " + part2);
+
+        //parsing
+        let parsedPart1 = parse(part1);
+
+        let part2Seperated = part2.split(",");
+        for (let index = 0; index < part2Seperated.length; index++) {
+
+            part2Seperated[index] = parse(part2Seperated[index]);
         }
 
-        function parseAsFunction(expr) {
-            //will divide into 3 parts:
+        let parsedPart2 = part2Seperated.join(',');
 
-            //part one before the "("
-            let part1 = expr.substr(0, expr.indexOf("("));
+        let finalExpr = parse(part1) + "(" + parsedPart2 + ")";
 
-            //part two from the first "(" to the last ")"
-            let len = expr.lastIndexOf(")") - 1 - expr.indexOf("(")
-            let part2 = expr.substr(expr.indexOf("(") + 1, len)
-            // console.log("part 2 " + part2);
+        return finalExpr;
 
-            //parsing
-            let parsedPart1 = parse(part1);
+    }
 
-            let part2Seperated = part2.split(",");
-            for (let index = 0; index < part2Seperated.length; index++) {
+    function isFunction(expr) {
+        return expr.indexOf("(") != -1;
+    }
 
-                part2Seperated[index] = parse(part2Seperated[index]);
-            }
+    function isLetter(char) {
+        return char.toUpperCase() != char.toLowerCase();
+    }
 
-            let parsedPart2 = part2Seperated.join(',');
-
-            let finalExpr = parse(part1) + "(" + parsedPart2 + ")";
-
-            return finalExpr;
-
-        }
-
-        function isFunction(expr) {
-            return expr.indexOf("(") != -1;
-        }
-
-        function isLetter(char) {
-            return char.toUpperCase() != char.toLowerCase();
-        }
-
-        function isConcatObj(expr) {
-            return expr.indexOf(".") != -1
-        }
+    function isConcatObj(expr) {
+        return expr.indexOf(".") != -1
+    }
 
 
-        // intial arrays and objects
+    // intial arrays and objects
 
-        let defaultBodyCode = document.body.innerHTML;
+    let inits = [];
+    let changes = [];
+    let forRenders = [];
 
+    // let defaultTexts = {};
+    let defaultInnerHTML = {};
+    let cpShowIdBindings = {};
+    let cpHideIdBindings = {};
+    let cpIfConditionalBindings = [];
+    let cpSwitchBindings = []; //[ {id, var, childrenBindings: [{childId, case}]} ]
 
-        let inits = [];
-        let changes = [];
-        let forRenders = [];
-
-        // let defaultTexts = {};
-        let defaultInnerHTML = {};
-        let cpShowIdBindings = {};
-        let cpHideIdBindings = {};
-        let cpIfConditionalBindings = [];
-        let cpSwitchBindings = []; //[ {id, var, childrenBindings: [{childId, case}]} ]
-
-        let deletedNodes = []; //list of ids 
-        let repeatedNodes = []; //list of nodes
+    let deletedNodes = []; //list of ids
+    let repeatedNodes = []; //list of nodes
 
 
 
 
-        // <!-- cp-model -->
+    // <!-- cp-model -->
 
-        // this should be used because we are initializing on every render
-        function assigneInitalVariables(id, variableName) {
-            document.getElementById(id).value = forthyear[variableName];
-        }
+    // this should be used because we are initializing on every render
+    function assigneInitalVariables(id, variableName) {
+        document.getElementById(id).value = forthyear[variableName];
+    }
 
-        function changeValue(id, variableName) {
-            forthyear[variableName] = document.getElementById(id).value;
-        }
+    function changeValue(id, variableName) {
+        forthyear[variableName] = document.getElementById(id).value;
+    }
 
 
-        function bindCpModelToVar(id, variableName) {
+    function bindCpModelToVar(id, variableName) {
 
-            // here we have 2 way bindings.
+        // here we have 2 way bindings.
 
-            //bind: variable => input
-            inits.push(() => {
-                assigneInitalVariables(id, variableName);
+        //bind: variable => input
+        inits.push(() => {
+            assigneInitalVariables(id, variableName);
+        });
+
+        //bind : input => variable
+        document.getElementById(id).addEventListener("input", (event) => {
+
+            changes.push(() => {
+                changeValue(id, variableName);
             });
 
-            //bind : input => variable
-            document.getElementById(id).addEventListener("input", (event) => {
+        });
+    }
 
-                changes.push(() => {
-                    changeValue(id, variableName);
-                });
 
-            });
+    // <!-- variable usage -->
+
+
+    function bindVariableUseage(id, rawCurly, expression) {
+
+        //this function saves the default innerHTML for the doc with id: @param:id
+        //ex: saves : "the value of x is {{x}}"
+
+        let text = document.getElementById(id).innerHTML;
+
+        if (defaultInnerHTML[rawCurly] === undefined) {
+            defaultInnerHTML[rawCurly] = []
+            defaultInnerHTML[rawCurly].push({ id: id, text: text, expression: expression });
+        } else {
+            defaultInnerHTML[rawCurly].push({ id: id, text: text, expression: expression });
         }
+    }
 
+    function renderVariableUsages() {
+        //this function repleaces all the {{__}} with the value of the __ variable
+        Object.keys(defaultInnerHTML).forEach(rawCurly => {
+            for (let index = 0; index < defaultInnerHTML[rawCurly].length; index++) {
 
-        // <!-- variable usage -->
+                let obj = defaultInnerHTML[rawCurly][index];
 
+                let newText = obj.text.replace(rawCurly, eval(parse(obj.expression)));
 
-        function bindVariableUseage(id, rawCurly, expression) {
-
-            //this function saves the default innerHTML for the doc with id: @param:id
-            //ex: saves : "the value of x is {{x}}"
-
-            let text = document.getElementById(id).innerHTML;
-
-            if (defaultInnerHTML[rawCurly] === undefined) {
-                defaultInnerHTML[rawCurly] = []
-                defaultInnerHTML[rawCurly].push({ id: id, text: text, expression: expression });
-            } else {
-                defaultInnerHTML[rawCurly].push({ id: id, text: text, expression: expression });
+                document.getElementById(obj.id).innerHTML = newText;
             }
+        });
+    }
+
+    // <!-- cp-show -->
+
+    function bindCpShow(id, expression) {
+        if (cpShowIdBindings[expression] === undefined) {
+            cpShowIdBindings[expression] = []
+            cpShowIdBindings[expression].push(id);
+        } else {
+            cpShowIdBindings[expression].push(id);
         }
+    }
 
-        function renderVariableUsages() {
-            //this function repleaces all the {{__}} with the value of the __ variable
-            Object.keys(defaultInnerHTML).forEach(rawCurly => {
-                for (let index = 0; index < defaultInnerHTML[rawCurly].length; index++) {
 
-                    let obj = defaultInnerHTML[rawCurly][index];
+    function renderCpShowConditionally() {
+        Object.keys(cpShowIdBindings).forEach(expression => {
+            for (let index = 0; index < cpShowIdBindings[expression].length; index++) {
 
-                    let newText = obj.text.replace(rawCurly, eval(parse(obj.expression)));
-
-                    document.getElementById(obj.id).innerHTML = newText;
-                }
-            });
-        }
-
-        // <!-- cp-show -->
-
-        function bindCpShow(id, expression) {
-            if (cpShowIdBindings[expression] === undefined) {
-                cpShowIdBindings[expression] = []
-                cpShowIdBindings[expression].push(id);
-            } else {
-                cpShowIdBindings[expression].push(id);
-            }
-        }
-
-
-        function renderCpShowConditionally() {
-            Object.keys(cpShowIdBindings).forEach(expression => {
-                for (let index = 0; index < cpShowIdBindings[expression].length; index++) {
-
-                    let id = cpShowIdBindings[expression][index];
-                    if (eval(parse(expression)) == true) {
-                        document.getElementById(id).hidden = false;
-                    } else {
-                        document.getElementById(id).hidden = true;
-                    }
-
-                }
-            });
-        }
-
-
-        // <!-- cp-hide -->
-
-
-        function bindCpHide(id, expression) {
-            if (cpHideIdBindings[expression] === undefined) {
-                cpHideIdBindings[expression] = []
-                cpHideIdBindings[expression].push(id);
-            } else {
-                cpHideIdBindings[expression].push(id);
-            }
-        }
-
-        function renderCpHideConditionally() {
-            Object.keys(cpHideIdBindings).forEach(expression => {
-                for (let index = 0; index < cpHideIdBindings[expression].length; index++) {
-
-                    let id = cpHideIdBindings[expression][index];
-                    if (eval(parse(expression)) == true) {
-                        document.getElementById(id).hidden = true;
-                    } else {
-                        document.getElementById(id).hidden = false;
-                    }
-
-                }
-            });
-        }
-
-        // <!-- cp-event -->
-
-        function bindCpEvent(id, eventName, cb, params = []) {
-            // console.log(id);
-            // console.log(eventName);
-            document.getElementById(id).addEventListener(eventName, () => {
-
-                let cbString = cb;
-                // if(params != undefined){
-                cbString += "(" + params.join(",") + ")";
-                eval(parse(cbString));
-            });
-
-            document.getElementById(id).addEventListener('click', ()=>{
-                document.getElementById(id).dispatchEvent(new CustomEvent(eventName));
-            })
-        }
-
-
-
-        // <!-- cp-for -->
-
-
-        //
-        // let dynamicScope = {};
-        // {
-        //     forId:{
-        //         x,
-        //         y,
-        //         index
-        //     }
-        // } 
-        function cpForRepeat(id, variableName) {
-
-
-            // let repeatsNumber = forthyear[variableName];
-
-            forRenders.push(() => {
-                // find the element
-                let element = document.getElementById(id);
-
-                // clone the element
-                for (let index = 0; index < forthyear[variableName]; index++) {
-
-                    //clone it
-                    let clone = element.cloneNode(true);
-                    clone.hidden = false;
-
-                    //add it to parent
-                    // element.insertAdjacentElement('beforestart', newScript);
-                    element.insertAdjacentElement('afterend', clone);
-                    repeatedNodes.push(clone);
-                }
-
-                //hide the original element
-                element.hidden = true;
-            })
-        }
-
-        function removeRepeatedNodes() {
-            for (let index = 0; index < repeatedNodes.length; index++) {
-                repeatedNodes[index].remove();
-            }
-            repeatedNodes = [];
-        }
-
-
-
-        // <!-- cp-if -->
-
-
-        //here we replace the node we want to delete (if we needed to delete it)
-        //with a node that has the same id and it is hidden
-        //and when we need to re-add the old node we add it instead of the newly initialized node
-
-        //this is implemented this way to save the place in-wich the node should always be
-
-        function bindCpIf(id, expression) {
-            cpIfConditionalBindings.push({
-                id: id,
-                expression: expression,
-            });
-        }
-
-        function renderCpIf() {
-            for (let index = 0; index < cpIfConditionalBindings.length; index++) {
-
-                let cond = cpIfConditionalBindings[index];
-
-                let doc = document.getElementById(cond.id);
-                if (eval(parse(cond.expression)) == false) {
-
-                    //create a node to be put instead of the if node
-                    let rep = document.createElement('div');
-                    rep.id = cond.id;
-                    rep.hidden = true;
-
-                    //put it after the if node
-                    doc.after(rep);
-
-                    //clone the if node to keep a reference
-                    let cloneDoc = doc.cloneNode(true);
-
-                    //save the reference and delete the original
-                    deletedNodes.push(cloneDoc);
-                    doc.remove();
-                }
-            }
-        }
-
-        function restoreDeleteIfNodes() {
-
-            //remove the deleted if nodes from the list and re adds them to their place
-
-            for (let index = 0; index < deletedNodes.length; index++) {
-
-                let delNode = deletedNodes[index];
-
-                //find the one we put there
-                let rep = document.getElementById(delNode.id);
-                rep.after(delNode);
-                rep.remove();
-
-
-            }
-            deletedNodes = [];
-        }
-
-        // <!-- cp-switch -->
-
-
-        function bindCpSwitch(expression, childIdsWithCases) {
-            cpSwitchBindings.push({
-                expression: expression,
-                childrenBindings: childIdsWithCases
-            });
-        }
-        function renderCpSwitch() {
-            for (let index = 0; index < cpSwitchBindings.length; index++) {
-
-                let binding = cpSwitchBindings[index];
-
-                let parentExpr = eval(parse(binding.expression));
-                let children = binding.childrenBindings;
-
-                let matched = false;
-                for (let index1 = 0; index1 < children.length; index1++) {
-
-                    let childId = children[index1].childId;
-                    let caseExpr = eval(parse(children[index1].case));
-
-                    let childDoc = document.getElementById(childId);
-
-                    if ((parentExpr == caseExpr) && !matched) {
-                        childDoc.hidden = false;
-                        matched = true;
-                    } else {
-                        childDoc.hidden = true;
-                    }
-
-
-
-                }
-                //show the defualt if not matched
-                let lastChild = children[children.length - 1];
-                if (!matched && (lastChild.case == null)) {
-                    document.getElementById(lastChild.childId).hidden = false;
+                let id = cpShowIdBindings[expression][index];
+                if (eval(parse(expression)) == true) {
+                    document.getElementById(id).hidden = false;
+                } else {
+                    document.getElementById(id).hidden = true;
                 }
 
             }
+        });
+    }
+
+
+    // <!-- cp-hide -->
+
+
+    function bindCpHide(id, expression) {
+        if (cpHideIdBindings[expression] === undefined) {
+            cpHideIdBindings[expression] = []
+            cpHideIdBindings[expression].push(id);
+        } else {
+            cpHideIdBindings[expression].push(id);
         }
-    </script>
+    }
 
+    function renderCpHideConditionally() {
+        Object.keys(cpHideIdBindings).forEach(expression => {
+            for (let index = 0; index < cpHideIdBindings[expression].length; index++) {
 
-    <!-- script to be generated -->
-    <script>
+                let id = cpHideIdBindings[expression][index];
+                if (eval(parse(expression)) == true) {
+                    document.getElementById(id).hidden = true;
+                } else {
+                    document.getElementById(id).hidden = false;
+                }
 
-
-        //cp model
-        this.bindCpModelToVar("myTestInput", "myTest");
-
-        //cp hide/show
-        this.bindCpShow("myTestShow", "cpShowCondition");
-        this.bindCpHide("myTestHide", "cpHideCondition");
-
-        //cp event
-        this.bindCpEvent("myTestEvent", forthyear.event, "printEventFire", ["'myTestEvent'"]);
-
-
-
-        //variable usage
-        this.bindVariableUseage("myTestUsage", "{{myTest}}", "upper(lower(myTest))");
-        this.bindVariableUseage("myTestUsage2", "{{repeatsNumber + repeatsNumber2}}", "repeatsNumber + repeatsNumber2");
-        // this.bindVariableUseage("myTestUsage2", "myTest");
-
-        //cp if
-        this.bindCpIf("myConditionTest", "conditional");
-        this.bindCpIf("myConditionTest2", "conditional2");
-
-
-
-
-        //cp switch
-        this.bindCpSwitch("switch", [
-            {
-                childId: "myTestSwitchChild1",
-                case: 99,
-            },
-            {
-                childId: "myTestSwitchChild2",
-                case: 100,
-            },
-            {
-                childId: "myTestSwitchChildDefault",
-                case: null
             }
-        ])
+        });
+    }
 
+    // <!-- cp-event -->
 
-        //cp for
-        this.cpForRepeat("myTestFor3", "repeatsNumber3");
-        this.cpForRepeat("myTestFor2", "repeatsNumber2");
-        this.cpForRepeat("myTestFor", "repeatsNumber");
+    function bindCpEvent(id, eventName, cb, params = []) {
+        // console.log(id);
+        // console.log(eventName);
+        document.getElementById(id).addEventListener(eventName, () => {
 
+            let cbString = cb;
+            // if(params != undefined){
+            cbString += "(" + params.join(",") + ")";
+            eval(parse(cbString));
+        });
 
-
-
-
-        function render() {
-            setInterval(() => {
-
-
-                removeRepeatedNodes(); //removes the cp-for nodes each time we start a new render
-
-
-                restoreDeleteIfNodes();//remove the deleted if nodes from the list and re adds them to their place
-
-
-
-                //render the changes of the cp-model (input=>variable) binding
-                for (var i = 0; i < changes.length; i++) {
-                    // console.log(changes[i]);
-                    changes[i]();
-                }
-                changes = [];
-
-                //(variable => input) binding
-                for (let index = 0; index < inits.length; index++) {
-                    inits[index]();
-                }
+        document.getElementById(id).addEventListener('click', ()=>{
+            document.getElementById(id).dispatchEvent(new CustomEvent(eventName));
+        })
+    }
 
 
 
-                //render the fors
-                for (let index = 0; index < forRenders.length; index++) {
-                    forRenders[index]();
-                }
+    // <!-- cp-for -->
 
 
-                renderVariableUsages()
-                renderCpShowConditionally();
-                renderCpHideConditionally();
-                renderCpIf();
-                renderCpSwitch();
+    //
+    // let dynamicScope = {};
+    // {
+    //     forId:{
+    //         x,
+    //         y,
+    //         index
+    //     }
+    // }
+    function cpForRepeat(id, variableName) {
 
-            }, 200);
+
+        // let repeatsNumber = forthyear[variableName];
+
+        forRenders.push(() => {
+            // find the element
+            let element = document.getElementById(id);
+
+            // clone the element
+            for (let index = 0; index < forthyear[variableName]; index++) {
+
+                //clone it
+                let clone = element.cloneNode(true);
+                clone.hidden = false;
+
+                //add it to parent
+                // element.insertAdjacentElement('beforestart', newScript);
+                element.insertAdjacentElement('afterend', clone);
+                repeatedNodes.push(clone);
+            }
+
+            //hide the original element
+            element.hidden = true;
+        })
+    }
+
+    function removeRepeatedNodes() {
+        for (let index = 0; index < repeatedNodes.length; index++) {
+            repeatedNodes[index].remove();
         }
-        render();
-    </script>
+        repeatedNodes = [];
+    }
+
+
+
+    // <!-- cp-if -->
+
+
+    //here we replace the node we want to delete (if we needed to delete it)
+    //with a node that has the same id and it is hidden
+    //and when we need to re-add the old node we add it instead of the newly initialized node
+
+    //this is implemented this way to save the place in-wich the node should always be
+
+    function bindCpIf(id, expression) {
+        cpIfConditionalBindings.push({
+            id: id,
+            expression: expression,
+        });
+    }
+
+    function renderCpIf() {
+        for (let index = 0; index < cpIfConditionalBindings.length; index++) {
+
+            let cond = cpIfConditionalBindings[index];
+
+            let doc = document.getElementById(cond.id);
+            if (eval(parse(cond.expression)) == false) {
+
+                //create a node to be put instead of the if node
+                let rep = document.createElement('div');
+                rep.id = cond.id;
+                rep.hidden = true;
+
+                //put it after the if node
+                doc.after(rep);
+
+                //clone the if node to keep a reference
+                let cloneDoc = doc.cloneNode(true);
+
+                //save the reference and delete the original
+                deletedNodes.push(cloneDoc);
+                doc.remove();
+            }
+        }
+    }
+
+    function restoreDeleteIfNodes() {
+
+        //remove the deleted if nodes from the list and re adds them to their place
+
+        for (let index = 0; index < deletedNodes.length; index++) {
+
+            let delNode = deletedNodes[index];
+
+            //find the one we put there
+            let rep = document.getElementById(delNode.id);
+            rep.after(delNode);
+            rep.remove();
+
+
+        }
+        deletedNodes = [];
+    }
+
+    // <!-- cp-switch -->
+
+
+    function bindCpSwitch(expression, childIdsWithCases) {
+        cpSwitchBindings.push({
+            expression: expression,
+            childrenBindings: childIdsWithCases
+        });
+    }
+    function renderCpSwitch() {
+        for (let index = 0; index < cpSwitchBindings.length; index++) {
+
+            let binding = cpSwitchBindings[index];
+
+            let parentExpr = eval(parse(binding.expression));
+            let children = binding.childrenBindings;
+
+            let matched = false;
+            for (let index1 = 0; index1 < children.length; index1++) {
+
+                let childId = children[index1].childId;
+                let caseExpr = eval(parse(children[index1].case));
+
+                let childDoc = document.getElementById(childId);
+
+                if ((parentExpr == caseExpr) && !matched) {
+                    childDoc.hidden = false;
+                    matched = true;
+                } else {
+                    childDoc.hidden = true;
+                }
+
+
+
+            }
+            //show the defualt if not matched
+            let lastChild = children[children.length - 1];
+            if (!matched && (lastChild.case == null)) {
+                document.getElementById(lastChild.childId).hidden = false;
+            }
+
+        }
+    }
+</script>
+
+
+<!-- script to be generated -->
+<script>
+
+
+    //cp model
+    this.bindCpModelToVar("myTestInput", "myTest");
+
+    //cp hide/show
+    this.bindCpShow("myTestShow", "cpShowCondition");
+    this.bindCpHide("myTestHide", "cpHideCondition");
+
+    //cp event
+    this.bindCpEvent("myTestEvent", forthyear.event, "printEventFire", ["'myTestEvent'"]);
+
+
+
+    //variable usage
+    this.bindVariableUseage("myTestUsage", "{{myTest}}", "upper(lower(myTest))");
+    this.bindVariableUseage("myTestUsage2", "{{repeatsNumber + repeatsNumber2}}", "repeatsNumber + repeatsNumber2");
+    // this.bindVariableUseage("myTestUsage2", "myTest");
+
+    //cp if
+    this.bindCpIf("myConditionTest", "conditional");
+    this.bindCpIf("myConditionTest2", "conditional2");
+
+
+
+
+    //cp switch
+    this.bindCpSwitch("switch", [
+        {
+            childId: "myTestSwitchChild1",
+            case: 99,
+        },
+        {
+            childId: "myTestSwitchChild2",
+            case: 100,
+        },
+        {
+            childId: "myTestSwitchChildDefault",
+            case: null
+        }
+    ]);
+
+    //cp for
+    this.cpForRepeat("myTestFor3", "repeatsNumber3");
+    this.cpForRepeat("myTestFor2", "repeatsNumber2");
+    this.cpForRepeat("myTestFor", "repeatsNumber");
+
+
+
+
+
+    function render() {
+        setInterval(() => {
+
+
+            removeRepeatedNodes(); //removes the cp-for nodes each time we start a new render
+
+
+            restoreDeleteIfNodes();//remove the deleted if nodes from the list and re adds them to their place
+
+
+
+            //render the changes of the cp-model (input=>variable) binding
+            for (var i = 0; i < changes.length; i++) {
+                // console.log(changes[i]);
+                changes[i]();
+            }
+            changes = [];
+
+            //(variable => input) binding
+            for (let index = 0; index < inits.length; index++) {
+                inits[index]();
+            }
+
+
+
+            //render the fors
+            for (let index = 0; index < forRenders.length; index++) {
+                forRenders[index]();
+            }
+
+
+            renderVariableUsages()
+            renderCpShowConditionally();
+            renderCpHideConditionally();
+            renderCpIf();
+            renderCpSwitch();
+
+        }, 200);
+    }
+    render();
+</script>
 
 
 </body>
