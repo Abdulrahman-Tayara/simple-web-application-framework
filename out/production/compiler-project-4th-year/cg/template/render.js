@@ -16,11 +16,13 @@ function render() {
             forRenders[index]();
         }
 
-        replaceAllVariableUsages();
+
+        replaceAllVariableUsages()
         renderCpShowConditionally();
         renderCpHideConditionally();
-        renderCpIfConditionalBindings();
+        renderCpIf();
+        renderCpSwitchBindinds();
 
-    }, 16);
+    }, 200);
 }
 render();

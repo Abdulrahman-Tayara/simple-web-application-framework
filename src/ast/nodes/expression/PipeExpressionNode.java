@@ -5,6 +5,8 @@ import ast.nodes.expression.value.ValuableNode;
 import ast.nodes.expression.value.variable.FunctionExpressionNode;
 import ast.nodes.expression.value.variable.VariableExpressionNode;
 
+import java.util.ArrayList;
+
 /**
  * Pipe expression, ex: pipedExpression | functionName:factor
  */
@@ -35,8 +37,12 @@ public class PipeExpressionNode extends ExpressionNode implements ValuableNode {
 
         ValuableNode transformerParam = new VariableExpressionNode(pipedExpression);
 
-        transformer.addParamInFirst(new FunctionExpressionNode.FunctionParam(transformerParam));
+        FunctionExpressionNode copiedTransformer = new FunctionExpressionNode(
+                transformer.getFunctionName(), new ArrayList<>(transformer.getParams())
+        );
 
-        return transformer.toHtml();
+        copiedTransformer.addParamInFirst(new FunctionExpressionNode.FunctionParam(transformerParam));
+
+        return copiedTransformer.toHtml();
     }
 }

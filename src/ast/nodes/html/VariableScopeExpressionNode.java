@@ -10,12 +10,23 @@ import cg.scripting.VariableScopeScriptCode;
 public class VariableScopeExpressionNode extends HTMLElementNode implements ScriptableNode {
     private ExpressionNode scopeExpression;
 
+    // Pure content
+    private String scopeContent;
+
     public ExpressionNode getScopeValue() {
         return scopeExpression;
     }
 
+    public String getScopeContent() {
+        return scopeContent;
+    }
+
     public void setScopeExpression(ExpressionNode scopeValues) {
         this.scopeExpression = scopeValues;
+    }
+
+    public void setScopeContent(String scopeContent) {
+        this.scopeContent = scopeContent;
     }
 
     @Override
@@ -25,6 +36,6 @@ public class VariableScopeExpressionNode extends HTMLElementNode implements Scri
 
     @Override
     public ScriptCode generateScript(HTMLTagNode tag) {
-        return new VariableScopeScriptCode(tag.getId(), scopeExpression);
+        return new VariableScopeScriptCode(tag.getId(), scopeExpression, scopeContent);
     }
 }

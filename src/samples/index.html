@@ -1,21 +1,11 @@
 <!DOCTYPE html>
-<Html id="495184888">
-<body id="1860909510">
-<div id="1534258805">{{upper(lower(var1,var1),lower(var1),'s') > 2}}</div>
-<div id="1180013177">
-    <div id="1509697111"></div>
-    <div id="822090641"></div>
-    <div id="484116642"></div>
-    <div id="920472765"></div>
-</div>
-<div id="1881485872"></div>
-<input id="1270761582">{{x}}</input><input id="303583444"></input><input id="1443800522"></input>
+<Html id="1994785267">
+<body id="144519417">
+<div id="242926071">{{zipper(upper(lower(x)))}}</div>
 <script>
 
     function forthyear() {
-        this.var1 = "initial value";
-        this.var2 = false;
-        this.var3 = true;
+        this.x = false
     }
 
     var forthyear = new forthyear();
@@ -23,6 +13,7 @@
 </script>
 
 <script>
+    let defaultBodyCode = document.body.innerHTML;
     let inits = [];
     let changes = [];
     let forRenders = [];
@@ -36,6 +27,61 @@
 </script>
 
 <script>
+    var globalObjectString = "forthyear";
+
+    function parse(expressionString) {
+        let type = typeof expressionString;
+        if (type != "string") {
+            return `${expressionString}`;
+        }
+        let exprArr = expressionString.split(" ");
+        let finalString = "";
+        for (let index = 0; index < exprArr.length; index++) {
+            let expr = exprArr[index];
+            if (isLetter(expr.charAt(0))) {
+                let striped = expr;
+                if (isFunction(expr)) {
+                    return parseAsFunction(expr);
+                }
+                if (isConcatObj(expr)) {
+                    striped = expr.substr(0, striped.indexOf("."));
+                }
+                if (forthyear[striped] != undefined) {
+                    let newExpr = globalObjectString + "." + expr;
+                    expr = newExpr;
+                }
+            }
+            finalString += expr;
+        }
+        return finalString;
+    }
+
+    function parseAsFunction(expr) {
+        let part1 = expr.substr(0, expr.indexOf("("));
+        let len = expr.lastIndexOf(")") - 1 - expr.indexOf("(");
+        let part2 = expr.substr(expr.indexOf("(") + 1, len);
+        let parsedPart1 = parse(part1);
+        let part2Seperated = part2.split(",");
+        for (let index = 0; index < part2Seperated.length; index++) {
+            part2Seperated[index] = parse(part2Seperated[index]);
+        }
+        let parsedPart2 = part2Seperated.join(',');
+        let finalExpr = parse(part1) + "(" + parsedPart2 + ")";
+        return finalExpr;
+    }
+
+    function isFunction(expr) {
+        return expr.indexOf("(") != -1;
+    }
+
+    function isLetter(char) {
+        return char.toUpperCase() != char.toLowerCase();
+    }
+
+    function isConcatObj(expr) {
+        return expr.indexOf(".") != -1
+    }
+
     function assigneInitalVariables(id, variableName) {
         document.getElementById(id).value = forthyear[variableName];
     }
@@ -44,7 +90,7 @@
         forthyear[variableName] = document.getElementById(id).value;
     }
 
-    function bindCpModelToVar(id, variableName) {
+    function bindCpModel(id, variableName) {
         inits.push(() => {
             assigneInitalVariables(id, variableName);
         });
@@ -55,13 +101,13 @@
         });
     }
 
-    function bindVariableUseageWithVariable(id, variableName) {
+    function bindVariableUsageWithVariable(id, variableName, formatters = []) {
         let text = document.getElementById(id).innerHTML;
         if (defaultInnerHTML[variableName] === undefined) {
             defaultInnerHTML[variableName] = [];
-            defaultInnerHTML[variableName].push({id: id, text: text});
+            defaultInnerHTML[variableName].push({id: id, text: text, formatter: formatters});
         } else {
-            defaultInnerHTML[variableName].push({id: id, text: text});
+            defaultInnerHTML[variableName].push({id: id, text: text, formatter: formatters});
         }
     }
 
@@ -75,20 +121,20 @@
         });
     }
 
-    function addCpShowIdBinding(id, variableName) {
-        if (cpShowIdBindings[variableName] === undefined) {
-            cpShowIdBindings[variableName] = [];
-            cpShowIdBindings[variableName].push(id);
+    function bindCpShow(id, expression) {
+        if (cpShowIdBindings[expression] === undefined) {
+            cpShowIdBindings[expression] = [];
+            cpShowIdBindings[expression].push(id);
         } else {
-            cpShowIdBindings[variableName].push(id);
+            cpShowIdBindings[expression].push(id);
         }
     }
 
-    function renderCpShowConditionally(id, variableName) {
-        Object.keys(cpShowIdBindings).forEach(variableName => {
-            for (let index = 0; index < cpShowIdBindings[variableName].length; index++) {
-                let id = cpShowIdBindings[variableName][index];
-                if (forthyear[variableName] == true) {
+    function renderCpShowConditionally() {
+        Object.keys(cpShowIdBindings).forEach(expression => {
+            for (let index = 0; index < cpShowIdBindings[expression].length; index++) {
+                let id = cpShowIdBindings[expression][index];
+                if (eval(parse(expression)) == true) {
                     document.getElementById(id).hidden = false;
                 } else {
                     document.getElementById(id).hidden = true;
@@ -97,20 +143,20 @@
         });
     }
 
-    function addCpHideIdBinding(id, variableName) {
-        if (cpHideIdBindings[variableName] === undefined) {
-            cpHideIdBindings[variableName] = [];
-            cpHideIdBindings[variableName].push(id);
+    function bindCpHide(id, expression) {
+        if (cpHideIdBindings[expression] === undefined) {
+            cpHideIdBindings[expression] = [];
+            cpHideIdBindings[expression].push(id);
         } else {
-            cpHideIdBindings[variableName].push(id);
+            cpHideIdBindings[expression].push(id);
         }
     }
 
-    function renderCpHideConditionally(id, variableName) {
-        Object.keys(cpHideIdBindings).forEach(variableName => {
-            for (let index = 0; index < cpHideIdBindings[variableName].length; index++) {
-                let id = cpHideIdBindings[variableName][index];
-                if (forthyear[variableName] == true) {
+    function renderCpHideConditionally() {
+        Object.keys(cpHideIdBindings).forEach(expression => {
+            for (let index = 0; index < cpHideIdBindings[expression].length; index++) {
+                let id = cpHideIdBindings[expression][index];
+                if (eval(parse(expression)) == true) {
                     document.getElementById(id).hidden = true;
                 } else {
                     document.getElementById(id).hidden = false;
@@ -119,15 +165,23 @@
         });
     }
 
-    function addCpIfBinding(id, variableName, expectedValue) {
-        cpIfConditionalBindings.push({id: id, variableName: variableName, expectedValue: expectedValue});
+    function bindCpEvent(id, eventName, cb) {
+        console.log(id);
+        console.log(eventName);
+        document.getElementById(id).addEventListener(eventName, () => {
+            cb();
+        })
     }
 
-    function renderCpIfConditionalBindings() {
+    function bindCpIf(id, expression) {
+        cpIfConditionalBindings.push({id: id, expression: expression,});
+    }
+
+    function renderCpIf() {
         for (let index = 0; index < cpIfConditionalBindings.length; index++) {
             let cond = cpIfConditionalBindings[index];
             let doc = document.getElementById(cond.id);
-            if (forthyear[cond.variableName] != cond.expectedValue) {
+            if (eval(parse(cond.expression)) == false) {
                 let rep = document.createElement('div');
                 rep.id = cond.id;
                 rep.hidden = true;
@@ -148,20 +202,39 @@
         }
         deletedNodes = [];
     }
+
+    function bindCpSwitch(expression, childIdsWithCases) {
+        cpSwitchBindings.push({expression: expression, childrenBindings: childIdsWithCases});
+    }
+
+    function renderCpSwitchBindinds() {
+        for (let index = 0; index < cpSwitchBindings.length; index++) {
+            let binding = cpSwitchBindings[index];
+            let parentExpr = eval(parse(binding.expression));
+            let children = binding.childrenBindings;
+            let matched = false;
+            for (let index1 = 0; index1 < children.length; index1++) {
+                let childId = children[index1].childId;
+                let caseExpr = eval(parse(children[index1].case));
+                let childDoc = document.getElementById(childId);
+                if ((parentExpr == caseExpr) && !matched) {
+                    childDoc.hidden = false;
+                    matched = true;
+                } else {
+                    childDoc.hidden = true;
+                }
+            }
+            let lastChild = children[children.length - 1];
+            if (!matched && (lastChild.case == null)) {
+                document.getElementById(lastChild.childId).hidden = false;
+            }
+        }
+    }
 </script>
 
 <script>
-    bindCpIf("1534258805", "var3 > 2");
-    bindVariableUsageWithVariable("1534258805", "upper(lower(var1),'s') > 2");
-    bindCpSwitch("1180013177", "x", [{"childId": "1509697111", "case": "2"}, {
-        "childId": "822090641",
-        "case": "\u0027s\u0027"
-    }, {"childId": "484116642", "case": "true"}, {"childId": "920472765", "case": "null"}]);
-    bindCpEvent("1881485872", "click", "func", ["true", "\u0027s\u0027", "1"]);
-    bindCpModel("1270761582", "x");
-    bindVariableUsageWithVariable("1270761582", "x");
-    bindCpHide("303583444", "y");
-    bindCpShow("1443800522", "y");
+    bindCpIf("242926071", "x");
+    bindVariableUsageWithVariable("242926071", "{{zipper(upper(lower(x)))}}", "zipper(upper(lower(x)))");
 
     function render() {
         setInterval(() => {
@@ -176,11 +249,12 @@
             for (let index = 0; index < forRenders.length; index++) {
                 forRenders[index]();
             }
-            replaceAllVariableUsages();
+            replaceAllVariableUsages()
             renderCpShowConditionally();
             renderCpHideConditionally();
-            renderCpIfConditionalBindings();
-        }, 16);
+            renderCpIf();
+            renderCpSwitchBindinds();
+        }, 200);
     }
 
     render();
