@@ -93,11 +93,11 @@
             document.getElementById("myTestEvent").dispatchEvent(new CustomEvent(this.forthyear.event));
         });
 
-    </script>
 
 
-    <!-- script already exists -->
-    <script>
+
+        // <!-- script already exists -->
+
         function forthyear() {
             this.myTest = "HI MAn";
             this.cpShowCondition = true;
@@ -125,13 +125,13 @@
 
 
 
-    </script>
 
-    <!-- 
-        here you will pass an exp or a string of expressions and the function will add the global
-        scope name before it so you will be able to evaluate it later
-    -->
-    <script>
+
+
+        // here you will pass an exp or a string of expressions and the function will add the global
+        // scope name before it so you will be able to evaluate it later
+
+
         var globalObjectString = "forthyear";
 
         function parse(expressionString) {
@@ -139,7 +139,7 @@
 
             let type = typeof expressionString;
             // console.log(type);
-            if(type != "string"){
+            if (type != "string") {
                 return `${expressionString}`
             }
             //now all spaces are removed
@@ -156,7 +156,7 @@
 
                     let striped = expr;
 
-                    if(isFunction(expr)){
+                    if (isFunction(expr)) {
                         return parseAsFunction(expr);
                     }
 
@@ -176,15 +176,15 @@
             return finalString;
         }
 
-        function parseAsFunction(expr){
+        function parseAsFunction(expr) {
             //will divide into 3 parts:
 
             //part one before the "("
             let part1 = expr.substr(0, expr.indexOf("("));
 
             //part two from the first "(" to the last ")"
-            let len = expr.lastIndexOf(")")-1 - expr.indexOf("(") 
-            let part2 = expr.substr(expr.indexOf("(")+1, len)
+            let len = expr.lastIndexOf(")") - 1 - expr.indexOf("(")
+            let part2 = expr.substr(expr.indexOf("(") + 1, len)
             // console.log("part 2 " + part2);
 
             //parsing
@@ -192,7 +192,7 @@
 
             let part2Seperated = part2.split(",");
             for (let index = 0; index < part2Seperated.length; index++) {
-                
+
                 part2Seperated[index] = parse(part2Seperated[index]);
             }
 
@@ -204,7 +204,7 @@
 
         }
 
-        function isFunction(expr){
+        function isFunction(expr) {
             return expr.indexOf("(") != -1;
         }
 
@@ -216,8 +216,8 @@
             return expr.indexOf(".") != -1
         }
 
-    </script>
-    <script>
+
+        // intial arrays and objects
 
         let defaultBodyCode = document.body.innerHTML;
 
@@ -236,11 +236,11 @@
         let deletedNodes = []; //list of ids 
         let repeatedNodes = []; //list of nodes
 
-    </script>
 
 
-    <!-- cp-model -->
-    <script>
+
+        // <!-- cp-model -->
+
         // this should be used because we are initializing on every render
         function assigneInitalVariables(id, variableName) {
             document.getElementById(id).value = forthyear[variableName];
@@ -269,10 +269,10 @@
 
             });
         }
-    </script>
 
-    <!-- variable usage -->
-    <script>
+
+        // <!-- variable usage -->
+
 
         function bindVariableUseageWithVariable(id, variableName, formatters = []) {
 
@@ -310,10 +310,10 @@
             });
         }
 
-    </script>
 
-    <!-- cp-show -->
-    <script>
+
+        // <!-- cp-show -->
+
         function bindCpShow(id, expression) {
             if (cpShowIdBindings[expression] === undefined) {
                 cpShowIdBindings[expression] = []
@@ -338,10 +338,10 @@
                 }
             });
         }
-    </script>
 
-    <!-- cp-hide -->
-    <script>
+
+        // <!-- cp-hide -->
+
 
         function bindCpHide(id, expression) {
             if (cpHideIdBindings[expression] === undefined) {
@@ -366,10 +366,9 @@
                 }
             });
         }
-    </script>
 
-    <!-- cp-event -->
-    <script>
+        // <!-- cp-event -->
+
         function addCpEventListener(id, eventName, cb) {
             console.log(id);
             console.log(eventName);
@@ -378,11 +377,9 @@
             })
         }
 
-    </script>
 
 
-    <!-- cp-for -->
-    <script>
+        // <!-- cp-for -->
 
 
         //
@@ -427,11 +424,11 @@
             }
             repeatedNodes = [];
         }
-    </script>
 
 
-    <!-- cp-if -->
-    <script>
+
+        // <!-- cp-if -->
+
 
         //here we replace the node we want to delete (if we needed to delete it)
         //with a node that has the same id and it is hidden
@@ -489,10 +486,9 @@
             }
             deletedNodes = [];
         }
-    </script>
 
-    <!-- cp-switch -->
-    <script>
+        // <!-- cp-switch -->
+
 
         function bindCpSwitch(expression, childIdsWithCases) {
             cpSwitchBindings.push({
@@ -523,13 +519,13 @@
                         childDoc.hidden = true;
                     }
 
-                    
+
 
                 }
 
                 //show the defualt if not matched
-                let lastChild = children[children.length-1];
-                if(!matched && (lastChild.case == null)){
+                let lastChild = children[children.length - 1];
+                if (!matched && (lastChild.case == null)) {
                     document.getElementById(lastChild.childId).hidden = false;
                 }
 
