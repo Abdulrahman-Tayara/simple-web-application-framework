@@ -1,0 +1,126 @@
+{
+  "elements": [
+    {
+      "name": "html",
+      "attributes": [],
+      "content": [
+        {
+          "text": ""
+        },
+        {
+          "name": "head",
+          "attributes": [],
+          "content": [
+            {
+              "text": ""
+            }
+          ]
+        },
+        {
+          "text": ""
+        },
+        {
+          "name": "body",
+          "attributes": [],
+          "content": [
+            {
+              "text": ""
+            },
+            {
+              "name": "div",
+              "attributes": [],
+              "content": [
+                {
+                  "text": ""
+                },
+                {
+                  "name": "p",
+                  "attributes": [
+                    {
+                      "name": "cp-if",
+                      "value": {
+                        "operator": "<",
+                        "operand1": {
+                          "functionName": "result",
+                          "params": []
+                        },
+                        "operand2": {
+                          "value": 30.0
+                        }
+                      }
+                    }
+                  ],
+                  "content": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "scopeExpression": {
+                        "condition": {
+                          "operator": "<",
+                          "operand1": {
+                            "functionName": "result",
+                            "params": []
+                          },
+                          "operand2": {
+                            "value": 20.0
+                          }
+                        },
+                        "expression1": {
+                          "condition": {
+                            "operator": ">",
+                            "operand1": {
+                              "variableName": "x"
+                            },
+                            "operand2": {
+                              "value": 15.0
+                            }
+                          },
+                          "expression1": {
+                            "value": "1-1"
+                          },
+                          "expression2": {
+                            "value": "1-2"
+                          }
+                        },
+                        "expression2": {
+                          "condition": {
+                            "operator": "<",
+                            "operand1": {
+                              "variableName": "x"
+                            },
+                            "operand2": {
+                              "value": 15.0
+                            }
+                          },
+                          "expression1": {
+                            "value": "2-1"
+                          },
+                          "expression2": {
+                            "value": "2-2"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "text": ""
+                }
+              ]
+            },
+            {
+              "text": ""
+            }
+          ]
+        },
+        {
+          "text": ""
+        }
+      ]
+    }
+  ]
+}
