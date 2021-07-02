@@ -1,3 +1,4 @@
+var globalObjectString = "forthyear";
 function parse(expressionString) {
 
 
@@ -106,33 +107,29 @@ function bindCpModelToVar(id, variableName) {
 }
 
 
-function bindVariableUseageWithVariable(id, variableName, formatters = []) {
+function bindVariableUsage(id, rawCurly, expression) {
 
 
     let text = document.getElementById(id).innerHTML;
 
-    if (defaultInnerHTML[variableName] === undefined) {
-        defaultInnerHTML[variableName] = [];
-        defaultInnerHTML[variableName].push({id: id, text: text, formatter: formatters});
+    if (defaultInnerHTML[rawCurly] === undefined) {
+        defaultInnerHTML[rawCurly] = [];
+        defaultInnerHTML[rawCurly].push({id: id, text: text, expression: expression});
     } else {
-        defaultInnerHTML[variableName].push({id: id, text: text, formatter: formatters});
+        defaultInnerHTML[rawCurly].push({id: id, text: text, expression: expression});
     }
-
 }
 
-function replaceAllVariableUsages() {
+function renderVariableUsages() {
 
+    Object.keys(defaultInnerHTML).forEach(rawCurly => {
+        for (let index = 0; index < defaultInnerHTML[rawCurly].length; index++) {
 
-    Object.keys(defaultInnerHTML).forEach(key => {
-        for (let index = 0; index < defaultInnerHTML[key].length; index++) {
+            let obj = defaultInnerHTML[rawCurly][index];
 
-            let obj = defaultInnerHTML[key][index];
-
-
-            let newText = obj.text.replace("{{" + key + "}}", forthyear[key]);
+            let newText = obj.text.replace(rawCurly, eval(parse(obj.expression)));
 
             document.getElementById(obj.id).innerHTML = newText;
-
         }
     });
 }
@@ -189,12 +186,20 @@ function renderCpHideConditionally() {
 }
 
 
-function addCpEventListener(id, eventName, cb) {
-    console.log(id);
-    console.log(eventName);
+function bindCpEvent(id, eventName, cb, params = []) {
+
+
     document.getElementById(id).addEventListener(eventName, () => {
-        cb();
+
+        let cbString = cb;
+
+        cbString += "(" + params.join(",") + ")";
+        eval(parse(cbString));
     });
+
+    document.getElementById(id).addEventListener('click', () => {
+        document.getElementById(id).dispatchEvent(new CustomEvent(eventName));
+    })
 }
 
 
@@ -288,7 +293,7 @@ function bindCpSwitch(expression, childIdsWithCases) {
     });
 }
 
-function renderCpSwitchBindinds() {
+function renderCpSwitch() {
     for (let index = 0; index < cpSwitchBindings.length; index++) {
 
         let binding = cpSwitchBindings[index];
@@ -313,7 +318,6 @@ function renderCpSwitchBindinds() {
 
 
         }
-
 
         let lastChild = children[children.length - 1];
         if (!matched && (lastChild.case == null)) {

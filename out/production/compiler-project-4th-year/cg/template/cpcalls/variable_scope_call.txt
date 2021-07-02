@@ -1,1 +1,1 @@
-bindVariableUsageWithVariable("%s","{{%s}}","%s");
+bindVariableUsage("%s","{{%s}}","%s");

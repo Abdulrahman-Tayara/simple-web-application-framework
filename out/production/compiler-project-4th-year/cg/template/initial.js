@@ -1,4 +1,3 @@
-let defaultBodyCode = document.body.innerHTML;
 let inits = [];
 let changes = [];
 let forRenders = [];

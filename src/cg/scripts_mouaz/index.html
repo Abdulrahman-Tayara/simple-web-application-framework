@@ -283,7 +283,7 @@
     // <!-- variable usage -->
 
 
-    function bindVariableUseage(id, rawCurly, expression) {
+    function bindVariableUsage(id, rawCurly, expression) {
 
         //this function saves the default innerHTML for the doc with id: @param:id
         //ex: saves : "the value of x is {{x}}"
@@ -291,7 +291,7 @@
         let text = document.getElementById(id).innerHTML;
 
         if (defaultInnerHTML[rawCurly] === undefined) {
-            defaultInnerHTML[rawCurly] = []
+            defaultInnerHTML[rawCurly] = [];
             defaultInnerHTML[rawCurly].push({ id: id, text: text, expression: expression });
         } else {
             defaultInnerHTML[rawCurly].push({ id: id, text: text, expression: expression });
@@ -316,7 +316,7 @@
 
     function bindCpShow(id, expression) {
         if (cpShowIdBindings[expression] === undefined) {
-            cpShowIdBindings[expression] = []
+            cpShowIdBindings[expression] = [];
             cpShowIdBindings[expression].push(id);
         } else {
             cpShowIdBindings[expression].push(id);
@@ -345,7 +345,7 @@
 
     function bindCpHide(id, expression) {
         if (cpHideIdBindings[expression] === undefined) {
-            cpHideIdBindings[expression] = []
+            cpHideIdBindings[expression] = [];
             cpHideIdBindings[expression].push(id);
         } else {
             cpHideIdBindings[expression].push(id);
@@ -558,9 +558,9 @@
 
 
     //variable usage
-    this.bindVariableUseage("myTestUsage", "{{myTest}}", "upper(lower(myTest))");
-    this.bindVariableUseage("myTestUsage2", "{{repeatsNumber + repeatsNumber2}}", "repeatsNumber + repeatsNumber2");
-    // this.bindVariableUseage("myTestUsage2", "myTest");
+    this.bindVariableUsage("myTestUsage", "{{myTest}}", "upper(lower(myTest))");
+    this.bindVariableUsage("myTestUsage2", "{{repeatsNumber + repeatsNumber2}}", "repeatsNumber + repeatsNumber2");
+    // this.bindVariableUsage("myTestUsage2", "myTest");
 
     //cp if
     this.bindCpIf("myConditionTest", "conditional");

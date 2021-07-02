@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<Html>
-    <body>
-        <div cp-if="myFun() || var3">{{var1}}</div>
+<html lang="en">
 
-        <script>
-            function forthyear() {
-                this.var1 = "initial value";
-                this.var2 = false;
-                this.var3 = true;
-                this.myFun = () => {
-                    return false;
-                }
-            }
-            var forthyear = new forthyear();
-            var globalObjectString = "forthyear";
+<head>
+    <title>Sample 1 - basic model</title>
+</head>
 
-        </script>
-    </body>
-</Html>
+<body cp-app="forthyear">
+
+    <input type="text" cp-model="myTest" />
+    <div id="myTestDiv">My Text is: {{myTest}}</div>
+
+    <script>
+        function forthyear() {
+            this.myTest = "HI MAn";
+        };
+
+        var forthyear = new forthyear();
+
+
+    </script>
+
+
+</body>
+
+</html>

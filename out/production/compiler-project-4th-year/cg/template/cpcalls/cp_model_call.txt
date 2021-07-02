@@ -1,1 +1,1 @@
-bindCpModel("%s","%s");
+bindCpModelToVar("%s","%s");
