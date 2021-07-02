@@ -103,11 +103,11 @@
             this.cpShowCondition = true;
             this.cpHideCondition = false;
             this.event = "eventName";
-            this.repeatsNumber = 6;
-            this.repeatsNumber2 = 6;
-            this.repeatsNumber3 = 6;
+            this.repeatsNumber = 1;
+            this.repeatsNumber2 = 1;
+            this.repeatsNumber3 = 3;
             this.conditional = true;
-            this.conditional2 = '3';
+            this.conditional2 = true;
             this.switch = 99;
             this.obj = {
                 data1: "data"
@@ -124,6 +124,11 @@
             this.upper = (str) => {
                 return str.toUpperCase();
             };
+            this.printEventFire = (id)=>{
+                console.log("fire");
+                console.log(id);
+                document.getElementById(id).style.backgroundColor = "red";
+            }
 
         };
 
@@ -367,11 +372,19 @@
 
         // <!-- cp-event -->
 
-        function addCpEventListener(id, eventName, cb) {
-            console.log(id);
-            console.log(eventName);
+        function bindCpEvent(id, eventName, cb, params = []) {
+            // console.log(id);
+            // console.log(eventName);
             document.getElementById(id).addEventListener(eventName, () => {
-                cb()
+
+                let cbString = cb;
+                // if(params != undefined){
+                cbString += "(" + params.join(",") + ")";
+                eval(parse(cbString));
+            });
+
+            document.getElementById(id).addEventListener('click', ()=>{
+                document.getElementById(id).dispatchEvent(new CustomEvent(eventName));
             })
         }
 
@@ -543,10 +556,7 @@
         this.bindCpHide("myTestHide", "cpHideCondition");
 
         //cp event
-        this.addCpEventListener("myTestEvent", forthyear.event, () => {
-            document.getElementById("myTestEvent").style.backgroundColor = "red";
-            console.log("fired!");
-        });
+        this.bindCpEvent("myTestEvent", forthyear.event, "printEventFire", ["'myTestEvent'"]);
 
 
 
@@ -557,7 +567,7 @@
 
         //cp if
         this.bindCpIf("myConditionTest", "conditional");
-        this.bindCpIf("myConditionTest2", "conditional2 > '4'");
+        this.bindCpIf("myConditionTest2", "conditional2");
 
 
 
