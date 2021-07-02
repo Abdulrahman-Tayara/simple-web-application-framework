@@ -2,11 +2,33 @@ package ast.nodes.attribute;
 
 import ast.nodes.expression.value.IndexableNode;
 import ast.nodes.expression.value.ValuableNode;
+import ast.nodes.html.HTMLTagNode;
+import cg.scripting.CPForScriptCode;
+import cg.scripting.ScriptCode;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CPForAttributeNode extends CPAttributeNode<CPForAttributeNode.ForExpressionNode> implements Structural {
 
+    @Override
+    public ScriptCode generateScript(HTMLTagNode tag) {
+        return new CPForScriptCode(tag.getId(), getValue().value, getIterators());
+    }
+
+    private List<String> getIterators() {
+        List<String> iterators = new ArrayList<>();
+        if (getValue().variableName != null) {
+            iterators.add(getValue().variableName);
+        } else {
+            iterators.add(getValue().pair.key);
+            iterators.add(getValue().pair.value);
+        }
+
+        return iterators;
+    }
 
     public static class ForExpressionNode {
         @SerializedName("iterator")

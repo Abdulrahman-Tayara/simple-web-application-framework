@@ -7,11 +7,10 @@
 
 <body id="b" cp-app="forthyear">
     <span>Cards?</span>
-    <input id="myShowItems" type="text" cp-model="showItemsCnt" value="4" />
 
-    <div cp-if="showItemsCnt > 10">
-        <div>it's a big number {{showItemsCnt}}</div>
-    </div>
+    <div cp-for="x,u in array"></div>
+
+
 
     <script>
         function forthyear() {
