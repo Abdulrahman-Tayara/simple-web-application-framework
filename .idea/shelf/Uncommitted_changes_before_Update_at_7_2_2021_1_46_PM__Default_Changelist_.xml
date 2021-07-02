@@ -1,0 +1,24 @@
+<changelist name="Uncommitted_changes_before_Update_at_7_2_2021_1_46_PM_[Default_Changelist]" date="1625222788977" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_2_2021_1_46_PM_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 7/2/2021 1:46 PM [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/compiler-project-4th-year/cg/HtmlGenerator.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/compiler-project-4th-year/cg/TemplateScriptsGenerator.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/compiler-project-4th-year/cg/InitialFieldsScriptGenerator.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/compiler-project-4th-year/cg/RenderScriptGenerator.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+</changelist>

@@ -1,7 +1,7 @@
 package ast.nodes;
 
 
-public class Node {
+public class Node implements Htmlable {
 
     transient private int line;
     transient private int col;
@@ -20,5 +20,10 @@ public class Node {
 
     public int getCol() {
         return col;
+    }
+
+    @Override
+    public String toHtml() {
+        return "";
     }
 }

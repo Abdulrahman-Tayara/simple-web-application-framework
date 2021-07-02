@@ -1,9 +1,11 @@
 package ast.nodes.expression.value.variable;
 
+import ast.nodes.Htmlable;
 import ast.nodes.expression.ExpressionNode;
 import ast.nodes.expression.condition.LogicalNode;
 import ast.nodes.expression.value.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +15,15 @@ public class FunctionExpressionNode extends ValueExpressionNode
         implements IndexableNode, LogicalNode, ConcatableNode {
 
     private String functionName;
-    private List<FunctionParam> params;
+    private ArrayList<FunctionParam> params;
+
+    public FunctionExpressionNode(String functionName, ArrayList<FunctionParam> params) {
+        this.functionName = functionName;
+        this.params = params;
+    }
+
+    public FunctionExpressionNode() {
+    }
 
     public String getFunctionName() {
         return functionName;
@@ -27,12 +37,18 @@ public class FunctionExpressionNode extends ValueExpressionNode
         return params;
     }
 
-    public void setParams(List<FunctionParam> params) {
+    public void setParams(ArrayList<FunctionParam> params) {
         this.params = params;
     }
 
+    public void addParamInFirst(FunctionParam param) {
+        if (this.params == null)
+            this.params = new ArrayList<>();
 
-    public static class FunctionParam {
+        this.params.add(0, param);
+    }
+
+    public static class FunctionParam implements Htmlable {
         private ValuableNode value;
 
         public FunctionParam(ValuableNode value) {
@@ -51,6 +67,11 @@ public class FunctionExpressionNode extends ValueExpressionNode
         public String toString() {
             return value.toString();
         }
+
+        @Override
+        public String toHtml() {
+            return value.toHtml();
+        }
     }
 
     @Override
@@ -67,5 +88,14 @@ public class FunctionExpressionNode extends ValueExpressionNode
 
         builder.append(')');
         return builder.toString();
+    }
+
+    @Override
+    public String toHtml() {
+        StringBuilder builder = new StringBuilder();
+        params.forEach(param -> builder.append(param.toHtml()).append(','));
+        if (builder.length() > 0)
+            builder.setLength(builder.length() - 1);
+        return functionName + '(' + builder + ')';
     }
 }

@@ -10,8 +10,15 @@ import ast.nodes.expression.value.ValueExpressionNode;
  */
 public class VariableExpressionNode extends ValueExpressionNode
         implements IndexableNode, LogicalNode, ConcatableNode {
-    
+
     private String variableName;
+
+    public VariableExpressionNode(String variableName) {
+        this.variableName = variableName;
+    }
+
+    public VariableExpressionNode() {
+    }
 
     public String getVariableName() {
         return variableName;
@@ -19,5 +26,10 @@ public class VariableExpressionNode extends ValueExpressionNode
 
     public void setVariableName(String variableName) {
         this.variableName = variableName;
+    }
+
+    @Override
+    public String toHtml() {
+        return variableName;
     }
 }

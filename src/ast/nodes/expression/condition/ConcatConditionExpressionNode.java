@@ -30,4 +30,9 @@ public class ConcatConditionExpressionNode extends ConditionExpressionNode {
     public void setCondition2(LogicalNode condition2) {
         this.condition2 = condition2;
     }
+
+    @Override
+    public String toHtml() {
+        return condition1.toHtml() + ' ' + operator + ' ' + condition2;
+    }
 }

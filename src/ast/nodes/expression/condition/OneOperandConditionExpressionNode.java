@@ -22,4 +22,9 @@ public class OneOperandConditionExpressionNode extends ConditionExpressionNode {
     public void setOperand(LogicalNode operand) {
         this.operand = operand;
     }
+
+    @Override
+    public String toHtml() {
+        return operator + operand.toHtml();
+    }
 }

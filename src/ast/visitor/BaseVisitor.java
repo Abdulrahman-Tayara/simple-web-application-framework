@@ -137,9 +137,6 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
                 tag.getAttributes().add(visitHtmlAttribute(attribute));
             });
 
-            if (!tag.validAttributes())
-                throw new RuntimeException("Invalid tag attributes");
-
             if (ctx.htmlContent() != null)
                 tag.setContent(visitHtmlContent(ctx.htmlContent()));
 
@@ -163,7 +160,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
             attribute.setName(ctx.TAG_NAME().getText()); // Add name
             if (ctx.ATTVALUE_VALUE() != null) {
-                attribute.setValue(ctx.ATTVALUE_VALUE().getText()); // Add value
+                attribute.setValue(ctx.ATTVALUE_VALUE().getText().replace("\"", "")); // Add value
             } else {
                 attribute.setValue(null);
             }
@@ -193,7 +190,8 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
         // Check function expression
         if (!(functionExpression instanceof FunctionExpressionNode
-                || functionExpression instanceof VariableExpressionNode))
+                || functionExpression instanceof VariableExpressionNode
+        ))
             throw new RuntimeException("Invalid pipe expression");
 
 
@@ -205,7 +203,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             functionNode.setLine(((VariableExpressionNode) functionExpression).getLine());
             functionNode.setCol(((VariableExpressionNode) functionExpression).getCol());
             functionNode.setFunctionName(((VariableExpressionNode) functionExpression).getVariableName());
-            functionNode.setParams(Collections.emptyList());
+            functionNode.setParams(new ArrayList<>());
         } else // If the function is full function expression
             functionNode = (FunctionExpressionNode) functionExpression;
 
@@ -394,7 +392,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             node.setFunctionName(variableExpressionNode.getVariableName());
 
             // Fetch function params and set it.
-            node.setParams(visitFunctionParams(ctx.functionParams()));
+            node.setParams((ArrayList<FunctionExpressionNode.FunctionParam>) visitFunctionParams(ctx.functionParams()));
 
             return node;
         }
@@ -799,9 +797,10 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
     @Override
     public EventAttributeNode visitEvent(HTMLParser.EventContext ctx) {
-        Object functionExpression = visit(ctx.expression());
+        Object expression = visit(ctx.expression());
 
-        if (!(functionExpression instanceof FunctionExpressionNode))
+        if (!(expression instanceof FunctionExpressionNode) &&
+                !(expression instanceof VariableExpressionNode))
             throw new RuntimeException("Invalid event expression");
 
         EventAttributeNode node = new EventAttributeNode();
@@ -809,7 +808,11 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         node.setCol(ctx.eventName().ANY_NAME().getSymbol().getCharPositionInLine());
 
         node.setName(visitEventName(ctx.eventName()));
-        node.setValue((FunctionExpressionNode) functionExpression);
+
+        if (expression instanceof VariableExpressionNode)
+            node.setValue(new FunctionExpressionNode(((VariableExpressionNode) expression).getVariableName(), new ArrayList<>()));
+        else
+            node.setValue((FunctionExpressionNode) expression);
 
         return node;
     }

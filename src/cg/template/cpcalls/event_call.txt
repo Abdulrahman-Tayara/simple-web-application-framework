@@ -1,0 +1,1 @@
+bindCpEvent("%s","%s","%s",%s);

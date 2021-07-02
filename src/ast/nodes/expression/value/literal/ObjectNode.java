@@ -3,6 +3,7 @@ package ast.nodes.expression.value.literal;
 import ast.nodes.expression.value.ConcatableNode;
 import ast.nodes.expression.value.IndexableNode;
 import ast.nodes.expression.value.ValuableNode;
+
 import java.util.Map;
 
 /**
@@ -30,5 +31,15 @@ public class ObjectNode extends LiteralExpressionNode<Map<String, ValuableNode>>
         public void setValue(ValuableNode value) {
             this.value = value;
         }
+    }
+
+    @Override
+    public String toHtml() {
+        StringBuilder builder = new StringBuilder();
+        builder.append('{');
+        value.forEach((key, value) -> builder.append(key).append(": ").append(value.toHtml()).append(","));
+        builder.setLength(builder.length() - 1);
+        builder.append('}');
+        return builder.toString();
     }
 }

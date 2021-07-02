@@ -10,4 +10,9 @@ public class HTMLScriptNode extends HTMLElementNode {
     public void setScriptBody(String scriptBody) {
         this.scriptBody = scriptBody;
     }
+
+    @Override
+    public String toHtml() {
+        return "\n<script>\n" + scriptBody + "\n</script>\n";
+    }
 }

@@ -25,4 +25,12 @@ public class ArrayNode extends LiteralExpressionNode<List<ArrayNode.ArrayItemNod
             this.value = value;
         }
     }
+
+    @Override
+    public String toHtml() {
+        StringBuilder builder = new StringBuilder();
+        value.forEach(val -> builder.append(val).append(", "));
+        builder.setLength(builder.length() - 1);
+        return '[' + builder.toString() + ']';
+    }
 }
