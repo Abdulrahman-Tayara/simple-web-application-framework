@@ -34,12 +34,7 @@ public class VariableScopeExpressionNode extends HTMLElementNode implements Scri
         ScriptCode scriptCode = new ScriptCode();
 
         StringBuilder builder = new StringBuilder();
-        String tagId = "";
-        for (AttributeNode<?> attr : tag.getAttributes()) {
-            if (attr.getName().equals("id")) {
-                tagId = ((HTMLAttributeNode) attr).getValue();
-            }
-        }
+        String tagId = tag.getId();
 
         if (tagId.equals("")) {
             throw new RuntimeException("id not found in tag, tried to generate code for variable usage and no id found in tag");
@@ -48,7 +43,7 @@ public class VariableScopeExpressionNode extends HTMLElementNode implements Scri
         builder.append(bindVariableUsageWithVariable)
                 .append('(')
                 .append("\"").append(tagId).append("\", ")
-                .append("\"").append(((ValuableNode) scopeExpression).toHtml()).append("\"")
+                .append("\"").append(scopeExpression.toHtml()).append("\"")
                 .append(')')
                 .append(';');
 

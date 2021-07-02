@@ -4,6 +4,7 @@ import ast.nodes.expression.ExpressionNode;
 import ast.nodes.expression.condition.LogicalNode;
 import ast.nodes.expression.value.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class FunctionExpressionNode extends ValueExpressionNode
         implements IndexableNode, LogicalNode, ConcatableNode {
 
     private String functionName;
-    private List<FunctionParam> params;
+    private ArrayList<FunctionParam> params;
 
     public String getFunctionName() {
         return functionName;
@@ -27,10 +28,16 @@ public class FunctionExpressionNode extends ValueExpressionNode
         return params;
     }
 
-    public void setParams(List<FunctionParam> params) {
+    public void setParams(ArrayList<FunctionParam> params) {
         this.params = params;
     }
 
+    public void addParamInFirst(FunctionParam param) {
+        if (this.params == null)
+            this.params = new ArrayList<>();
+
+        this.params.add(0, param);
+    }
 
     public static class FunctionParam {
         private ValuableNode value;
@@ -73,7 +80,8 @@ public class FunctionExpressionNode extends ValueExpressionNode
     public String toHtml() {
         StringBuilder builder = new StringBuilder();
         params.forEach(param -> builder.append(param.value.toHtml()).append(','));
-        builder.setLength(builder.length() - 1);
+        if (builder.length() > 0)
+            builder.setLength(builder.length() - 1);
         return functionName + '(' + builder.toString() + ')';
     }
 }
