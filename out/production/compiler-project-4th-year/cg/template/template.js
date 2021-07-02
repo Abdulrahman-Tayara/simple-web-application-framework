@@ -1,4 +1,5 @@
 var globalObjectString = "forthyear";
+
 function parse(expressionString) {
 
 
@@ -27,6 +28,10 @@ function parse(expressionString) {
 
             if (isConcatObj(expr)) {
                 striped = expr.substr(0, striped.indexOf("."));
+            }
+
+            if (isIndexed(expr)) {
+                striped = expr.substr(0, striped.indexOf('['));
             }
 
             if (forthyear[striped] != undefined) {
@@ -76,16 +81,19 @@ function isLetter(char) {
 }
 
 function isConcatObj(expr) {
-    return expr.indexOf(".") != -1
+    return expr.indexOf(".") != -1;
 }
 
+function isIndexed(expr) {
+    return expr.indexOf("[") != -1;
+}
 
 function assigneInitalVariables(id, variableName) {
-    document.getElementById(id).value = forthyear[variableName];
+    document.getElementById(id).value = eval(parse(variableName));
 }
 
 function changeValue(id, variableName) {
-    forthyear[variableName] = document.getElementById(id).value;
+    eval(`${parse(variableName)} = document.getElementById(${id}).value`);
 }
 
 
@@ -197,32 +205,23 @@ function bindCpEvent(id, eventName, cb, params = []) {
         eval(parse(cbString));
     });
 
-    document.getElementById(id).addEventListener('click', () => {
-        document.getElementById(id).dispatchEvent(new CustomEvent(eventName));
-    })
 }
 
 
-function cpForRepeat(id, variableName) {
-
+function bindCpFor(id, expression, counter1, counter2 = null) {
 
     forRenders.push(() => {
-
         let element = document.getElementById(id);
 
-
-        for (let index = 0; index < forthyear[variableName]; index++) {
-
-
+        let evaluatedExpression = eval(parse(expression));
+        
+        for (let index in evaluatedExpression) {
             let clone = element.cloneNode(true);
             clone.hidden = false;
-
-
-            element.insertAdjacentElement('afterend', clone);
+            clone.id = clone.id + "-" + index;
+            element.insertAdjacentElement('beforeBegin', clone);
             repeatedNodes.push(clone);
         }
-
-
         element.hidden = true;
     })
 }
@@ -248,7 +247,7 @@ function renderCpIf() {
         let cond = cpIfConditionalBindings[index];
 
         let doc = document.getElementById(cond.id);
-        if (eval(parse(cond.expression)) == false) {
+        if (!eval(parse(cond.expression))) {
 
 
             let rep = document.createElement('div');

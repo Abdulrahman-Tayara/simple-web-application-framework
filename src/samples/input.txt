@@ -1,20 +1,62 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Sample 4 if</title>
+    <title>Sample 7 everything</title>
 </head>
 
-<body id="b" cp-app="forthyear">
-    <span>Cards?</span>
+<body cp-app="forthyear">
 
-    <div cp-for="x,u in array"></div>
+    <div>
+        <span>Id</span> <input type="number" cp-model="newObj.newId" /> <br />
+        <span>Name</span> <input type="text" cp-model="newObj.newName" /> <br />
+        <span>Date</span> <input type="date" cp-model="newObj.newDate" /> <br />
+        <button @click="addSt()">Add</button>
+    </div>
 
+    <div cp-if="newAddedSt.newId">
+        <span>the new St id: {{newAddedSt.newId}}</span>
+        <span>the new St Name: {{newAddedSt.newId | lower}}</span>
+        <span>the new St Date: {{newAddedSt.newId | date('dd/mm/yyyy')}}</span> <!-- any date format you want  -->
+    </div>
+
+
+
+    <table>
+        <thead>
+                <th cp-for="k,v in obj[0]">Hi</th>
+        </thead>
+            <tr cp-for="st in obj">
+                Hiasd
+            </tr>
+    </table>
 
 
     <script>
         function forthyear() {
-            this.showItemsCnt = 6;
+            let scope = this;
+            scope.newObj = {};
+            scope.newAddedSt = {};
+            scope.obj = [
+                { id: 1, name: "St1", birthdate: new Date() },
+                { id: 2, name: "St2", birthdate: new Date() },
+                { id: 3, name: "St3", birthdate: new Date() },
+                { id: 4, name: "St4", birthdate: new Date() },
+                { id: 5, name: "St5", birthdate: new Date() },
+                { id: 6, name: "St6", birthdate: new Date() },
+            ]
+            scope.addSt = function () {
+                console.log(scope.newObj);
+                scope.newAddedSt = Object.assign({}, scope.newObj)
+                scope.obj.push(Object.assign({}, scope.newObj));
+                scope.newObj = {};
+            }
+            this.lower = (item) => {
+                return item;
+            }
+
+            this.date = (item, format) => {
+                return item + " should be formatted to " + format;
+            }
         };
 
         var forthyear = new forthyear();
