@@ -137,9 +137,6 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
                 tag.getAttributes().add(visitHtmlAttribute(attribute));
             });
 
-            if (!tag.validAttributes())
-                throw new RuntimeException("Invalid tag attributes");
-
             if (ctx.htmlContent() != null)
                 tag.setContent(visitHtmlContent(ctx.htmlContent()));
 
@@ -206,7 +203,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             functionNode.setLine(((VariableExpressionNode) functionExpression).getLine());
             functionNode.setCol(((VariableExpressionNode) functionExpression).getCol());
             functionNode.setFunctionName(((VariableExpressionNode) functionExpression).getVariableName());
-            functionNode.setParams(Collections.emptyList());
+            functionNode.setParams(new ArrayList<>());
         } else // If the function is full function expression
             functionNode = (FunctionExpressionNode) functionExpression;
 
@@ -395,7 +392,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
             node.setFunctionName(variableExpressionNode.getVariableName());
 
             // Fetch function params and set it.
-            node.setParams(visitFunctionParams(ctx.functionParams()));
+            node.setParams((ArrayList<FunctionExpressionNode.FunctionParam>) visitFunctionParams(ctx.functionParams()));
 
             return node;
         }

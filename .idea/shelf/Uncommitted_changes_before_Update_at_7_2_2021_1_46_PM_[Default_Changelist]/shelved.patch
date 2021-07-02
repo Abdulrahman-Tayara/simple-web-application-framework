@@ -1,0 +1,60 @@
+Index: src/ast/nodes/attribute/CPIFAttributeNode.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ast.nodes.attribute;\r\n\r\npublic class CPIFAttributeNode extends CPConditionalAttributeNode implements Structural {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/ast/nodes/attribute/CPIFAttributeNode.java	(revision d3ee5342566f7159ca5c484021cee1b1536c269c)
++++ src/ast/nodes/attribute/CPIFAttributeNode.java	(date 1625159528891)
+@@ -1,4 +1,13 @@
+ package ast.nodes.attribute;
+ 
++import ast.nodes.html.HTMLTagNode;
++import cg.scripting.ScriptCode;
++
+ public class CPIFAttributeNode extends CPConditionalAttributeNode implements Structural {
++
++    @Override
++    public ScriptCode generateScript(HTMLTagNode tag) {
++        return new ScriptCode();
++    }
++
+ }
+Index: src/samples/input.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<Html>\r\n    <body>\r\n        <input cp-model=\"1\"></input>\r\n    </body>\r\n</Html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/samples/input.txt	(revision d3ee5342566f7159ca5c484021cee1b1536c269c)
++++ src/samples/input.txt	(date 1625159495296)
+@@ -1,6 +1,5 @@
+ <!DOCTYPE html>
+ <Html>
+-    <body>
+-        <input cp-model="1"></input>
++    <body @click="f">
+     </body>
+ </Html>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectKey\">\r\n    <option name=\"state\" value=\"project://e2804f05-5315-4fc6-a121-c522a6c26470\" />\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" default=\"true\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision d3ee5342566f7159ca5c484021cee1b1536c269c)
++++ .idea/misc.xml	(date 1625152971179)
+@@ -3,7 +3,7 @@
+   <component name="ProjectKey">
+     <option name="state" value="project://e2804f05-5315-4fc6-a121-c522a6c26470" />
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file

@@ -11,6 +11,6 @@ public class StringValueNode extends LiteralExpressionNode<String>
 
     @Override
     public String toHtml() {
-        return value;
+        return "'" + value + "'";
     }
 }

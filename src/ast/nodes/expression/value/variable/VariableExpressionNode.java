@@ -13,6 +13,13 @@ public class VariableExpressionNode extends ValueExpressionNode
 
     private String variableName;
 
+    public VariableExpressionNode(String variableName) {
+        this.variableName = variableName;
+    }
+
+    public VariableExpressionNode() {
+    }
+
     public String getVariableName() {
         return variableName;
     }

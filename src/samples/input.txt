@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <Html>
     <body>
-        <input cp-model="var1"></input>
-        <div cp-show="var2">{{var1}}</div>
-        <div cp-hide="var3">{{var1}}</div>
+        <div cp-if="var3 > 2">{{(var1 | lower | upper('s')) > 2}}</div>
+        <div cp-switch="x">
+            <div cp-switch-case="2"></div>
+            <div cp-switch-case="'s'"></div>
+            <div cp-switch-case="true"></div>
+        </div>
 
         <script>
             function forthyear() {

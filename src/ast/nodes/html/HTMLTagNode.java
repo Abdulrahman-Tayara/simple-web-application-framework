@@ -34,20 +34,6 @@ public class HTMLTagNode extends HTMLElementNode {
         this.content = content;
     }
 
-    public boolean validAttributes() {
-        // Check if there is only one if attribute
-        long ifCount = attributes.stream().filter(attribute -> attribute instanceof CPIFAttributeNode
-                || attribute instanceof CPElseIfAttributeNode
-                || attribute instanceof CPElseAttributeNode).count();
-
-        // Check if there is only one switch attribute
-        long switchCount = attributes.stream().filter(attribute -> attribute instanceof CPSwitchAttributeNode
-                || attribute instanceof CPSwitchCaseAttributeNode
-                || attribute instanceof CPSwitchDefaultAttributeNode).count();
-
-        return ifCount <= 1 && switchCount <= 1;
-    }
-
     public boolean hasContent() {
         return content != null && !content.isEmpty();
     }
@@ -59,6 +45,20 @@ public class HTMLTagNode extends HTMLElementNode {
             }
         }
         return null;
+    }
+
+    public AttributeNode<?> getAttribute(int index) {
+        return attributes.get(index);
+    }
+
+    public int indexOf(Class<? extends AttributeNode<?>> attribute) {
+        for (int i = 0; i < attributes.size(); i++) {
+            if (attributes.get(i).getClass().isAssignableFrom(attribute)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     @Override
