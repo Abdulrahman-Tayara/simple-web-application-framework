@@ -34,13 +34,14 @@ public class HtmlGenerator {
             }
         } else if (node instanceof HTMLTagNode) {
             HTMLTagNode tagNode = ((HTMLTagNode) node);
-            examineTag(tagNode);
 
             if (tagNode.hasContent()) {
                 for (HTMLElementNode elementNode : tagNode.getContent()) {
                     iterate(elementNode);
                 }
             }
+
+            examineTag(tagNode);
         }
     }
 
