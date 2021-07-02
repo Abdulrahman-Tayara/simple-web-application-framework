@@ -1,9 +1,10 @@
-<!DOCTYPE html><Html id="1819698578" ><body id="1163258796" ><input id="2048872872" ></input><div id="1701051507" >{{var1}}</div>
+<!DOCTYPE html><Html id="358452469" ><body id="1252669376" ><div id="1143139832" >{{upper(lower(var1,var1),lower(var1),'s') > 2}}</div><div id="484675801" ><div id="1890424926" ></div><div id="1612150007" ></div><div id="735930058" ></div><div id="1679239890" ></div></div><div id="1477000673" ></div><input id="1404277330" >{{x}}</input><input id="1783048960" ></input><input id="484702430" ></input>
 <script>
 
             function forthyear() {
                 this.var1 = "initial value";
                 this.var2 = false;
+                this.var3 = true;
             }
             var forthyear = new forthyear();
         </script>
@@ -18,9 +19,14 @@ function assigneInitalVariables(id, variableName) {    document.getElementById(i
 </script>
 
 <script>
-bindCpModelToVar("2048872872", "var1");
-addCpShowIdBinding("1701051507", "var2");
-bindVariableUseageWithVariable("1701051507", "var1");
+bindCpIf("1143139832","var3 > 2");
+bindVariableUsageWithVariable("1143139832","upper(lower(var1),'s') > 2");
+bindCpSwitch("484675801","x",[{"childId":"1890424926","case":"2"},{"childId":"1612150007","case":"\u0027s\u0027"},{"childId":"735930058","case":"true"},{"childId":"1679239890","case":"null"}]);
+bindCpEvent("1477000673","click","func",["true","\u0027s\u0027","1"]);
+bindCpModel("1404277330","x");
+bindVariableUsageWithVariable("1404277330","x");
+bindCpHide("1783048960","y");
+bindCpShow("484702430","y");
 function render() {    setInterval(() => {        restoreDeleteIfNodes();        for (var i = 0; i < changes.length; i++) {            changes[i]();        }        changes = [];        for (let index = 0; index < inits.length; index++) {            inits[index]();        }        for (let index = 0; index < forRenders.length; index++) {            forRenders[index]();        }        replaceAllVariableUsages();        renderCpShowConditionally();        renderCpHideConditionally();        renderCpIfConditionalBindings();    }, 16);}render();
 </script>
 </body></Html>

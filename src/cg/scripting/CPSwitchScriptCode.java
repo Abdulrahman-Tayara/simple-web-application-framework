@@ -66,12 +66,12 @@ public class CPSwitchScriptCode extends ScriptCode {
     private static class SwitchCase {
         @SerializedName("childId")
         private final String tagId;
-        @SuppressWarnings("case")
+        @SerializedName("case")
         private final String expression;
 
         public SwitchCase(String tagId, ValuableNode expression) {
             this.tagId = tagId;
-            this.expression = expression.toHtml();
+            this.expression = expression != null ? expression.toHtml() : "null";
         }
     }
 }

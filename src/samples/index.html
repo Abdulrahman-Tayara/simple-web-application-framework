@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<Html id="1072200404">
-<body id="1349040186">
-<div id="456941913">{{upper(lower(var1,var1),lower(var1),'s') > 2}}</div>
-<div id="1008531105">
-    <div id="731819592"></div>
-    <div id="1715026706"></div>
-    <div id="1409897457"></div>
+<Html id="495184888">
+<body id="1860909510">
+<div id="1534258805">{{upper(lower(var1,var1),lower(var1),'s') > 2}}</div>
+<div id="1180013177">
+    <div id="1509697111"></div>
+    <div id="822090641"></div>
+    <div id="484116642"></div>
+    <div id="920472765"></div>
 </div>
+<div id="1881485872"></div>
+<input id="1270761582">{{x}}</input><input id="303583444"></input><input id="1443800522"></input>
 <script>
 
     function forthyear() {
@@ -148,12 +151,17 @@
 </script>
 
 <script>
-    bindCpIf("456941913", "var3 > 2");
-    bindVariableUseageWithVariable("456941913", "upper(lower(var1),'s') > 2");
-    bindCpSwitch("1008531105", "x", [{"childId": "731819592", "expression": "2"}, {
-        "childId": "1715026706",
-        "expression": "\u0027s\u0027"
-    }, {"childId": "1409897457", "expression": "true"}]);
+    bindCpIf("1534258805", "var3 > 2");
+    bindVariableUsageWithVariable("1534258805", "upper(lower(var1),'s') > 2");
+    bindCpSwitch("1180013177", "x", [{"childId": "1509697111", "case": "2"}, {
+        "childId": "822090641",
+        "case": "\u0027s\u0027"
+    }, {"childId": "484116642", "case": "true"}, {"childId": "920472765", "case": "null"}]);
+    bindCpEvent("1881485872", "click", "func", ["true", "\u0027s\u0027", "1"]);
+    bindCpModel("1270761582", "x");
+    bindVariableUsageWithVariable("1270761582", "x");
+    bindCpHide("303583444", "y");
+    bindCpShow("1443800522", "y");
 
     function render() {
         setInterval(() => {

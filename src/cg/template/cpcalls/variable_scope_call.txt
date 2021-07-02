@@ -1,0 +1,1 @@
+bindVariableUsageWithVariable("%s","%s");

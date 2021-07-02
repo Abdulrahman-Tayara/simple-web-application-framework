@@ -797,9 +797,10 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
 
     @Override
     public EventAttributeNode visitEvent(HTMLParser.EventContext ctx) {
-        Object functionExpression = visit(ctx.expression());
+        Object expression = visit(ctx.expression());
 
-        if (!(functionExpression instanceof FunctionExpressionNode))
+        if (!(expression instanceof FunctionExpressionNode) &&
+                !(expression instanceof VariableExpressionNode))
             throw new RuntimeException("Invalid event expression");
 
         EventAttributeNode node = new EventAttributeNode();
@@ -807,7 +808,11 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         node.setCol(ctx.eventName().ANY_NAME().getSymbol().getCharPositionInLine());
 
         node.setName(visitEventName(ctx.eventName()));
-        node.setValue((FunctionExpressionNode) functionExpression);
+
+        if (expression instanceof VariableExpressionNode)
+            node.setValue(new FunctionExpressionNode(((VariableExpressionNode) expression).getVariableName(), new ArrayList<>()));
+        else
+            node.setValue((FunctionExpressionNode) expression);
 
         return node;
     }

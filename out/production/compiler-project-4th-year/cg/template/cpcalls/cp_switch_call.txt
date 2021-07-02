@@ -1,1 +1,1 @@
-bindCpSwitch("%s", "%s", %s);
+bindCpSwitch("%s","%s",%s);

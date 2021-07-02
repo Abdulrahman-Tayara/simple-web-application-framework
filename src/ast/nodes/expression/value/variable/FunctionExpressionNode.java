@@ -1,5 +1,6 @@
 package ast.nodes.expression.value.variable;
 
+import ast.nodes.Htmlable;
 import ast.nodes.expression.ExpressionNode;
 import ast.nodes.expression.condition.LogicalNode;
 import ast.nodes.expression.value.*;
@@ -15,6 +16,14 @@ public class FunctionExpressionNode extends ValueExpressionNode
 
     private String functionName;
     private ArrayList<FunctionParam> params;
+
+    public FunctionExpressionNode(String functionName, ArrayList<FunctionParam> params) {
+        this.functionName = functionName;
+        this.params = params;
+    }
+
+    public FunctionExpressionNode() {
+    }
 
     public String getFunctionName() {
         return functionName;
@@ -39,7 +48,7 @@ public class FunctionExpressionNode extends ValueExpressionNode
         this.params.add(0, param);
     }
 
-    public static class FunctionParam {
+    public static class FunctionParam implements Htmlable {
         private ValuableNode value;
 
         public FunctionParam(ValuableNode value) {
@@ -57,6 +66,11 @@ public class FunctionExpressionNode extends ValueExpressionNode
         @Override
         public String toString() {
             return value.toString();
+        }
+
+        @Override
+        public String toHtml() {
+            return value.toHtml();
         }
     }
 
@@ -79,9 +93,9 @@ public class FunctionExpressionNode extends ValueExpressionNode
     @Override
     public String toHtml() {
         StringBuilder builder = new StringBuilder();
-        params.forEach(param -> builder.append(param.value.toHtml()).append(','));
+        params.forEach(param -> builder.append(param.toHtml()).append(','));
         if (builder.length() > 0)
             builder.setLength(builder.length() - 1);
-        return functionName + '(' + builder.toString() + ')';
+        return functionName + '(' + builder + ')';
     }
 }
