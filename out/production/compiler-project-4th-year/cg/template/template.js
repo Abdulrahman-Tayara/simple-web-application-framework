@@ -1,5 +1,3 @@
-var globalObjectString = "forthyear";
-
 function parse(expressionString) {
 
 
@@ -80,6 +78,7 @@ function isConcatObj(expr) {
     return expr.indexOf(".") != -1
 }
 
+
 function assigneInitalVariables(id, variableName) {
     document.getElementById(id).value = forthyear[variableName];
 }
@@ -89,7 +88,7 @@ function changeValue(id, variableName) {
 }
 
 
-function bindCpModel(id, variableName) {
+function bindCpModelToVar(id, variableName) {
 
 
     inits.push(() => {
@@ -106,7 +105,8 @@ function bindCpModel(id, variableName) {
     });
 }
 
-function bindVariableUsageWithVariable(id, variableName, formatters = []) {
+
+function bindVariableUseageWithVariable(id, variableName, formatters = []) {
 
 
     let text = document.getElementById(id).innerHTML;
@@ -122,17 +122,21 @@ function bindVariableUsageWithVariable(id, variableName, formatters = []) {
 
 function replaceAllVariableUsages() {
 
+
     Object.keys(defaultInnerHTML).forEach(key => {
         for (let index = 0; index < defaultInnerHTML[key].length; index++) {
 
             let obj = defaultInnerHTML[key][index];
 
+
             let newText = obj.text.replace("{{" + key + "}}", forthyear[key]);
+
             document.getElementById(obj.id).innerHTML = newText;
 
         }
     });
 }
+
 
 function bindCpShow(id, expression) {
     if (cpShowIdBindings[expression] === undefined) {
@@ -159,6 +163,7 @@ function renderCpShowConditionally() {
     });
 }
 
+
 function bindCpHide(id, expression) {
     if (cpHideIdBindings[expression] === undefined) {
         cpHideIdBindings[expression] = [];
@@ -183,13 +188,47 @@ function renderCpHideConditionally() {
     });
 }
 
-function bindCpEvent(id, eventName, cb) {
+
+function addCpEventListener(id, eventName, cb) {
     console.log(id);
     console.log(eventName);
     document.getElementById(id).addEventListener(eventName, () => {
         cb();
+    });
+}
+
+
+function cpForRepeat(id, variableName) {
+
+
+    forRenders.push(() => {
+
+        let element = document.getElementById(id);
+
+
+        for (let index = 0; index < forthyear[variableName]; index++) {
+
+
+            let clone = element.cloneNode(true);
+            clone.hidden = false;
+
+
+            element.insertAdjacentElement('afterend', clone);
+            repeatedNodes.push(clone);
+        }
+
+
+        element.hidden = true;
     })
 }
+
+function removeRepeatedNodes() {
+    for (let index = 0; index < repeatedNodes.length; index++) {
+        repeatedNodes[index].remove();
+    }
+    repeatedNodes = [];
+}
+
 
 function bindCpIf(id, expression) {
     cpIfConditionalBindings.push({
@@ -206,13 +245,17 @@ function renderCpIf() {
         let doc = document.getElementById(cond.id);
         if (eval(parse(cond.expression)) == false) {
 
+
             let rep = document.createElement('div');
             rep.id = cond.id;
             rep.hidden = true;
 
+
             doc.after(rep);
 
+
             let cloneDoc = doc.cloneNode(true);
+
 
             deletedNodes.push(cloneDoc);
             doc.remove();
@@ -221,17 +264,22 @@ function renderCpIf() {
 }
 
 function restoreDeleteIfNodes() {
+
+
     for (let index = 0; index < deletedNodes.length; index++) {
 
         let delNode = deletedNodes[index];
+
 
         let rep = document.getElementById(delNode.id);
         rep.after(delNode);
         rep.remove();
 
+
     }
     deletedNodes = [];
 }
+
 
 function bindCpSwitch(expression, childIdsWithCases) {
     cpSwitchBindings.push({

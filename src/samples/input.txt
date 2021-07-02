@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <Html>
     <body>
-
-        <div cp-if="x">
-            {{x | lower | upper | zipper}}
-        </div>
+        <div cp-if="myFun() || var3">{{var1}}</div>
 
         <script>
             function forthyear() {
-                this.x = false
+                this.var1 = "initial value";
+                this.var2 = false;
+                this.var3 = true;
+                this.myFun = () => {
+                    return false;
+                }
             }
             var forthyear = new forthyear();
+            var globalObjectString = "forthyear";
+
         </script>
     </body>
 </Html>

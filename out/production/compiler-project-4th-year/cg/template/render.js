@@ -16,12 +16,10 @@ function render() {
             forRenders[index]();
         }
 
-
-        replaceAllVariableUsages()
+        replaceAllVariableUsages();
         renderCpShowConditionally();
         renderCpHideConditionally();
         renderCpIf();
-        renderCpSwitchBindinds();
 
     }, 200);
 }
