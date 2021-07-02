@@ -1,0 +1,1 @@
+bindCpSwitch("%s", "%s", %s);

@@ -1,0 +1,32 @@
+{
+  "globalScope": {
+    "Scope": [
+      {
+        "Scope": [
+          {
+            "symbol": "xx"
+          },
+          {
+            "symbol": "tt1"
+          },
+          {
+            "Scope": [
+              {
+                "symbol": "y"
+              },
+              {
+                "symbol": "tt2"
+              },
+              {
+                "symbol": "z"
+              }
+            ],
+            "symbol": "cp-if scope"
+          }
+        ],
+        "symbol": "cp-if scope"
+      }
+    ],
+    "symbol": "Global Scope"
+  }
+}

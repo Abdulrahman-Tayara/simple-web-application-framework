@@ -1,0 +1,34 @@
+{
+  "globalScope": {
+    "Scope": [
+      {
+        "tagName": "Html",
+        "Scope": [
+          {
+            "tagName": "head",
+            "Scope": [
+              {
+                "tagName": "title",
+                "Scope": [],
+                "symbol": "html element"
+              }
+            ],
+            "symbol": "html element"
+          },
+          {
+            "tagName": "div",
+            "Scope": [
+              {
+                "attributeName": "cp-model",
+                "symbol": "cp attribute"
+              }
+            ],
+            "symbol": "html element"
+          }
+        ],
+        "symbol": "html element"
+      }
+    ],
+    "symbol": "HtmlDocument Scope"
+  }
+}
