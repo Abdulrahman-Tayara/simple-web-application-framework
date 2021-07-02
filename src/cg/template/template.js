@@ -320,7 +320,7 @@ function renderCpSwitch() {
         }
 
         let lastChild = children[children.length - 1];
-        if (!matched && (lastChild.case == null)) {
+        if (!matched && (eval(parse(lastChild.case)) == null)) {
             document.getElementById(lastChild.childId).hidden = false;
         }
 

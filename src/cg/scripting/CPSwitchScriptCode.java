@@ -26,7 +26,7 @@ public class CPSwitchScriptCode extends ScriptCode {
 
         List<SwitchCase> cases = fetchCases();
 
-        String line = String.format(call, tag.getId(), expression.toHtml(), Utils.toJson(cases));
+        String line = String.format(call, expression.toHtml(), Utils.toJson(cases));
 
         addLine(line);
     }

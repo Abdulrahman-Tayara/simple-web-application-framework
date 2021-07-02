@@ -2,24 +2,25 @@
 <html lang="en">
 
 <head>
-    <title>Sample 1 - basic model</title>
+    <title>Sample 4 if</title>
 </head>
 
-<body cp-app="forthyear">
+<body id="b" cp-app="forthyear">
+    <span>Cards?</span>
+    <input id="myShowItems" type="text" cp-model="showItemsCnt" value="4" />
 
-    <input type="text" cp-model="myTest" />
-    <div id="myTestDiv">My Text is: {{myTest}}</div>
+    <div cp-if="showItemsCnt > 10">
+        <div>it's a big number {{showItemsCnt}}</div>
+    </div>
 
     <script>
         function forthyear() {
-            this.myTest = "HI MAn";
+            this.showItemsCnt = 6;
         };
 
         var forthyear = new forthyear();
 
-
     </script>
-
 
 </body>
 
