@@ -1,27 +1,20 @@
 <!DOCTYPE html>
 <Html>
     <body>
-        <div cp-if="var3 > 2">{{(var1 | lower | upper('s')) > 2}}</div>
-        <div cp-switch="x">
-            <div cp-switch-case="2"></div>
-            <div cp-switch-case="'s'"></div>
-            <div cp-switch-case="true"></div>
-            <div cp-switchDefault></div>
-        </div>
-
-        <div @click="func(true, 's', 1)"></div>
-
-        <input cp-model="x">{{x}}</input>
-        <input cp-hide="y"></input>
-        <input cp-show="y"></input>
+        <div cp-if="myFun() || var3">{{var1}}</div>
 
         <script>
             function forthyear() {
                 this.var1 = "initial value";
                 this.var2 = false;
                 this.var3 = true;
+                this.myFun = () => {
+                    return false;
+                }
             }
             var forthyear = new forthyear();
+            var globalObjectString = "forthyear";
+
         </script>
     </body>
 </Html>

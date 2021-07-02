@@ -33,6 +33,6 @@ public class ConcatConditionExpressionNode extends ConditionExpressionNode {
 
     @Override
     public String toHtml() {
-        return condition1.toHtml() + ' ' + operator + ' ' + condition2;
+        return condition1.toHtml() + ' ' + operator + ' ' + condition2.toHtml();
     }
 }

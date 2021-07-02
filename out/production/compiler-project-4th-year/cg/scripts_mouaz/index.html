@@ -15,7 +15,7 @@
         <!-- Html Code -->
         <input id="myTestInput" type="text" cp-model="myTest" value="myTestInputValue" />
         <div id="myTestUsage">My Text is: {{myTest}}</div>
-        <div id="myTestUsage2">AnotherText is: {{repeatsNumber + repeatsNumber2}}</div>
+        <div id="myTestUsage2">AnotherText is: {{myTest}}</div>
 
 
         <div id="myTestFor">
@@ -117,14 +117,7 @@
             this.c = 1;
             this.fun = (a, b, c) => {
                 return a + b + c;
-            };
-            this.lower = (str) => {
-                return str.toLowerCase();
-            };
-            this.upper = (str) => {
-                return str.toUpperCase();
-            };
-
+            }
         };
 
         var forthyear = new forthyear();
@@ -281,34 +274,43 @@
         // <!-- variable usage -->
 
 
-        function bindVariableUseage(id, rawCurly, expression) {
+        function bindVariableUseageWithVariable(id, variableName, formatters = []) {
 
             //this function saves the default innerHTML for the doc with id: @param:id
             //ex: saves : "the value of x is {{x}}"
 
             let text = document.getElementById(id).innerHTML;
 
-            if (defaultInnerHTML[rawCurly] === undefined) {
-                defaultInnerHTML[rawCurly] = []
-                defaultInnerHTML[rawCurly].push({ id: id, text: text, expression: expression });
+            if (defaultInnerHTML[variableName] === undefined) {
+                defaultInnerHTML[variableName] = []
+                defaultInnerHTML[variableName].push({ id: id, text: text, formatter: formatters });
             } else {
-                defaultInnerHTML[rawCurly].push({ id: id, text: text, expression: expression });
+                defaultInnerHTML[variableName].push({ id: id, text: text, formatter: formatters });
             }
+
         }
 
-        function renderVariableUsages() {
+        function replaceAllVariableUsages() {
+
             //this function repleaces all the {{__}} with the value of the __ variable
-            Object.keys(defaultInnerHTML).forEach(rawCurly => {
-                for (let index = 0; index < defaultInnerHTML[rawCurly].length; index++) {
 
-                    let obj = defaultInnerHTML[rawCurly][index];
+            Object.keys(defaultInnerHTML).forEach(key => {
+                for (let index = 0; index < defaultInnerHTML[key].length; index++) {
 
-                    let newText = obj.text.replace(rawCurly, eval(parse(obj.expression)));
+                    let obj = defaultInnerHTML[key][index];
 
+                    // let formatted = applyFormatters(obj.formatters, forthyear[key]);
+                    // let newText = obj.text.replace("{{" + key + "}}", formatted);
+
+                    let newText = obj.text.replace("{{" + key + "}}", forthyear[key]);
+                    // console.log(newText);
                     document.getElementById(obj.id).innerHTML = newText;
+
                 }
             });
         }
+
+
 
         // <!-- cp-show -->
 
@@ -494,7 +496,7 @@
                 childrenBindings: childIdsWithCases
             });
         }
-        function renderCpSwitch() {
+        function renderCpSwitchBindinds() {
             for (let index = 0; index < cpSwitchBindings.length; index++) {
 
                 let binding = cpSwitchBindings[index];
@@ -520,6 +522,7 @@
 
 
                 }
+
                 //show the defualt if not matched
                 let lastChild = children[children.length - 1];
                 if (!matched && (lastChild.case == null)) {
@@ -551,9 +554,8 @@
 
 
         //variable usage
-        this.bindVariableUseage("myTestUsage", "{{myTest}}", "upper(lower(myTest))");
-        this.bindVariableUseage("myTestUsage2", "{{repeatsNumber + repeatsNumber2}}", "repeatsNumber + repeatsNumber2");
-        // this.bindVariableUseage("myTestUsage2", "myTest");
+        this.bindVariableUseageWithVariable("myTestUsage", "myTest");
+        this.bindVariableUseageWithVariable("myTestUsage2", "myTest");
 
         //cp if
         this.bindCpIf("myConditionTest", "conditional");
@@ -619,11 +621,11 @@
                 }
 
 
-                renderVariableUsages()
+                replaceAllVariableUsages()
                 renderCpShowConditionally();
                 renderCpHideConditionally();
                 renderCpIf();
-                renderCpSwitch();
+                renderCpSwitchBindinds();
 
             }, 200);
         }

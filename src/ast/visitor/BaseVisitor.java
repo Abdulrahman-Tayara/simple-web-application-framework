@@ -58,6 +58,7 @@ public class BaseVisitor extends HTMLParserBaseVisitor {
         node.setCol(ctx.VARIABLE_SCOPE_OPEN().getSymbol().getCharPositionInLine());
 
         node.setScopeExpression((ExpressionNode) scopeExpression);
+        node.setScopeContent(ctx.expression().getText());
 
         return node;
     }

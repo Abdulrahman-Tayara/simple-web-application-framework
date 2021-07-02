@@ -1,0 +1,815 @@
+Index: src/samples/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<Html id=\"1072200404\">\r\n<body id=\"1349040186\">\r\n<div id=\"456941913\">{{upper(lower(var1,var1),lower(var1),'s') > 2}}</div>\r\n<div id=\"1008531105\">\r\n    <div id=\"731819592\"></div>\r\n    <div id=\"1715026706\"></div>\r\n    <div id=\"1409897457\"></div>\r\n</div>\r\n<script>\r\n\r\n    function forthyear() {\r\n        this.var1 = \"initial value\";\r\n        this.var2 = false;\r\n        this.var3 = true;\r\n    }\r\n\r\n    var forthyear = new forthyear();\r\n</script>\r\n</script>\r\n\r\n<script>\r\n    let inits = [];\r\n    let changes = [];\r\n    let forRenders = [];\r\n    let defaultInnerHTML = {};\r\n    let cpShowIdBindings = {};\r\n    let cpHideIdBindings = {};\r\n    let cpIfConditionalBindings = [];\r\n    let cpSwitchBindings = [];\r\n    let deletedNodes = [];\r\n    let repeatedNodes = [];\r\n</script>\r\n\r\n<script>\r\n    function assigneInitalVariables(id, variableName) {\r\n        document.getElementById(id).value = forthyear[variableName];\r\n    }\r\n\r\n    function changeValue(id, variableName) {\r\n        forthyear[variableName] = document.getElementById(id).value;\r\n    }\r\n\r\n    function bindCpModelToVar(id, variableName) {\r\n        inits.push(() => {\r\n            assigneInitalVariables(id, variableName);\r\n        });\r\n        document.getElementById(id).addEventListener(\"input\", (event) => {\r\n            changes.push(() => {\r\n                changeValue(id, variableName);\r\n            });\r\n        });\r\n    }\r\n\r\n    function bindVariableUseageWithVariable(id, variableName) {\r\n        let text = document.getElementById(id).innerHTML;\r\n        if (defaultInnerHTML[variableName] === undefined) {\r\n            defaultInnerHTML[variableName] = [];\r\n            defaultInnerHTML[variableName].push({id: id, text: text});\r\n        } else {\r\n            defaultInnerHTML[variableName].push({id: id, text: text});\r\n        }\r\n    }\r\n\r\n    function replaceAllVariableUsages() {\r\n        Object.keys(defaultInnerHTML).forEach(key => {\r\n            for (let index = 0; index < defaultInnerHTML[key].length; index++) {\r\n                let obj = defaultInnerHTML[key][index];\r\n                let newText = obj.text.replace(\"{{\" + key + \"}}\", forthyear[key]);\r\n                document.getElementById(obj.id).innerHTML = newText;\r\n            }\r\n        });\r\n    }\r\n\r\n    function addCpShowIdBinding(id, variableName) {\r\n        if (cpShowIdBindings[variableName] === undefined) {\r\n            cpShowIdBindings[variableName] = [];\r\n            cpShowIdBindings[variableName].push(id);\r\n        } else {\r\n            cpShowIdBindings[variableName].push(id);\r\n        }\r\n    }\r\n\r\n    function renderCpShowConditionally(id, variableName) {\r\n        Object.keys(cpShowIdBindings).forEach(variableName => {\r\n            for (let index = 0; index < cpShowIdBindings[variableName].length; index++) {\r\n                let id = cpShowIdBindings[variableName][index];\r\n                if (forthyear[variableName] == true) {\r\n                    document.getElementById(id).hidden = false;\r\n                } else {\r\n                    document.getElementById(id).hidden = true;\r\n                }\r\n            }\r\n        });\r\n    }\r\n\r\n    function addCpHideIdBinding(id, variableName) {\r\n        if (cpHideIdBindings[variableName] === undefined) {\r\n            cpHideIdBindings[variableName] = [];\r\n            cpHideIdBindings[variableName].push(id);\r\n        } else {\r\n            cpHideIdBindings[variableName].push(id);\r\n        }\r\n    }\r\n\r\n    function renderCpHideConditionally(id, variableName) {\r\n        Object.keys(cpHideIdBindings).forEach(variableName => {\r\n            for (let index = 0; index < cpHideIdBindings[variableName].length; index++) {\r\n                let id = cpHideIdBindings[variableName][index];\r\n                if (forthyear[variableName] == true) {\r\n                    document.getElementById(id).hidden = true;\r\n                } else {\r\n                    document.getElementById(id).hidden = false;\r\n                }\r\n            }\r\n        });\r\n    }\r\n\r\n    function addCpIfBinding(id, variableName, expectedValue) {\r\n        cpIfConditionalBindings.push({id: id, variableName: variableName, expectedValue: expectedValue});\r\n    }\r\n\r\n    function renderCpIfConditionalBindings() {\r\n        for (let index = 0; index < cpIfConditionalBindings.length; index++) {\r\n            let cond = cpIfConditionalBindings[index];\r\n            let doc = document.getElementById(cond.id);\r\n            if (forthyear[cond.variableName] != cond.expectedValue) {\r\n                let rep = document.createElement('div');\r\n                rep.id = cond.id;\r\n                rep.hidden = true;\r\n                doc.after(rep);\r\n                let cloneDoc = doc.cloneNode(true);\r\n                deletedNodes.push(cloneDoc);\r\n                doc.remove();\r\n            }\r\n        }\r\n    }\r\n\r\n    function restoreDeleteIfNodes() {\r\n        for (let index = 0; index < deletedNodes.length; index++) {\r\n            let delNode = deletedNodes[index];\r\n            let rep = document.getElementById(delNode.id);\r\n            rep.after(delNode);\r\n            rep.remove();\r\n        }\r\n        deletedNodes = [];\r\n    }\r\n</script>\r\n\r\n<script>\r\n    bindCpIf(\"456941913\", \"var3 > 2\");\r\n    bindVariableUseageWithVariable(\"456941913\", \"upper(lower(var1),'s') > 2\");\r\n    bindCpSwitch(\"1008531105\", \"x\", [{\"childId\": \"731819592\", \"expression\": \"2\"}, {\r\n        \"childId\": \"1715026706\",\r\n        \"expression\": \"\\u0027s\\u0027\"\r\n    }, {\"childId\": \"1409897457\", \"expression\": \"true\"}]);\r\n\r\n    function render() {\r\n        setInterval(() => {\r\n            restoreDeleteIfNodes();\r\n            for (var i = 0; i < changes.length; i++) {\r\n                changes[i]();\r\n            }\r\n            changes = [];\r\n            for (let index = 0; index < inits.length; index++) {\r\n                inits[index]();\r\n            }\r\n            for (let index = 0; index < forRenders.length; index++) {\r\n                forRenders[index]();\r\n            }\r\n            replaceAllVariableUsages();\r\n            renderCpShowConditionally();\r\n            renderCpHideConditionally();\r\n            renderCpIfConditionalBindings();\r\n        }, 16);\r\n    }\r\n\r\n    render();\r\n</script>\r\n</body>\r\n</Html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/samples/index.html b/src/samples/index.html
+--- a/src/samples/index.html	(revision dab38200a32d2fb8ec811a83ef69ff9f1135125f)
++++ b/src/samples/index.html	(date 1625234744586)
+@@ -1,11 +1,11 @@
+ <!DOCTYPE html>
+-<Html id="1072200404">
+-<body id="1349040186">
+-<div id="456941913">{{upper(lower(var1,var1),lower(var1),'s') > 2}}</div>
+-<div id="1008531105">
+-    <div id="731819592"></div>
+-    <div id="1715026706"></div>
+-    <div id="1409897457"></div>
++<Html id="1707587726">
++<body id="1024579389">
++<div id="322147606">{{upper(lower(var1,var1),lower(var1),'s') > 2}}</div>
++<div id="1248030049">
++    <div id="740736867"></div>
++    <div id="989826417"></div>
++    <div id="38131902"></div>
+ </div>
+ <script>
+ 
+@@ -17,9 +17,9 @@
+ 
+     var forthyear = new forthyear();
+ </script>
+-</script>
+ 
+ <script>
++    let defaultBodyCode = document.body.innerHTML;
+     let inits = [];
+     let changes = [];
+     let forRenders = [];
+@@ -52,13 +52,13 @@
+         });
+     }
+ 
+-    function bindVariableUseageWithVariable(id, variableName) {
++    function bindVariableUseageWithVariable(id, variableName, formatters = []) {
+         let text = document.getElementById(id).innerHTML;
+         if (defaultInnerHTML[variableName] === undefined) {
+-            defaultInnerHTML[variableName] = [];
+-            defaultInnerHTML[variableName].push({id: id, text: text});
++            defaultInnerHTML[variableName] = []
++            defaultInnerHTML[variableName].push({id: id, text: text, formatter: formatters});
+         } else {
+-            defaultInnerHTML[variableName].push({id: id, text: text});
++            defaultInnerHTML[variableName].push({id: id, text: text, formatter: formatters});
+         }
+     }
+ 
+@@ -72,20 +72,20 @@
+         });
+     }
+ 
+-    function addCpShowIdBinding(id, variableName) {
+-        if (cpShowIdBindings[variableName] === undefined) {
+-            cpShowIdBindings[variableName] = [];
+-            cpShowIdBindings[variableName].push(id);
++    function bindCpShow(id, expression) {
++        if (cpShowIdBindings[expression] === undefined) {
++            cpShowIdBindings[expression] = []
++            cpShowIdBindings[expression].push(id);
+         } else {
+-            cpShowIdBindings[variableName].push(id);
++            cpShowIdBindings[expression].push(id);
+         }
+     }
+ 
+-    function renderCpShowConditionally(id, variableName) {
+-        Object.keys(cpShowIdBindings).forEach(variableName => {
+-            for (let index = 0; index < cpShowIdBindings[variableName].length; index++) {
+-                let id = cpShowIdBindings[variableName][index];
+-                if (forthyear[variableName] == true) {
++    function renderCpShowConditionally() {
++        Object.keys(cpShowIdBindings).forEach(expression => {
++            for (let index = 0; index < cpShowIdBindings[expression].length; index++) {
++                let id = cpShowIdBindings[expression][index];
++                if (eval(parse(expression)) == true) {
+                     document.getElementById(id).hidden = false;
+                 } else {
+                     document.getElementById(id).hidden = true;
+@@ -94,20 +94,20 @@
+         });
+     }
+ 
+-    function addCpHideIdBinding(id, variableName) {
+-        if (cpHideIdBindings[variableName] === undefined) {
+-            cpHideIdBindings[variableName] = [];
+-            cpHideIdBindings[variableName].push(id);
++    function bindCpHide(id, expression) {
++        if (cpHideIdBindings[expression] === undefined) {
++            cpHideIdBindings[expression] = []
++            cpHideIdBindings[expression].push(id);
+         } else {
+-            cpHideIdBindings[variableName].push(id);
++            cpHideIdBindings[expression].push(id);
+         }
+     }
+ 
+-    function renderCpHideConditionally(id, variableName) {
+-        Object.keys(cpHideIdBindings).forEach(variableName => {
+-            for (let index = 0; index < cpHideIdBindings[variableName].length; index++) {
+-                let id = cpHideIdBindings[variableName][index];
+-                if (forthyear[variableName] == true) {
++    function renderCpHideConditionally() {
++        Object.keys(cpHideIdBindings).forEach(expression => {
++            for (let index = 0; index < cpHideIdBindings[expression].length; index++) {
++                let id = cpHideIdBindings[expression][index];
++                if (eval(parse(expression)) == true) {
+                     document.getElementById(id).hidden = true;
+                 } else {
+                     document.getElementById(id).hidden = false;
+@@ -116,15 +116,53 @@
+         });
+     }
+ 
+-    function addCpIfBinding(id, variableName, expectedValue) {
+-        cpIfConditionalBindings.push({id: id, variableName: variableName, expectedValue: expectedValue});
++    function addCpEventListener(id, eventName, cb) {
++        console.log(id);
++        console.log(eventName);
++        document.getElementById(id).addEventListener(eventName, () => {
++            cb()
++        })
++    }
++
++    function bindCpIf(id, expression) {
++        cpIfConditionalBindings.push({id: id, expression: expression,});
++    }
++
++    function renderCpIf() {
++        for (let index = 0; index < cpIfConditionalBindings.length; index++) {
++            let cond = cpIfConditionalBindings[index];
++            let doc = document.getElementById(cond.id);
++            if (eval(parse(cond.expression)) == false) {
++                let rep = document.createElement('div');
++                rep.id = cond.id;
++                rep.hidden = true;
++                doc.after(rep);
++                let cloneDoc = doc.cloneNode(true);
++                deletedNodes.push(cloneDoc);
++                doc.remove();
++            }
++        }
+     }
+ 
+-    function renderCpIfConditionalBindings() {
++    function restoreDeleteIfNodes() {
++        for (let index = 0; index < deletedNodes.length; index++) {
++            let delNode = deletedNodes[index];
++            let rep = document.getElementById(delNode.id);
++            rep.after(delNode);
++            rep.remove();
++        }
++        deletedNodes = [];
++    }
++
++    function bindCpIf(id, expression) {
++        cpIfConditionalBindings.push({id: id, expression: expression,});
++    }
++
++    function renderCpIf() {
+         for (let index = 0; index < cpIfConditionalBindings.length; index++) {
+             let cond = cpIfConditionalBindings[index];
+             let doc = document.getElementById(cond.id);
+-            if (forthyear[cond.variableName] != cond.expectedValue) {
++            if (eval(parse(cond.expression)) == false) {
+                 let rep = document.createElement('div');
+                 rep.id = cond.id;
+                 rep.hidden = true;
+@@ -148,12 +186,12 @@
+ </script>
+ 
+ <script>
+-    bindCpIf("456941913", "var3 > 2");
+-    bindVariableUseageWithVariable("456941913", "upper(lower(var1),'s') > 2");
+-    bindCpSwitch("1008531105", "x", [{"childId": "731819592", "expression": "2"}, {
+-        "childId": "1715026706",
++    bindCpIf("322147606", "var3 > 2");
++    bindVariableUseageWithVariable("322147606", "upper(lower(var1),'s') > 2");
++    bindCpSwitch("1248030049", "x", [{"childId": "740736867", "expression": "2"}, {
++        "childId": "989826417",
+         "expression": "\u0027s\u0027"
+-    }, {"childId": "1409897457", "expression": "true"}]);
++    }, {"childId": "38131902", "expression": "true"}]);
+ 
+     function render() {
+         setInterval(() => {
+Index: src/cg/template/template.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\nfunction assigneInitalVariables(id, variableName) {\r\n    document.getElementById(id).value = forthyear[variableName];\r\n}\r\n\r\nfunction changeValue(id, variableName) {\r\n    forthyear[variableName] = document.getElementById(id).value;\r\n}\r\n\r\nfunction bindCpModelToVar(id, variableName) {\r\n    inits.push(() => {\r\n        assigneInitalVariables(id, variableName);\r\n    });\r\n    document.getElementById(id).addEventListener(\"input\", (event) => {\r\n\r\n        changes.push(() => {\r\n            changeValue(id, variableName);\r\n        });\r\n    });\r\n}\r\n\r\n\r\nfunction bindVariableUseageWithVariable(id, variableName) {\r\n\r\n    let text = document.getElementById(id).innerHTML;\r\n\r\n    if (defaultInnerHTML[variableName] === undefined) {\r\n        defaultInnerHTML[variableName] = [];\r\n        defaultInnerHTML[variableName].push({ id: id, text: text });\r\n    } else {\r\n        defaultInnerHTML[variableName].push({ id: id, text: text });\r\n    }\r\n\r\n}\r\n\r\nfunction replaceAllVariableUsages() {\r\n    Object.keys(defaultInnerHTML).forEach(key => {\r\n        for (let index = 0; index < defaultInnerHTML[key].length; index++) {\r\n\r\n            let obj = defaultInnerHTML[key][index];\r\n            let newText = obj.text.replace(\"{{\" + key + \"}}\", forthyear[key]);\r\n            document.getElementById(obj.id).innerHTML = newText;\r\n\r\n        }\r\n    });\r\n}\r\nfunction addCpShowIdBinding(id, variableName) {\r\n    if (cpShowIdBindings[variableName] === undefined) {\r\n        cpShowIdBindings[variableName] = [];\r\n        cpShowIdBindings[variableName].push(id);\r\n    } else {\r\n        cpShowIdBindings[variableName].push(id);\r\n    }\r\n}\r\n\r\n\r\nfunction renderCpShowConditionally(id, variableName) {\r\n    Object.keys(cpShowIdBindings).forEach(variableName => {\r\n        for (let index = 0; index < cpShowIdBindings[variableName].length; index++) {\r\n\r\n            let id = cpShowIdBindings[variableName][index];\r\n            if (forthyear[variableName] == true) {\r\n                document.getElementById(id).hidden = false;\r\n            } else {\r\n                document.getElementById(id).hidden = true;\r\n            }\r\n\r\n        }\r\n    });\r\n}\r\n\r\n\r\nfunction addCpHideIdBinding(id, variableName) {\r\n    if (cpHideIdBindings[variableName] === undefined) {\r\n        cpHideIdBindings[variableName] = [];\r\n        cpHideIdBindings[variableName].push(id);\r\n    } else {\r\n        cpHideIdBindings[variableName].push(id);\r\n    }\r\n}\r\n\r\nfunction renderCpHideConditionally(id, variableName) {\r\n    Object.keys(cpHideIdBindings).forEach(variableName => {\r\n        for (let index = 0; index < cpHideIdBindings[variableName].length; index++) {\r\n\r\n            let id = cpHideIdBindings[variableName][index];\r\n            if (forthyear[variableName] == true) {\r\n                document.getElementById(id).hidden = true;\r\n            } else {\r\n                document.getElementById(id).hidden = false;\r\n            }\r\n        }\r\n    });\r\n}\r\n\r\n\r\nfunction addCpIfBinding(id, variableName, expectedValue) {\r\n    cpIfConditionalBindings.push({\r\n        id: id,\r\n        variableName: variableName,\r\n        expectedValue: expectedValue\r\n    });\r\n}\r\n\r\nfunction renderCpIfConditionalBindings() {\r\n    for (let index = 0; index < cpIfConditionalBindings.length; index++) {\r\n\r\n        let cond = cpIfConditionalBindings[index];\r\n\r\n        let doc = document.getElementById(cond.id);\r\n        if (forthyear[cond.variableName] != cond.expectedValue) {\r\n\r\n            \r\n            let rep = document.createElement('div');\r\n            rep.id = cond.id;\r\n            rep.hidden = true;\r\n\r\n            \r\n            doc.after(rep);\r\n\r\n            \r\n            let cloneDoc = doc.cloneNode(true);\r\n\r\n            \r\n            deletedNodes.push(cloneDoc);\r\n            doc.remove();\r\n        }\r\n\r\n    }\r\n}\r\n\r\nfunction restoreDeleteIfNodes() {\r\n\r\n    \r\n\r\n    for (let index = 0; index < deletedNodes.length; index++) {\r\n\r\n        let delNode = deletedNodes[index];\r\n\r\n        \r\n        let rep = document.getElementById(delNode.id);\r\n        rep.after(delNode);\r\n        rep.remove();\r\n\r\n\r\n    }\r\n    deletedNodes = [];\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/cg/template/template.js b/src/cg/template/template.js
+--- a/src/cg/template/template.js	(revision dab38200a32d2fb8ec811a83ef69ff9f1135125f)
++++ b/src/cg/template/template.js	(date 1625234653685)
+@@ -1,4 +1,3 @@
+-
+ function assigneInitalVariables(id, variableName) {
+     document.getElementById(id).value = forthyear[variableName];
+ }
+@@ -8,9 +7,11 @@
+ }
+ 
+ function bindCpModelToVar(id, variableName) {
++
+     inits.push(() => {
+         assigneInitalVariables(id, variableName);
+     });
++
+     document.getElementById(id).addEventListener("input", (event) => {
+ 
+         changes.push(() => {
+@@ -19,47 +20,48 @@
+     });
+ }
+ 
+-
+-function bindVariableUseageWithVariable(id, variableName) {
+-
++function bindVariableUseageWithVariable(id, variableName, formatters = []) {
+     let text = document.getElementById(id).innerHTML;
+ 
+     if (defaultInnerHTML[variableName] === undefined) {
+-        defaultInnerHTML[variableName] = [];
+-        defaultInnerHTML[variableName].push({ id: id, text: text });
++        defaultInnerHTML[variableName] = []
++        defaultInnerHTML[variableName].push({id: id, text: text, formatter: formatters});
+     } else {
+-        defaultInnerHTML[variableName].push({ id: id, text: text });
++        defaultInnerHTML[variableName].push({id: id, text: text, formatter: formatters});
+     }
+ 
+ }
+ 
+ function replaceAllVariableUsages() {
++
+     Object.keys(defaultInnerHTML).forEach(key => {
+         for (let index = 0; index < defaultInnerHTML[key].length; index++) {
+ 
+             let obj = defaultInnerHTML[key][index];
++
+             let newText = obj.text.replace("{{" + key + "}}", forthyear[key]);
++
+             document.getElementById(obj.id).innerHTML = newText;
+-
+         }
+     });
+ }
+-function addCpShowIdBinding(id, variableName) {
+-    if (cpShowIdBindings[variableName] === undefined) {
+-        cpShowIdBindings[variableName] = [];
+-        cpShowIdBindings[variableName].push(id);
++
++function bindCpShow(id, expression) {
++    if (cpShowIdBindings[expression] === undefined) {
++        cpShowIdBindings[expression] = []
++        cpShowIdBindings[expression].push(id);
+     } else {
+-        cpShowIdBindings[variableName].push(id);
++        cpShowIdBindings[expression].push(id);
+     }
+ }
+ 
+ 
+-function renderCpShowConditionally(id, variableName) {
+-    Object.keys(cpShowIdBindings).forEach(variableName => {
+-        for (let index = 0; index < cpShowIdBindings[variableName].length; index++) {
++function renderCpShowConditionally() {
++    Object.keys(cpShowIdBindings).forEach(expression => {
++        for (let index = 0; index < cpShowIdBindings[expression].length; index++) {
+ 
+-            let id = cpShowIdBindings[variableName][index];
+-            if (forthyear[variableName] == true) {
++            let id = cpShowIdBindings[expression][index];
++            if (eval(parse(expression)) == true) {
+                 document.getElementById(id).hidden = false;
+             } else {
+                 document.getElementById(id).hidden = true;
+@@ -70,74 +72,116 @@
+ }
+ 
+ 
+-function addCpHideIdBinding(id, variableName) {
+-    if (cpHideIdBindings[variableName] === undefined) {
+-        cpHideIdBindings[variableName] = [];
+-        cpHideIdBindings[variableName].push(id);
++function bindCpHide(id, expression) {
++    if (cpHideIdBindings[expression] === undefined) {
++        cpHideIdBindings[expression] = []
++        cpHideIdBindings[expression].push(id);
+     } else {
+-        cpHideIdBindings[variableName].push(id);
++        cpHideIdBindings[expression].push(id);
+     }
+ }
+ 
+-function renderCpHideConditionally(id, variableName) {
+-    Object.keys(cpHideIdBindings).forEach(variableName => {
+-        for (let index = 0; index < cpHideIdBindings[variableName].length; index++) {
++function renderCpHideConditionally() {
++    Object.keys(cpHideIdBindings).forEach(expression => {
++        for (let index = 0; index < cpHideIdBindings[expression].length; index++) {
+ 
+-            let id = cpHideIdBindings[variableName][index];
+-            if (forthyear[variableName] == true) {
++            let id = cpHideIdBindings[expression][index];
++            if (eval(parse(expression)) == true) {
+                 document.getElementById(id).hidden = true;
+             } else {
+                 document.getElementById(id).hidden = false;
+             }
++
+         }
+     });
+ }
+ 
++function addCpEventListener(id, eventName, cb) {
++    console.log(id);
++    console.log(eventName);
++    document.getElementById(id).addEventListener(eventName, () => {
++        cb()
++    })
++}
+ 
+-function addCpIfBinding(id, variableName, expectedValue) {
++function bindCpIf(id, expression) {
+     cpIfConditionalBindings.push({
+         id: id,
+-        variableName: variableName,
+-        expectedValue: expectedValue
++        expression: expression,
+     });
+ }
+ 
+-function renderCpIfConditionalBindings() {
++function renderCpIf() {
+     for (let index = 0; index < cpIfConditionalBindings.length; index++) {
+ 
+         let cond = cpIfConditionalBindings[index];
+ 
+         let doc = document.getElementById(cond.id);
+-        if (forthyear[cond.variableName] != cond.expectedValue) {
++        if (eval(parse(cond.expression)) == false) {
++
++            let rep = document.createElement('div');
++            rep.id = cond.id;
++            rep.hidden = true;
++
++            doc.after(rep);
++
++            let cloneDoc = doc.cloneNode(true);
+ 
+-            
++            deletedNodes.push(cloneDoc);
++            doc.remove();
++        }
++    }
++}
++
++function restoreDeleteIfNodes() {
++
++    for (let index = 0; index < deletedNodes.length; index++) {
++
++        let delNode = deletedNodes[index];
++
++        let rep = document.getElementById(delNode.id);
++        rep.after(delNode);
++        rep.remove();
++
++
++    }
++    deletedNodes = [];
++}
++
++function bindCpIf(id, expression) {
++    cpIfConditionalBindings.push({
++        id: id,
++        expression: expression,
++    });
++}
++
++function renderCpIf() {
++    for (let index = 0; index < cpIfConditionalBindings.length; index++) {
++
++        let cond = cpIfConditionalBindings[index];
++
++        let doc = document.getElementById(cond.id);
++        if (eval(parse(cond.expression)) == false) {
++
+             let rep = document.createElement('div');
+             rep.id = cond.id;
+             rep.hidden = true;
+ 
+-            
+             doc.after(rep);
+ 
+-            
+             let cloneDoc = doc.cloneNode(true);
+ 
+-            
+             deletedNodes.push(cloneDoc);
+             doc.remove();
+         }
+-
+     }
+ }
+ 
+ function restoreDeleteIfNodes() {
+-
+-    
+-
+     for (let index = 0; index < deletedNodes.length; index++) {
+ 
+         let delNode = deletedNodes[index];
+ 
+-        
+         let rep = document.getElementById(delNode.id);
+         rep.after(delNode);
+         rep.remove();
+Index: src/cg/template/initial.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>let inits = [];\r\nlet changes = [];\r\nlet forRenders = [];\r\n\r\nlet defaultInnerHTML = {};\r\nlet cpShowIdBindings = {};\r\nlet cpHideIdBindings = {};\r\nlet cpIfConditionalBindings = [];\r\nlet cpSwitchBindings = [];\r\n\r\nlet deletedNodes = [];\r\nlet repeatedNodes = [];
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/cg/template/initial.js b/src/cg/template/initial.js
+--- a/src/cg/template/initial.js	(revision dab38200a32d2fb8ec811a83ef69ff9f1135125f)
++++ b/src/cg/template/initial.js	(date 1625232595957)
+@@ -1,12 +1,11 @@
++let defaultBodyCode = document.body.innerHTML;
+ let inits = [];
+ let changes = [];
+ let forRenders = [];
+-
+ let defaultInnerHTML = {};
+ let cpShowIdBindings = {};
+ let cpHideIdBindings = {};
+ let cpIfConditionalBindings = [];
+ let cpSwitchBindings = [];
+-
+ let deletedNodes = [];
+ let repeatedNodes = [];
+\ No newline at end of file
+Index: out/production/compiler-project-4th-year/cg/template/template.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\nfunction assigneInitalVariables(id, variableName) {\r\n    document.getElementById(id).value = forthyear[variableName];\r\n}\r\n\r\nfunction changeValue(id, variableName) {\r\n    forthyear[variableName] = document.getElementById(id).value;\r\n}\r\n\r\nfunction bindCpModelToVar(id, variableName) {\r\n    inits.push(() => {\r\n        assigneInitalVariables(id, variableName);\r\n    });\r\n    document.getElementById(id).addEventListener(\"input\", (event) => {\r\n\r\n        changes.push(() => {\r\n            changeValue(id, variableName);\r\n        });\r\n    });\r\n}\r\n\r\n\r\nfunction bindVariableUseageWithVariable(id, variableName) {\r\n\r\n    let text = document.getElementById(id).innerHTML;\r\n\r\n    if (defaultInnerHTML[variableName] === undefined) {\r\n        defaultInnerHTML[variableName] = [];\r\n        defaultInnerHTML[variableName].push({ id: id, text: text });\r\n    } else {\r\n        defaultInnerHTML[variableName].push({ id: id, text: text });\r\n    }\r\n\r\n}\r\n\r\nfunction replaceAllVariableUsages() {\r\n    Object.keys(defaultInnerHTML).forEach(key => {\r\n        for (let index = 0; index < defaultInnerHTML[key].length; index++) {\r\n\r\n            let obj = defaultInnerHTML[key][index];\r\n            let newText = obj.text.replace(\"{{\" + key + \"}}\", forthyear[key]);\r\n            document.getElementById(obj.id).innerHTML = newText;\r\n\r\n        }\r\n    });\r\n}\r\nfunction addCpShowIdBinding(id, variableName) {\r\n    if (cpShowIdBindings[variableName] === undefined) {\r\n        cpShowIdBindings[variableName] = [];\r\n        cpShowIdBindings[variableName].push(id);\r\n    } else {\r\n        cpShowIdBindings[variableName].push(id);\r\n    }\r\n}\r\n\r\n\r\nfunction renderCpShowConditionally(id, variableName) {\r\n    Object.keys(cpShowIdBindings).forEach(variableName => {\r\n        for (let index = 0; index < cpShowIdBindings[variableName].length; index++) {\r\n\r\n            let id = cpShowIdBindings[variableName][index];\r\n            if (forthyear[variableName] == true) {\r\n                document.getElementById(id).hidden = false;\r\n            } else {\r\n                document.getElementById(id).hidden = true;\r\n            }\r\n\r\n        }\r\n    });\r\n}\r\n\r\n\r\nfunction addCpHideIdBinding(id, variableName) {\r\n    if (cpHideIdBindings[variableName] === undefined) {\r\n        cpHideIdBindings[variableName] = [];\r\n        cpHideIdBindings[variableName].push(id);\r\n    } else {\r\n        cpHideIdBindings[variableName].push(id);\r\n    }\r\n}\r\n\r\nfunction renderCpHideConditionally(id, variableName) {\r\n    Object.keys(cpHideIdBindings).forEach(variableName => {\r\n        for (let index = 0; index < cpHideIdBindings[variableName].length; index++) {\r\n\r\n            let id = cpHideIdBindings[variableName][index];\r\n            if (forthyear[variableName] == true) {\r\n                document.getElementById(id).hidden = true;\r\n            } else {\r\n                document.getElementById(id).hidden = false;\r\n            }\r\n        }\r\n    });\r\n}\r\n\r\n\r\nfunction addCpIfBinding(id, variableName, expectedValue) {\r\n    cpIfConditionalBindings.push({\r\n        id: id,\r\n        variableName: variableName,\r\n        expectedValue: expectedValue\r\n    });\r\n}\r\n\r\nfunction renderCpIfConditionalBindings() {\r\n    for (let index = 0; index < cpIfConditionalBindings.length; index++) {\r\n\r\n        let cond = cpIfConditionalBindings[index];\r\n\r\n        let doc = document.getElementById(cond.id);\r\n        if (forthyear[cond.variableName] != cond.expectedValue) {\r\n\r\n            \r\n            let rep = document.createElement('div');\r\n            rep.id = cond.id;\r\n            rep.hidden = true;\r\n\r\n            \r\n            doc.after(rep);\r\n\r\n            \r\n            let cloneDoc = doc.cloneNode(true);\r\n\r\n            \r\n            deletedNodes.push(cloneDoc);\r\n            doc.remove();\r\n        }\r\n\r\n    }\r\n}\r\n\r\nfunction restoreDeleteIfNodes() {\r\n\r\n    \r\n\r\n    for (let index = 0; index < deletedNodes.length; index++) {\r\n\r\n        let delNode = deletedNodes[index];\r\n\r\n        \r\n        let rep = document.getElementById(delNode.id);\r\n        rep.after(delNode);\r\n        rep.remove();\r\n\r\n\r\n    }\r\n    deletedNodes = [];\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/compiler-project-4th-year/cg/template/template.js b/out/production/compiler-project-4th-year/cg/template/template.js
+--- a/out/production/compiler-project-4th-year/cg/template/template.js	(revision dab38200a32d2fb8ec811a83ef69ff9f1135125f)
++++ b/out/production/compiler-project-4th-year/cg/template/template.js	(date 1625234653685)
+@@ -1,4 +1,3 @@
+-
+ function assigneInitalVariables(id, variableName) {
+     document.getElementById(id).value = forthyear[variableName];
+ }
+@@ -8,9 +7,11 @@
+ }
+ 
+ function bindCpModelToVar(id, variableName) {
++
+     inits.push(() => {
+         assigneInitalVariables(id, variableName);
+     });
++
+     document.getElementById(id).addEventListener("input", (event) => {
+ 
+         changes.push(() => {
+@@ -19,47 +20,48 @@
+     });
+ }
+ 
+-
+-function bindVariableUseageWithVariable(id, variableName) {
+-
++function bindVariableUseageWithVariable(id, variableName, formatters = []) {
+     let text = document.getElementById(id).innerHTML;
+ 
+     if (defaultInnerHTML[variableName] === undefined) {
+-        defaultInnerHTML[variableName] = [];
+-        defaultInnerHTML[variableName].push({ id: id, text: text });
++        defaultInnerHTML[variableName] = []
++        defaultInnerHTML[variableName].push({id: id, text: text, formatter: formatters});
+     } else {
+-        defaultInnerHTML[variableName].push({ id: id, text: text });
++        defaultInnerHTML[variableName].push({id: id, text: text, formatter: formatters});
+     }
+ 
+ }
+ 
+ function replaceAllVariableUsages() {
++
+     Object.keys(defaultInnerHTML).forEach(key => {
+         for (let index = 0; index < defaultInnerHTML[key].length; index++) {
+ 
+             let obj = defaultInnerHTML[key][index];
++
+             let newText = obj.text.replace("{{" + key + "}}", forthyear[key]);
++
+             document.getElementById(obj.id).innerHTML = newText;
+-
+         }
+     });
+ }
+-function addCpShowIdBinding(id, variableName) {
+-    if (cpShowIdBindings[variableName] === undefined) {
+-        cpShowIdBindings[variableName] = [];
+-        cpShowIdBindings[variableName].push(id);
++
++function bindCpShow(id, expression) {
++    if (cpShowIdBindings[expression] === undefined) {
++        cpShowIdBindings[expression] = []
++        cpShowIdBindings[expression].push(id);
+     } else {
+-        cpShowIdBindings[variableName].push(id);
++        cpShowIdBindings[expression].push(id);
+     }
+ }
+ 
+ 
+-function renderCpShowConditionally(id, variableName) {
+-    Object.keys(cpShowIdBindings).forEach(variableName => {
+-        for (let index = 0; index < cpShowIdBindings[variableName].length; index++) {
++function renderCpShowConditionally() {
++    Object.keys(cpShowIdBindings).forEach(expression => {
++        for (let index = 0; index < cpShowIdBindings[expression].length; index++) {
+ 
+-            let id = cpShowIdBindings[variableName][index];
+-            if (forthyear[variableName] == true) {
++            let id = cpShowIdBindings[expression][index];
++            if (eval(parse(expression)) == true) {
+                 document.getElementById(id).hidden = false;
+             } else {
+                 document.getElementById(id).hidden = true;
+@@ -70,74 +72,116 @@
+ }
+ 
+ 
+-function addCpHideIdBinding(id, variableName) {
+-    if (cpHideIdBindings[variableName] === undefined) {
+-        cpHideIdBindings[variableName] = [];
+-        cpHideIdBindings[variableName].push(id);
++function bindCpHide(id, expression) {
++    if (cpHideIdBindings[expression] === undefined) {
++        cpHideIdBindings[expression] = []
++        cpHideIdBindings[expression].push(id);
+     } else {
+-        cpHideIdBindings[variableName].push(id);
++        cpHideIdBindings[expression].push(id);
+     }
+ }
+ 
+-function renderCpHideConditionally(id, variableName) {
+-    Object.keys(cpHideIdBindings).forEach(variableName => {
+-        for (let index = 0; index < cpHideIdBindings[variableName].length; index++) {
++function renderCpHideConditionally() {
++    Object.keys(cpHideIdBindings).forEach(expression => {
++        for (let index = 0; index < cpHideIdBindings[expression].length; index++) {
+ 
+-            let id = cpHideIdBindings[variableName][index];
+-            if (forthyear[variableName] == true) {
++            let id = cpHideIdBindings[expression][index];
++            if (eval(parse(expression)) == true) {
+                 document.getElementById(id).hidden = true;
+             } else {
+                 document.getElementById(id).hidden = false;
+             }
++
+         }
+     });
+ }
+ 
++function addCpEventListener(id, eventName, cb) {
++    console.log(id);
++    console.log(eventName);
++    document.getElementById(id).addEventListener(eventName, () => {
++        cb()
++    })
++}
+ 
+-function addCpIfBinding(id, variableName, expectedValue) {
++function bindCpIf(id, expression) {
+     cpIfConditionalBindings.push({
+         id: id,
+-        variableName: variableName,
+-        expectedValue: expectedValue
++        expression: expression,
+     });
+ }
+ 
+-function renderCpIfConditionalBindings() {
++function renderCpIf() {
+     for (let index = 0; index < cpIfConditionalBindings.length; index++) {
+ 
+         let cond = cpIfConditionalBindings[index];
+ 
+         let doc = document.getElementById(cond.id);
+-        if (forthyear[cond.variableName] != cond.expectedValue) {
++        if (eval(parse(cond.expression)) == false) {
++
++            let rep = document.createElement('div');
++            rep.id = cond.id;
++            rep.hidden = true;
++
++            doc.after(rep);
++
++            let cloneDoc = doc.cloneNode(true);
+ 
+-            
++            deletedNodes.push(cloneDoc);
++            doc.remove();
++        }
++    }
++}
++
++function restoreDeleteIfNodes() {
++
++    for (let index = 0; index < deletedNodes.length; index++) {
++
++        let delNode = deletedNodes[index];
++
++        let rep = document.getElementById(delNode.id);
++        rep.after(delNode);
++        rep.remove();
++
++
++    }
++    deletedNodes = [];
++}
++
++function bindCpIf(id, expression) {
++    cpIfConditionalBindings.push({
++        id: id,
++        expression: expression,
++    });
++}
++
++function renderCpIf() {
++    for (let index = 0; index < cpIfConditionalBindings.length; index++) {
++
++        let cond = cpIfConditionalBindings[index];
++
++        let doc = document.getElementById(cond.id);
++        if (eval(parse(cond.expression)) == false) {
++
+             let rep = document.createElement('div');
+             rep.id = cond.id;
+             rep.hidden = true;
+ 
+-            
+             doc.after(rep);
+ 
+-            
+             let cloneDoc = doc.cloneNode(true);
+ 
+-            
+             deletedNodes.push(cloneDoc);
+             doc.remove();
+         }
+-
+     }
+ }
+ 
+ function restoreDeleteIfNodes() {
+-
+-    
+-
+     for (let index = 0; index < deletedNodes.length; index++) {
+ 
+         let delNode = deletedNodes[index];
+ 
+-        
+         let rep = document.getElementById(delNode.id);
+         rep.after(delNode);
+         rep.remove();
+Index: out/production/compiler-project-4th-year/samples/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html><Html id=\"1819698578\" ><body id=\"1163258796\" ><input id=\"2048872872\" ></input><div id=\"1701051507\" >{{var1}}</div>\r\n<script>\r\n\r\n            function forthyear() {\r\n                this.var1 = \"initial value\";\r\n                this.var2 = false;\r\n            }\r\n            var forthyear = new forthyear();\r\n        </script>\r\n</script>\r\n\r\n<script>\r\nlet inits = [];let changes = [];let forRenders = [];let defaultInnerHTML = {};let cpShowIdBindings = {};let cpHideIdBindings = {};let cpIfConditionalBindings = [];let cpSwitchBindings = [];let deletedNodes = [];let repeatedNodes = [];\r\n</script>\r\n\r\n<script>\r\nfunction assigneInitalVariables(id, variableName) {    document.getElementById(id).value = forthyear[variableName];}function changeValue(id, variableName) {    forthyear[variableName] = document.getElementById(id).value;}function bindCpModelToVar(id, variableName) {    inits.push(() => {        assigneInitalVariables(id, variableName);    });    document.getElementById(id).addEventListener(\"input\", (event) => {        changes.push(() => {            changeValue(id, variableName);        });    });}function bindVariableUseageWithVariable(id, variableName) {    let text = document.getElementById(id).innerHTML;    if (defaultInnerHTML[variableName] === undefined) {        defaultInnerHTML[variableName] = [];        defaultInnerHTML[variableName].push({ id: id, text: text });    } else {        defaultInnerHTML[variableName].push({ id: id, text: text });    }}function replaceAllVariableUsages() {    Object.keys(defaultInnerHTML).forEach(key => {        for (let index = 0; index < defaultInnerHTML[key].length; index++) {            let obj = defaultInnerHTML[key][index];            let newText = obj.text.replace(\"{{\" + key + \"}}\", forthyear[key]);            document.getElementById(obj.id).innerHTML = newText;        }    });}function addCpShowIdBinding(id, variableName) {    if (cpShowIdBindings[variableName] === undefined) {        cpShowIdBindings[variableName] = [];        cpShowIdBindings[variableName].push(id);    } else {        cpShowIdBindings[variableName].push(id);    }}function renderCpShowConditionally(id, variableName) {    Object.keys(cpShowIdBindings).forEach(variableName => {        for (let index = 0; index < cpShowIdBindings[variableName].length; index++) {            let id = cpShowIdBindings[variableName][index];            if (forthyear[variableName] == true) {                document.getElementById(id).hidden = false;            } else {                document.getElementById(id).hidden = true;            }        }    });}function addCpHideIdBinding(id, variableName) {    if (cpHideIdBindings[variableName] === undefined) {        cpHideIdBindings[variableName] = [];        cpHideIdBindings[variableName].push(id);    } else {        cpHideIdBindings[variableName].push(id);    }}function renderCpHideConditionally(id, variableName) {    Object.keys(cpHideIdBindings).forEach(variableName => {        for (let index = 0; index < cpHideIdBindings[variableName].length; index++) {            let id = cpHideIdBindings[variableName][index];            if (forthyear[variableName] == true) {                document.getElementById(id).hidden = true;            } else {                document.getElementById(id).hidden = false;            }        }    });}function addCpIfBinding(id, variableName, expectedValue) {    cpIfConditionalBindings.push({        id: id,        variableName: variableName,        expectedValue: expectedValue    });}function renderCpIfConditionalBindings() {    for (let index = 0; index < cpIfConditionalBindings.length; index++) {        let cond = cpIfConditionalBindings[index];        let doc = document.getElementById(cond.id);        if (forthyear[cond.variableName] != cond.expectedValue) {                        let rep = document.createElement('div');            rep.id = cond.id;            rep.hidden = true;                        doc.after(rep);                        let cloneDoc = doc.cloneNode(true);                        deletedNodes.push(cloneDoc);            doc.remove();        }    }}function restoreDeleteIfNodes() {        for (let index = 0; index < deletedNodes.length; index++) {        let delNode = deletedNodes[index];                let rep = document.getElementById(delNode.id);        rep.after(delNode);        rep.remove();    }    deletedNodes = [];}\r\n</script>\r\n\r\n<script>\r\nbindCpModelToVar(\"2048872872\", \"var1\");\r\naddCpShowIdBinding(\"1701051507\", \"var2\");\r\nbindVariableUseageWithVariable(\"1701051507\", \"var1\");\r\nfunction render() {    setInterval(() => {        restoreDeleteIfNodes();        for (var i = 0; i < changes.length; i++) {            changes[i]();        }        changes = [];        for (let index = 0; index < inits.length; index++) {            inits[index]();        }        for (let index = 0; index < forRenders.length; index++) {            forRenders[index]();        }        replaceAllVariableUsages();        renderCpShowConditionally();        renderCpHideConditionally();        renderCpIfConditionalBindings();    }, 16);}render();\r\n</script>\r\n</body></Html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/compiler-project-4th-year/samples/index.html b/out/production/compiler-project-4th-year/samples/index.html
+--- a/out/production/compiler-project-4th-year/samples/index.html	(revision dab38200a32d2fb8ec811a83ef69ff9f1135125f)
++++ b/out/production/compiler-project-4th-year/samples/index.html	(date 1625232546872)
+@@ -1,16 +1,17 @@
+-<!DOCTYPE html><Html id="1819698578" ><body id="1163258796" ><input id="2048872872" ></input><div id="1701051507" >{{var1}}</div>
++<!DOCTYPE html><Html id="376317939" ><body id="1189440381" ><div id="1608701651" >{{upper(lower(var1,var1),lower(var1),'s') > 2}}</div><div id="1413619920" ><div id="622016421" ></div><div id="1005306652" ></div><div id="1894790642" ></div></div>
+ <script>
+ 
+             function forthyear() {
+                 this.var1 = "initial value";
+                 this.var2 = false;
++                this.var3 = true;
+             }
+             var forthyear = new forthyear();
+         </script>
+ </script>
+ 
+ <script>
+-let inits = [];let changes = [];let forRenders = [];let defaultInnerHTML = {};let cpShowIdBindings = {};let cpHideIdBindings = {};let cpIfConditionalBindings = [];let cpSwitchBindings = [];let deletedNodes = [];let repeatedNodes = [];
++let defaultBodyCode = document.body.innerHTML;\nlet inits = [];\nlet changes = [];\nlet forRenders = [];\nlet defaultInnerHTML = {};\nlet cpShowIdBindings = {};\nlet cpHideIdBindings = {};\nlet cpIfConditionalBindings = [];\nlet cpSwitchBindings = []; //[ {id, var, childrenBindings: [{childId, case}]} ] \nlet deletedNodes = []; //list of ids \nlet repeatedNodes = []; //list of nodes \n
+ </script>
+ 
+ <script>
+@@ -18,9 +19,9 @@
+ </script>
+ 
+ <script>
+-bindCpModelToVar("2048872872", "var1");
+-addCpShowIdBinding("1701051507", "var2");
+-bindVariableUseageWithVariable("1701051507", "var1");
++bindCpIf("1608701651", "var3 > 2");
++bindVariableUseageWithVariable("1608701651", "upper(lower(var1),'s') > 2");
++bindCpSwitch("1413619920", "x", [{"childId":"622016421","expression":"2"},{"childId":"1005306652","expression":"\u0027s\u0027"},{"childId":"1894790642","expression":"true"}]);
+ function render() {    setInterval(() => {        restoreDeleteIfNodes();        for (var i = 0; i < changes.length; i++) {            changes[i]();        }        changes = [];        for (let index = 0; index < inits.length; index++) {            inits[index]();        }        for (let index = 0; index < forRenders.length; index++) {            forRenders[index]();        }        replaceAllVariableUsages();        renderCpShowConditionally();        renderCpHideConditionally();        renderCpIfConditionalBindings();    }, 16);}render();
+ </script>
+ </body></Html>
+\ No newline at end of file
+Index: .idea/compiler-project-4th-year.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src\" isTestSource=\"false\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"module-library\">\r\n      <library>\r\n        <CLASSES>\r\n          <root url=\"jar://$MODULE_DIR$/jars/antlr-4.8-complete.jar!/\" />\r\n        </CLASSES>\r\n        <JAVADOC />\r\n        <SOURCES />\r\n      </library>\r\n    </orderEntry>\r\n    <orderEntry type=\"module-library\">\r\n      <library>\r\n        <CLASSES>\r\n          <root url=\"jar://$MODULE_DIR$/jars/gson-2.8.6.jar!/\" />\r\n        </CLASSES>\r\n        <JAVADOC />\r\n        <SOURCES />\r\n      </library>\r\n    </orderEntry>\r\n    <orderEntry type=\"library\" name=\"jtidy-r938\" level=\"project\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler-project-4th-year.iml b/.idea/compiler-project-4th-year.iml
+--- a/.idea/compiler-project-4th-year.iml	(revision dab38200a32d2fb8ec811a83ef69ff9f1135125f)
++++ b/.idea/compiler-project-4th-year.iml	(date 1625234096036)
+@@ -7,7 +7,7 @@
+     </content>
+     <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
+-    <orderEntry type="module-library">
++    <orderEntry type="module-library" exported="">
+       <library>
+         <CLASSES>
+           <root url="jar://$MODULE_DIR$/jars/antlr-4.8-complete.jar!/" />
+@@ -16,7 +16,7 @@
+         <SOURCES />
+       </library>
+     </orderEntry>
+-    <orderEntry type="module-library">
++    <orderEntry type="module-library" exported="">
+       <library>
+         <CLASSES>
+           <root url="jar://$MODULE_DIR$/jars/gson-2.8.6.jar!/" />
+@@ -25,6 +25,6 @@
+         <SOURCES />
+       </library>
+     </orderEntry>
+-    <orderEntry type="library" name="jtidy-r938" level="project" />
++    <orderEntry type="library" exported="" name="jtidy-r938" level="project" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: out/production/compiler-project-4th-year/cg/template/initial.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>let inits = [];\r\nlet changes = [];\r\nlet forRenders = [];\r\n\r\nlet defaultInnerHTML = {};\r\nlet cpShowIdBindings = {};\r\nlet cpHideIdBindings = {};\r\nlet cpIfConditionalBindings = [];\r\nlet cpSwitchBindings = [];\r\n\r\nlet deletedNodes = [];\r\nlet repeatedNodes = [];
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/compiler-project-4th-year/cg/template/initial.js b/out/production/compiler-project-4th-year/cg/template/initial.js
+--- a/out/production/compiler-project-4th-year/cg/template/initial.js	(revision dab38200a32d2fb8ec811a83ef69ff9f1135125f)
++++ b/out/production/compiler-project-4th-year/cg/template/initial.js	(date 1625232595957)
+@@ -1,12 +1,11 @@
++let defaultBodyCode = document.body.innerHTML;
+ let inits = [];
+ let changes = [];
+ let forRenders = [];
+-
+ let defaultInnerHTML = {};
+ let cpShowIdBindings = {};
+ let cpHideIdBindings = {};
+ let cpIfConditionalBindings = [];
+ let cpSwitchBindings = [];
+-
+ let deletedNodes = [];
+ let repeatedNodes = [];
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectKey\">\r\n    <option name=\"state\" value=\"project://e2804f05-5315-4fc6-a121-c522a6c26470\" />\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" default=\"true\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision dab38200a32d2fb8ec811a83ef69ff9f1135125f)
++++ b/.idea/misc.xml	(date 1625234501447)
+@@ -3,7 +3,7 @@
+   <component name="ProjectKey">
+     <option name="state" value="project://e2804f05-5315-4fc6-a121-c522a6c26470" />
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file

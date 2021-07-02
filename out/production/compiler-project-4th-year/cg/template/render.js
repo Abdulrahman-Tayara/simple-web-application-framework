@@ -19,8 +19,8 @@ function render() {
         replaceAllVariableUsages();
         renderCpShowConditionally();
         renderCpHideConditionally();
-        renderCpIfConditionalBindings();
+        renderCpIf();
 
-    }, 16);
+    }, 200);
 }
 render();
