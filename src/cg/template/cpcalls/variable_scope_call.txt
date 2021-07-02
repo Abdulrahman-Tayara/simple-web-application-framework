@@ -1,1 +1,1 @@
-bindVariableUsageWithVariable("%s","%s");
+bindVariableUsage("%s","%s");
