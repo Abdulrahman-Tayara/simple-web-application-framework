@@ -1,8 +1,8 @@
-import SymbolTable.DefSymbols;
+import symboltable.DefSymbols;
 import ast.nodes.html.HtmlDocumentNode;
 import ast.visitor.BaseVisitor;
-import cg.HtmlGenerator;
-import cg.IdsGenerator;
+import codegeneration.HtmlGenerator;
+import codegeneration.IdsGenerator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -14,7 +14,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.w3c.dom.Document;
 import org.w3c.tidy.Tidy;
-import semantic_check.SymantecChecker;
+import semantic.SymantecChecker;
 
 import java.io.*;
 import java.lang.reflect.Modifier;

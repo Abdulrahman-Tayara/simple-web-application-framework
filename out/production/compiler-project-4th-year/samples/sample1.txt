@@ -1,6 +1,0 @@
-<html>
-    <div></div>
-    <div>
-        <span></span>
-    </div>
-</html>
